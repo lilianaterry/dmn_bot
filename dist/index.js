@@ -1,13 +1,14 @@
 'use strict';
 
+import { MessengerApi } from "./messenger-api";
+
 // Imports dependencies and set up http server
-const
-  express = require('express'),
-  bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()); // creates express http server
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      app = express().use(bodyParser.json()); // creates express http server
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 8000, () => console.log('webhook is listening'));
+app.listen(process.env.PORT || 8000, () => console.log('Listening for requests from Messenger'));
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
@@ -18,12 +19,13 @@ app.post('/webhook', (req, res) => {
   if (body.object === 'page') {
 
     // Iterates over each entry - there may be multiple if batched
-    body.entry.forEach(function(entry) {
+    body.entry.forEach(function (entry) {
 
       // Gets the message. entry.messaging is an array, but
       // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
+      MessengerApi.getInstance().sendTextMessage(webhook_event.psid, 'Message received');
     });
 
     // Returns a '200 OK' response to all requests
@@ -32,14 +34,13 @@ app.post('/webhook', (req, res) => {
     // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
   }
-
 });
 
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
   console.log('Received webhook GET request');
   // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = "zV3zVSZoCm"
+  let VERIFY_TOKEN = "zV3zVSZoCm";
 
   // Parse the query params
   let mode = req.query['hub.mode'];
@@ -55,7 +56,6 @@ app.get('/webhook', (req, res) => {
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
       res.status(200).send(challenge);
-
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.sendStatus(403);
@@ -64,6 +64,5 @@ app.get('/webhook', (req, res) => {
 });
 
 app.get('/heartbeat', (req, res) => {
-  console.log('Received heartbeat request');
   res.send('Server heartbeat success');
 });

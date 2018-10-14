@@ -1,0 +1,15 @@
+[ignore]
+.*/node_modules/.*
+
+[include]
+./src/
+
+[libs]
+.*/node_modules/.*
+
+[lints]
+
+[options]
+all=true
+
+[strict]
