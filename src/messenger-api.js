@@ -9,7 +9,7 @@ export class MessengerApi {
     if (!process.env.MESSENGER_KEY) {
       throw new Error('MESSENGER_KEY environment variable not set.')
     } 
-
+    
     this.GRAPH_API_URL = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.MESSENGER_KEY}`
   }
 
@@ -38,6 +38,8 @@ export class MessengerApi {
       } else {
         console.log('Message sent successfully');
       }
+      console.log(response)
+      console.log(body)
     })
   }
 }
