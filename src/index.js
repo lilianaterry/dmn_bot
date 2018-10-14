@@ -1,6 +1,7 @@
 'use strict';
 
-import { MessengerApi } from "./messenger-api";
+//import { MessengerApi } from "./messenger-api";
+import { Commands } from "./commands";
 
 // Imports dependencies and set up http server
 const
@@ -13,7 +14,9 @@ app.listen(process.env.PORT || 8000, () => console.log('Listening for requests f
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
-
+  
+  console.log("Received webhook POST request");
+	
   let body = req.body;
 
   // Checks this is an event from a page subscription
@@ -22,12 +25,29 @@ app.post('/webhook', (req: any, res: any) => {
     // Iterates over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
 
-      // Gets the message. entry.messaging is an array, but
+      // Gets the message. entry messaging is an array, but
       // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
+
+	  // Ignore extraneous messages sent with nlp analysis for now
+      if (!webhook_event['message']['nlp']) {
+            let user_id = webhook_event['sender']['id'];
+            let message_command = webhook_event['message']['text'].toLowerCase();
+
+            // Decides which command to run from user request
+            switch(message_command) {
+                  case "start":
+                        Commands.startConversation(user_id);
+                        break;
+                  default:
+                        console.log("Sorry that command was not found");
+            }
+            console.log(webhook_event);
+      }});
+
+
       console.log(webhook_event);
-      MessengerApi.getInstance().sendTextMessage(webhook_event.psid, 'Message received');
-    });
+      //MessengerApi.getInstance().sendTextMessage(webhook_event.psid, 'Message received');
 
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');
