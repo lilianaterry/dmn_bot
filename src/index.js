@@ -1,6 +1,6 @@
 'use strict';
 
-//import { MessengerApi } from "./messenger-api";
+import { MessengerApi } from "./messenger-api";
 import { Commands } from "./commands";
 
 // Imports dependencies and set up http server
@@ -43,11 +43,11 @@ app.post('/webhook', (req: any, res: any) => {
                         console.log("Sorry that command was not found");
             }
             console.log(webhook_event);
-      }});
-
-
+      }
       console.log(webhook_event);
-      //MessengerApi.getInstance().sendTextMessage(webhook_event.psid, 'Message received');
+      MessengerApi.getInstance().sendTextMessage(webhook_event.sender.id, 'Message received');
+      error
+    });
 
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');

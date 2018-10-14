@@ -3,8 +3,8 @@ import * as AWS from 'aws-sdk';
 		
 export class Database {
 		
-	table;
-	docClient;	
+	table: string;
+	docClient: any;	
 
     constructor(tableName: string) {
 		AWS.config.update({
@@ -33,6 +33,3 @@ export class Database {
        	});
 	}
 }
-
-
-

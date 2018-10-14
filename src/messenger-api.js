@@ -24,13 +24,15 @@ export class MessengerApi {
     request.post(this.GRAPH_API_URL, {
       json: true,
       body: {
-        "messaging_type": "<MESSAGING_TYPE>",
+        "messaging_type": "MESSAGE_TAG",
+        "tag": "NON_PROMOTIONAL_SUBSCRIPTION",
         "recipient": {
           "id": psid
         },
         "message": {
           "text": message
         }
+
       }
     }, (error, response, body) => {
       if (error) {
