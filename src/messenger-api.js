@@ -40,8 +40,6 @@ export class MessengerApi {
       } else {
         console.log('Message sent successfully');
       }
-      console.log(response)
-      console.log(body)
     })
   }
 }

@@ -46,7 +46,6 @@ app.post('/webhook', (req: any, res: any) => {
       }
       console.log(webhook_event);
       MessengerApi.getInstance().sendTextMessage(webhook_event.sender.id, 'Message received');
-      error
     });
 
     // Returns a '200 OK' response to all requests
