@@ -29,14 +29,16 @@ app.post('/webhook', (req: any, res: any) => {
       // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
 
-	  // Ignore extraneous messages sent with nlp analysis for now
-      if (!webhook_event['message']['nlp']) {
+	console.log(webhook_event);
+
+	// Ignore extraneous messages sent with nlp analysis for now
+      if (webhook_event && !webhook_event['message']['nlp']) {
             let user_id = webhook_event['sender']['id'];
             let message_command = webhook_event['message']['text'].toLowerCase();
 
             // Decides which command to run from user request
             switch(message_command) {
-                  case "start":
+            	case "start":
                         Commands.startConversation(user_id);
                         break;
                   default:

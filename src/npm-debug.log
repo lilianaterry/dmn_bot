@@ -1,0 +1,149 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ec2-user/.nvm/versions/node/v4.4.5/bin/node',
+1 verbose cli   '/home/ec2-user/.nvm/versions/node/v4.4.5/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'n',
+1 verbose cli   '4.5.0' ]
+2 info using npm@2.15.5
+3 info using node@v4.4.5
+4 verbose install initial load of /home/ec2-user/.nvm/versions/node/v4.4.5/lib/package.json
+5 verbose readDependencies loading dependencies from /home/ec2-user/.nvm/versions/node/v4.4.5/lib/package.json
+6 silly cache add args [ 'n', null ]
+7 verbose cache add spec n
+8 silly cache add args [ '4.5.0', null ]
+9 verbose cache add spec 4.5.0
+10 silly cache add parsed spec Result {
+10 silly cache add   raw: 'n',
+10 silly cache add   scope: null,
+10 silly cache add   name: 'n',
+10 silly cache add   rawSpec: '',
+10 silly cache add   spec: 'latest',
+10 silly cache add   type: 'tag' }
+11 silly addNamed n@latest
+12 verbose addNamed "latest" is being treated as a dist-tag for n
+13 info addNameTag [ 'n', 'latest' ]
+14 silly mapToRegistry name n
+15 silly mapToRegistry using default registry
+16 silly mapToRegistry registry https://registry.npmjs.org/
+17 silly mapToRegistry data Result {
+17 silly mapToRegistry   raw: 'n',
+17 silly mapToRegistry   scope: null,
+17 silly mapToRegistry   name: 'n',
+17 silly mapToRegistry   rawSpec: '',
+17 silly mapToRegistry   spec: 'latest',
+17 silly mapToRegistry   type: 'tag' }
+18 silly mapToRegistry uri https://registry.npmjs.org/n
+19 verbose addNameTag registry:https://registry.npmjs.org/n not in flight; fetching
+20 silly cache add parsed spec Result {
+20 silly cache add   raw: '4.5.0',
+20 silly cache add   scope: null,
+20 silly cache add   name: '4.5.0',
+20 silly cache add   rawSpec: '',
+20 silly cache add   spec: 'latest',
+20 silly cache add   type: 'tag' }
+21 silly addNamed 4.5.0@latest
+22 verbose addNamed "latest" is being treated as a dist-tag for 4.5.0
+23 info addNameTag [ '4.5.0', 'latest' ]
+24 silly mapToRegistry name 4.5.0
+25 silly mapToRegistry using default registry
+26 silly mapToRegistry registry https://registry.npmjs.org/
+27 silly mapToRegistry data Result {
+27 silly mapToRegistry   raw: '4.5.0',
+27 silly mapToRegistry   scope: null,
+27 silly mapToRegistry   name: '4.5.0',
+27 silly mapToRegistry   rawSpec: '',
+27 silly mapToRegistry   spec: 'latest',
+27 silly mapToRegistry   type: 'tag' }
+28 silly mapToRegistry uri https://registry.npmjs.org/4.5.0
+29 verbose addNameTag registry:https://registry.npmjs.org/4.5.0 not in flight; fetching
+30 verbose request uri https://registry.npmjs.org/n
+31 verbose request no auth needed
+32 info attempt registry request try #1 at 10:06:19 PM
+33 verbose request id a3a32cf7939c6d26
+34 verbose etag W/"794fec4ca3d45c86a55b552d4a0e3ec8"
+35 verbose lastModified Fri, 03 Aug 2018 00:36:01 GMT
+36 http request GET https://registry.npmjs.org/n
+37 verbose request uri https://registry.npmjs.org/4.5.0
+38 verbose request no auth needed
+39 info attempt registry request try #1 at 10:06:19 PM
+40 verbose etag W/"c65adb1f90962592a71b0c8ae36eae26"
+41 verbose lastModified Sat, 26 May 2018 14:10:16 GMT
+42 http request GET https://registry.npmjs.org/4.5.0
+43 http 304 https://registry.npmjs.org/n
+44 verbose headers { date: 'Sun, 14 Oct 2018 22:06:20 GMT',
+44 verbose headers   connection: 'keep-alive',
+44 verbose headers   'set-cookie': [ '__cfduid=d8b1e665d7625c086b5ef350a10fb1ac51539554780; expires=Mon, 14-Oct-19 22:06:20 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+44 verbose headers   'cf-cache-status': 'HIT',
+44 verbose headers   'cache-control': 'max-age=300',
+44 verbose headers   'cf-ray': '469d5a3f0bc923ea-IAD',
+44 verbose headers   etag: '"794fec4ca3d45c86a55b552d4a0e3ec8"',
+44 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+44 verbose headers   'last-modified': 'Fri, 03 Aug 2018 00:36:01 GMT',
+44 verbose headers   vary: 'accept-encoding, accept',
+44 verbose headers   server: 'cloudflare' }
+45 silly get cb [ 304,
+45 silly get   { date: 'Sun, 14 Oct 2018 22:06:20 GMT',
+45 silly get     connection: 'keep-alive',
+45 silly get     'set-cookie': [ '__cfduid=d8b1e665d7625c086b5ef350a10fb1ac51539554780; expires=Mon, 14-Oct-19 22:06:20 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+45 silly get     'cf-cache-status': 'HIT',
+45 silly get     'cache-control': 'max-age=300',
+45 silly get     'cf-ray': '469d5a3f0bc923ea-IAD',
+45 silly get     etag: '"794fec4ca3d45c86a55b552d4a0e3ec8"',
+45 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+45 silly get     'last-modified': 'Fri, 03 Aug 2018 00:36:01 GMT',
+45 silly get     vary: 'accept-encoding, accept',
+45 silly get     server: 'cloudflare' } ]
+46 verbose etag https://registry.npmjs.org/n from cache
+47 verbose get saving n to /home/ec2-user/.npm/registry.npmjs.org/n/.cache.json
+48 verbose correctMkdir /home/ec2-user/.npm correctMkdir not in flight; initializing
+49 http 304 https://registry.npmjs.org/4.5.0
+50 verbose headers { date: 'Sun, 14 Oct 2018 22:06:20 GMT',
+50 verbose headers   connection: 'keep-alive',
+50 verbose headers   'set-cookie': [ '__cfduid=df4bb8595544a1bdc14cacdc7807284e11539554780; expires=Mon, 14-Oct-19 22:06:20 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+50 verbose headers   'cf-cache-status': 'HIT',
+50 verbose headers   'cache-control': 'max-age=300',
+50 verbose headers   'cf-ray': '469d5a3f0d3a9f78-IAD',
+50 verbose headers   etag: '"c65adb1f90962592a71b0c8ae36eae26"',
+50 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+50 verbose headers   'last-modified': 'Sat, 26 May 2018 14:10:16 GMT',
+50 verbose headers   vary: 'accept-encoding, accept',
+50 verbose headers   server: 'cloudflare' }
+51 silly get cb [ 304,
+51 silly get   { date: 'Sun, 14 Oct 2018 22:06:20 GMT',
+51 silly get     connection: 'keep-alive',
+51 silly get     'set-cookie': [ '__cfduid=df4bb8595544a1bdc14cacdc7807284e11539554780; expires=Mon, 14-Oct-19 22:06:20 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+51 silly get     'cf-cache-status': 'HIT',
+51 silly get     'cache-control': 'max-age=300',
+51 silly get     'cf-ray': '469d5a3f0d3a9f78-IAD',
+51 silly get     etag: '"c65adb1f90962592a71b0c8ae36eae26"',
+51 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+51 silly get     'last-modified': 'Sat, 26 May 2018 14:10:16 GMT',
+51 silly get     vary: 'accept-encoding, accept',
+51 silly get     server: 'cloudflare' } ]
+52 verbose etag https://registry.npmjs.org/4.5.0 from cache
+53 verbose get saving 4.5.0 to /home/ec2-user/.npm/registry.npmjs.org/4.5.0/.cache.json
+54 verbose correctMkdir /home/ec2-user/.npm correctMkdir already in flight; waiting
+55 silly addNameTag next cb for n with tag latest
+56 silly addNamed n@2.1.12
+57 verbose addNamed "2.1.12" is a plain semver version for n
+58 silly addNameTag next cb for 4.5.0 with tag latest
+59 verbose stack TypeError: Cannot convert undefined or null to object
+59 verbose stack     at Function.keys (native)
+59 verbose stack     at installTargetsError (/home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/add-named.js:273:24)
+59 verbose stack     at next (/home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/add-named.js:94:10)
+59 verbose stack     at RES (/home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/node_modules/inflight/inflight.js:23:14)
+59 verbose stack     at f (/home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/node_modules/once/once.js:17:25)
+59 verbose stack     at fixName (/home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/add-named.js:29:5)
+59 verbose stack     at saved (/home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/cache/caching-client.js:173:7)
+59 verbose stack     at /home/ec2-user/.nvm/versions/node/v4.4.5/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+59 verbose stack     at FSReqWrap.oncomplete (fs.js:82:15)
+60 verbose cwd /home/ec2-user/dmn_bot/src
+61 error Linux 4.14.62-65.117.amzn1.x86_64
+62 error argv "/home/ec2-user/.nvm/versions/node/v4.4.5/bin/node" "/home/ec2-user/.nvm/versions/node/v4.4.5/bin/npm" "install" "-g" "n" "4.5.0"
+63 error node v4.4.5
+64 error npm  v2.15.5
+65 error Cannot convert undefined or null to object
+66 error If you need help, you may report this error at:
+66 error     <https://github.com/npm/npm/issues>
+67 verbose exit [ 1, true ]

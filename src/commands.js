@@ -11,7 +11,8 @@ export class Commands {
 		// ask about frequency
 		// save responses with id in dynamo table 
 		console.log("start conversation!");
-		// Database.addUser(user_id);
+		var users = new Database("dmn_users");
+		users.addUser(user_id);
 	}
 
 	static endConversation(user_id: string) {
