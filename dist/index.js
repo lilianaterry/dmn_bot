@@ -1,19 +1,21 @@
 'use strict';
 
-import { MessengerApi } from "./messenger-api";
+var _messengerApi = require('./messenger-api');
 
 // Imports dependencies and set up http server
-const express = require('express'),
-      bodyParser = require('body-parser'),
-      app = express().use(bodyParser.json()); // creates express http server
+var express = require('express'),
+    bodyParser = require('body-parser'),
+    app = express().use(bodyParser.json()); // creates express http server
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 8000, () => console.log('Listening for requests from Messenger'));
+app.listen(process.env.PORT || 8000, function () {
+  return console.log('Listening for requests from Messenger');
+});
 
 // Creates the endpoint for our webhook
-app.post('/webhook', (req, res) => {
+app.post('/webhook', function (req, res) {
 
-  let body = req.body;
+  var body = req.body;
 
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
@@ -23,9 +25,9 @@ app.post('/webhook', (req, res) => {
 
       // Gets the message. entry.messaging is an array, but
       // will only ever contain one message, so we get index 0
-      let webhook_event = entry.messaging[0];
+      var webhook_event = entry.messaging[0];
       console.log(webhook_event);
-      MessengerApi.getInstance().sendTextMessage(webhook_event.psid, 'Message received');
+      _messengerApi.MessengerApi.getInstance().sendTextMessage(webhook_event.psid, 'Message received');
     });
 
     // Returns a '200 OK' response to all requests
@@ -37,15 +39,15 @@ app.post('/webhook', (req, res) => {
 });
 
 // Adds support for GET requests to our webhook
-app.get('/webhook', (req, res) => {
+app.get('/webhook', function (req, res) {
   console.log('Received webhook GET request');
   // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = "zV3zVSZoCm";
+  var VERIFY_TOKEN = "zV3zVSZoCm";
 
   // Parse the query params
-  let mode = req.query['hub.mode'];
-  let token = req.query['hub.verify_token'];
-  let challenge = req.query['hub.challenge'];
+  var mode = req.query['hub.mode'];
+  var token = req.query['hub.verify_token'];
+  var challenge = req.query['hub.challenge'];
 
   // Checks if a token and mode is in the query string of the request
   if (mode && token) {
@@ -63,6 +65,6 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-app.get('/heartbeat', (req, res) => {
+app.get('/heartbeat', function (req, res) {
   res.send('Server heartbeat success');
 });
