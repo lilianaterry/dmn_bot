@@ -3,29 +3,24 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Commands = void 0;
+exports.startConversation = startConversation;
+exports.endConversation = endConversation;
 
-var _table_operations = require("./table_operations");
+var _tableOperations = _interopRequireDefault(require("./table-operations"));
 
-class Commands {
-  constructor() {// TODO
-  }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  static startConversation(user_id) {
-    // save user to dynamo table
-    // prompt them for subscription suggestions
-    // ask about frequency
-    // save responses with id in dynamo table 
-    console.log("start conversation!");
-    var users = new _table_operations.Database("dmn_users");
-    users.addUser(user_id);
-  }
-
-  static endConversation(user_id) {// reprompt to make sure they wish to leave
-    // remove all entries from dynamo table
-    // send goodbye message
-  }
-
+function startConversation(userId) {
+  // save user to dynamo table
+  // prompt them for subscription suggestions
+  // ask about frequency
+  // save responses with id in dynamo table
+  console.log('start conversation!');
+  const users = new _tableOperations.default('dmn_users');
+  users.addUser(userId);
 }
 
-exports.Commands = Commands;
+function endConversation(userId) {// reprompt to make sure they wish to leave
+  // remove all entries from dynamo table
+  // send goodbye message
+}

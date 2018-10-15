@@ -5,7 +5,7 @@
 ./src/
 
 [libs]
-.*/node_modules/.*
+node_modules/
 
 [lints]
 

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MessengerApi = void 0;
+exports.default = void 0;
 
 var request = _interopRequireWildcard(require("request"));
 
@@ -30,27 +30,24 @@ class MessengerApi {
     request.post(this.GRAPH_API_URL, {
       json: true,
       body: {
-        "messaging_type": "MESSAGE_TAG",
-        "tag": "NON_PROMOTIONAL_SUBSCRIPTION",
-        "recipient": {
-          "id": psid
+        messaging_type: 'MESSAGE_TAG',
+        tag: 'NON_PROMOTIONAL_SUBSCRIPTION',
+        recipient: {
+          id: psid
         },
-        "message": {
-          "text": message
+        message: {
+          text: message
         }
       }
-    }, (error, response, body) => {
+    }, error => {
       if (error) {
         console.error(error);
       } else {
         console.log('Message sent successfully');
       }
-
-      console.log(response);
-      console.log(body);
     });
   }
 
 }
 
-exports.MessengerApi = MessengerApi;
+exports.default = MessengerApi;
