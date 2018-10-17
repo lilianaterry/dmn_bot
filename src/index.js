@@ -24,7 +24,7 @@ app.post('/webhook', (req: any, res: any) => {
       // will only ever contain one message, so we get index 0
       const webhookEvent = entry.messaging[0];
 
-      console.log(webhookEvent);
+      console.log(JSON.stringify(webhookEvent, null, 2));
 
       // Ignore extraneous messages sent with nlp analysis for now
       if (webhookEvent && !webhookEvent.message.nlp) {
@@ -39,9 +39,7 @@ app.post('/webhook', (req: any, res: any) => {
           default:
             console.log('Sorry that command was not found');
         }
-        console.log(webhookEvent);
       }
-      console.log(webhookEvent);
       MessengerApi.getInstance().sendTextMessage(webhookEvent.sender.id, 'Message received');
     });
 
