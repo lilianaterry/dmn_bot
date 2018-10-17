@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import MessengerApi from './messenger-api';
 import * as Commands from './commands';
 
@@ -27,7 +28,7 @@ app.post('/webhook', (req: any, res: any) => {
       console.log(JSON.stringify(webhookEvent, null, 2));
 
       // Ignore extraneous messages sent with nlp analysis for now
-      if (webhookEvent && !webhookEvent.message.nlp) {
+      if (!_.get(webhookEvent, 'message.nlp')) {
         const userId = webhookEvent.sender.id;
         const messageCommand = webhookEvent.message.text.toLowerCase();
 
@@ -39,8 +40,16 @@ app.post('/webhook', (req: any, res: any) => {
           default:
             console.log('Sorry that command was not found');
         }
+
+        MessengerApi.getInstance().sendTextMessage(webhookEvent.sender.id, 'Message received');
+        console.log('Uploading image');
+        MessengerApi.getInstance().uploadImageAttachment(`${__dirname}/../test.jpg`, 'test.jpg', 'image/jpg')
+          .then((attachmentId) => {
+            // console.log(`Attachment id: ${attachmentId}`);
+            console.log('Sending attachment with id');
+            MessengerApi.getInstance().sendImageAttachmentWithId(webhookEvent.sender.id, attachmentId);
+          });
       }
-      MessengerApi.getInstance().sendTextMessage(webhookEvent.sender.id, 'Message received');
     });
 
     // Returns a '200 OK' response to all requests

@@ -15,7 +15,10 @@
     "aws-sdk": "^2.334.0",
     "body-parser": "latest",
     "express": "^4.16.3",
-    "request": "^2.88.0"
+    "lodash": "^4.17.11",
+    "lomath": "^0.3.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "@babel/cli": "latest",
