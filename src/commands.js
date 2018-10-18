@@ -5,9 +5,8 @@ export function startConversation(userId: string) {
   // prompt them for subscription suggestions
   // ask about frequency
   // save responses with id in dynamo table
-  console.log('start conversation!');
   const users = new Database('dmn_users');
-  users.addUser(userId);
+  users.addNewUser(userId);
 }
 
 export function endConversation(userId: string) {

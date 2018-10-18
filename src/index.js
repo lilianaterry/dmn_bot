@@ -25,31 +25,37 @@ app.post('/webhook', (req: any, res: any) => {
       // will only ever contain one message, so we get index 0
       const webhookEvent = entry.messaging[0];
 
+			console.log("*******WEBHOOT EVENT RECEIVED:");
       console.log(JSON.stringify(webhookEvent, null, 2));
 
       // Ignore extraneous messages sent with nlp analysis for now
-      if (!_.get(webhookEvent, 'message.nlp')) {
+      if (webhookEvent && !_.get(webhookEvent, 'message.nlp') && _.get(webhookEvent, "message")) {
         const userId = webhookEvent.sender.id;
-        const messageCommand = webhookEvent.message.text.toLowerCase();
+				
+				// user sent a text message
+				if (webhookEvent.message.text) {
+        	const messageCommand = webhookEvent.message.text.toLowerCase();
 
-        // Decides which command to run from user request
-        switch (messageCommand) {
-          case 'start':
-            Commands.startConversation(userId);
-            break;
-          default:
-            console.log('Sorry that command was not found');
-        }
+        	// Decides which command to run from user request
+        	switch (messageCommand) {
+          	case 'start':
+            	Commands.startConversation(userId);
+            	break;
+          	default:
+            	console.log('Sorry that command was not found');
+        	}
 
-        MessengerApi.getInstance().sendTextMessage(webhookEvent.sender.id, 'Message received');
-        console.log('Uploading image');
-        MessengerApi.getInstance().uploadImageAttachment(`${__dirname}/../test.jpg`, 'test.jpg', 'image/jpg')
+        	MessengerApi.getInstance().sendTextMessage(webhookEvent.sender.id, 'Message received');
+        	/* MessengerApi.getInstance().uploadImageAttachment(`${__dirname}/../test.jpg`, 'test.jpg', 'image/jpg')
           .then((attachmentId) => {
             // console.log(`Attachment id: ${attachmentId}`);
             console.log('Sending attachment with id');
             MessengerApi.getInstance().sendImageAttachmentWithId(webhookEvent.sender.id, attachmentId);
-          });
-      }
+          }); */
+      	} else {
+					console.log("No text found. WebhookEvent: \n" + webhookEvent);
+				}
+			}
     });
 
     // Returns a '200 OK' response to all requests

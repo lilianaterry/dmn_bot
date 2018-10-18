@@ -14,21 +14,32 @@ export default class Database {
     this.docClient = new AWS.DynamoDB.DocumentClient();
   }
 
-  addUser(userId: string) {
+	// add new user id to general list of all subscribers
+  addNewUser(userId: string) {
     const params = {
       TableName: this.table,
       Item: {
-        userId,
+        user_id: userId,
         preferences: null,
       },
     };
-    console.log('Adding a new user...');
-    this.docClient.put(params, (err, data) => {
+    
+		this.docClient.put(params, (err, data) => {
       if (err) {
         console.error('Unable to add item. Error JSON:', JSON.stringify(err, null, 2));
-      } else {
-        console.log('Added item:', JSON.stringify(data, null, 2));
       }
     });
   }
+
+	// TODO
+	addUserSubscription() {
+
+
+	}
+
+	// TODO
+	addUserPreferences() {
+
+
+	}
 }

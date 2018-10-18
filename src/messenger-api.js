@@ -7,6 +7,7 @@ export default class MessengerApi {
 
   constructor() {
     if (!process.env.MESSENGER_KEY) {
+			console.log("process env: " + process.env);
       throw new Error('MESSENGER_KEY environment variable not set.');
     }
 
