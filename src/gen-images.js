@@ -1,34 +1,32 @@
-var Canvas = require('canvas')
-  , Image = Canvas.Image
-  , canvas = new Canvas(2000, 2000)
-  , ctx = canvas.getContext('2d');
+import * as fs from 'fs';
 
-var fs = require('fs');
-var stream = canvas.pngStream();
-var score1 = '25';
-var score2 = '30';
-var scoreText = score1 + "  -  " + score2;
+const uuid = require('uuid/v4');
+const Canvas = require('canvas');
 
-ctx.font = '30px Impact';
-var totalLen = ctx.measureText(scoreText);
+export default class ImageGenerator {
+  constructor(width: number, height: number) {
+    this.canvas = new Canvas(width, height);
+    this.ctx = this.canvas.getContext('2d');
+  }
 
-var scoreX = 1000 - (totalLen / 2);
-var scoreY = 100;
+  write(directory: string): Promise {
+    return new Promise((resolve, reject) => {
+      const pngBuffer = this.canvas.toBuffer();
+      const id = uuid();
+      const writeStream = fs.createWriteStream(`${directory}/${id}.png`);
+      writeStream.end(pngBuffer, () => {
+        resolve(`${id}.png`);
+      });
 
-ctx.fillText(scoreText, scoreX, scoreY);
-fs.writeFile('out.png', canvas.toBuffer());
+      writeStream.on('error', () => {
+        reject(new Error('Something went wrong while writing the image.'));
+      });
+    });
+  }
 
-/*
-export default class GenImage {
-
-	constructor(team1: string, team2: string, team1_score: string, team2_score: string) {
-		this.team1 = team1;
-		this.team2 = team2;
-		this.team1_score = team1_score;
-		this.team2_score = team2_score;
-	}
-	ctx.font = '300px Impact';
-	ctx.fillText("Hello World", 500, 500);
-	fs.writeFile('out.png', canvas.toBuffer());
+  genImage(): ImageGenerator {
+    this.ctx.font = '300px Impact';
+    this.ctx.fillText('Hello World', 500, 500);
+    return this;
+  }
 }
- */

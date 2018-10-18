@@ -7,7 +7,7 @@ export default class MessengerApi {
 
   constructor() {
     if (!process.env.MESSENGER_KEY) {
-			console.log("process env: " + process.env);
+      console.log(`process env: ${process.env}`);
       throw new Error('MESSENGER_KEY environment variable not set.');
     }
 
@@ -35,7 +35,7 @@ export default class MessengerApi {
           text: message,
         },
       },
-    }).then((body) => {
+    }).then(() => {
       console.log('Message sent successfully');
       // console.log(JSON.stringify(body, null, 4));
     }).catch((error) => {
@@ -114,7 +114,7 @@ export default class MessengerApi {
     });
   }
 
-  uploadImageAttachment(filepath, filename, filetype) {
+  uploadImageAttachment(filepath) {
     const formData = {
       message: JSON.stringify({
         attachment: {
@@ -124,13 +124,7 @@ export default class MessengerApi {
           },
         },
       }),
-      filedata: {
-        value: fs.createReadStream(filepath),
-        options: {
-          filename,
-          contentType: filetype,
-        },
-      },
+      filedata: fs.createReadStream(filepath),
     };
 
     return request.post(this.ATTACHMENTS_API, {
