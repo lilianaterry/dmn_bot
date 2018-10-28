@@ -160,9 +160,3 @@ function generateCard(finalScore,
 
 generateCard(false, "Burges", "Lake Highlands", "40", "35", "BurgesHS_Logo.png", "LakeHighland.png", "10:58", "3rd", "Burges");
 
-
-
-
-
-
-

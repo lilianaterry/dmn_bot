@@ -1,6 +1,9 @@
 [ignore]
 .*/node_modules/.*
 
+[untyped]
+.*/node_modules/.*
+
 [include]
 ./src/
 
