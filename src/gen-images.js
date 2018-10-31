@@ -104,12 +104,16 @@ function teamSection(team1, team2, team1Score, team2Score, team1URI, team2URI, p
 
 	// images
 	var team1Img = new Image();
+	team1Img.onload = () => {	
+		graphics.drawImage(team1Img, padding, 90, 50, 50);
+	}
 	team1Img.src = team1URI;
+	
 	var team2Img = new Image();
+	team2Img.onload = () => {
+		graphics.drawImage(team2Img, padding, 200, 50, 50);
+	}
 	team2Img.src = team2URI;
-
-	graphics.drawImage(team1Img, padding, 90, 50, 50);
-	graphics.drawImage(team2Img, padding, 200, 50, 50);
 }
 
 function drawPossessionTriangle(possession, team1, team2) {
