@@ -29,7 +29,7 @@ app.post('/webhook', (req: any, res: any) => {
       // will only ever contain one message, so we get index 0
       const webhookEvent = entry.messaging[0];
 
-      console.log('*******WEBHOOK EVENT RECEIVED:');
+      console.log('*** WEBHOOK EVENT RECEIVED ***:');
       console.log(JSON.stringify(webhookEvent, null, 2));
 
       // Ignore extraneous messages sent with nlp analysis for now
@@ -50,8 +50,8 @@ app.post('/webhook', (req: any, res: any) => {
           }
 
           MessengerApi.getInstance().sendTextMessage(webhookEvent.sender.id, 'Message received');
-          console.log('Uploading image');
-          const imageGenerator = new ImageGenerator(2000, 2000);
+/*          console.log('Uploading image');
+         const imageGenerator = new ImageGenerator(2000, 2000);
           const directory = __dirname;
           imageGenerator.genImage().write(directory)
             .then((imageFilename) => {
@@ -66,7 +66,7 @@ app.post('/webhook', (req: any, res: any) => {
                 });
             }).catch((error) => {
               console.error(error);
-            });
+            });*/
         } else {
           console.log(`No text found. WebhookEvent: \n${JSON.stringify(webhookEvent, null, 4)}`);
         }

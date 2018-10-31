@@ -20,7 +20,8 @@ export default class Database {
       TableName: this.table,
       Item: {
         user_id: userId,
-        preferences: null
+        preferences: null, 
+				message_state: 0
       },
     };
     
@@ -62,8 +63,6 @@ export default class Database {
       if (err) console.log(err);
       else console.log(data);
     });
-
-    console.log("Response item from get: " + response);
   }
 
 /**
@@ -72,7 +71,7 @@ export default class Database {
  * @param {int} userState 
  */
   setUserFlowState(userId, userState) {     
-    var params = {
+		var params = {
             TableName:this.table,
             Key: {
                 user_id : userId
@@ -83,7 +82,9 @@ export default class Database {
             },
             ReturnValues:"UPDATED_NEW"
         };
-     
-    this.docClient.update(params,callback);
+    this.docClient.update(params, function(err, data) {
+			if (err) console.log(err);
+			else console.log(data);
+		});	
   }
 }
