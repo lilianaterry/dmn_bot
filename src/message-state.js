@@ -1,6 +1,5 @@
 
 export default class MessengerState {
-	
 	/*
 		outputText: 
 		parseText: function;
@@ -13,10 +12,10 @@ export default class MessengerState {
 		this.stateNumber = stateNumber;
 	}
 
-	getStateNumber() {
+	get stateNumber() {
 		return this.stateNumber;
 	}
-}
+};
 // Called in Flow Constructor
 // var stateNumber = 0;
 // var outputTextFunc = ( teamName ) => {return "Go {teamname}!"};

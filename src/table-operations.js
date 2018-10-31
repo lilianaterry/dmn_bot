@@ -1,11 +1,8 @@
 import * as AWS from 'aws-sdk';
 
 export default class Database {
-  table: string;
 
-  docClient: any;
-
-  constructor(tableName: string) {
+  constructor(tableName) {
     AWS.config.update({
       region: 'us-east-1',
     });
@@ -15,7 +12,7 @@ export default class Database {
   }
 
 	// add new user id to general list of all subscribers
-  addNewUser(userId: string) {
+  addNewUser(userId) {
     const params = {
       TableName: this.table,
       Item: {
@@ -32,14 +29,27 @@ export default class Database {
   }
 
 	// TODO
-	addUserSubscription() {
-
+	setUserSubscriptions(userId) {
 
 	}
 
 	// TODO
-	addUserPreferences() {
+	setUserPreferences(userId) {
 
+  }
 
-	}
+  // TODO
+  getUser(userId) {
+
+  }
+
+  // TODO
+  getUserFlowState(userId) {
+
+  }
+
+  // TODO
+  setUserFlowState(userId, userState) {
+    
+  }
 }
