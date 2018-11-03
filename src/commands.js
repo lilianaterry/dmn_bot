@@ -1,6 +1,6 @@
 import Database from './table-operations';
 
-export function startConversation(userId) {
+export function startConversation(userId: number) {
   // save user to dynamo table
   // prompt them for subscription suggestions
   // ask about frequency
@@ -9,7 +9,7 @@ export function startConversation(userId) {
   users.addNewUser(userId);
 }
 
-export function endConversation(userId) {
+export function endConversation(userId: number) {
   // reprompt to make sure they wish to leave
   // remove all entries from dynamo table
   // send goodbye message

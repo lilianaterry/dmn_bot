@@ -1,4 +1,4 @@
-import * as Intents from './intent-handlers';
+import { Intents, welcomeUser } from './intent-handlers';
 
 // Imports dependencies and set up http server
 const express = require('express');
@@ -18,8 +18,8 @@ app.post('/webhook', (req: any, res: any) => {
   const sessionId = req.body.session;
 
   switch (intent) {
-    case 'Welcome Intent':
-      return res.json(Intents.enrollUser(sessionId));
+    case Intents.WelcomeIntent:
+      return res.json(welcomeUser(sessionId));
 
     default:
       return res.json({ source: 'pressbot.com' });

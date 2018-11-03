@@ -1,5 +1,16 @@
 import Database from './table-operations';
+import { messages } from './strings';
 
+const Intents = {
+  WelcomeIntent: 'Welcome',
+  AddTeamSubscriptionIntent: 'Add Team Subscription',
+};
+
+const Events = {
+  AddTeamSubscriptionEvent: 'ADD-TEAM-SUBSCRIPTION',
+};
+
+export { Intents, Events };
 
 function generateResult(text) {
   return {
@@ -38,4 +49,19 @@ export function verifySchool(sessionId, schoolName) {
 
 export function addTeamSubscription() {
 
+}
+
+export function welcomeUser(userId: number) {
+  return {
+    source: 'pressbotbox.com',
+    payload: {
+      facebook: {
+        text: messages.welcome_message,
+      },
+      followupEventInput: {
+        name: Events.AddTeamSubscriptionEvent,
+        languageCode: 'en-US',
+      },
+    },
+  };
 }
