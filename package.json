@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "actions-on-google": "^2.4.1",
     "aws-sdk": "^2.334.0",
     "body-parser": "latest",
     "canvas": "^1.6.13",
