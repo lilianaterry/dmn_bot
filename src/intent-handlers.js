@@ -1,9 +1,11 @@
+import * as _ from 'lodash';
 import Database from './table-operations';
 import { messages } from './strings';
 
 const Intents = {
   WelcomeIntent: 'Welcome',
   AddTeamSubscriptionIntent: 'Add Team Subscription',
+  InvalidTeamProvided: 'InvalidTeamProvided',
 };
 
 const Events = {
@@ -23,27 +25,27 @@ function generateResult(text) {
   };
 }
 
-export function verifySchool(sessionId, schoolName) {
-  const validContext = 'team-is-valid';
-  const invalidContext = 'team-not-valid';
-  let returnContext;
+function generateContext(name: string, lifespan: number, session: string) {
+  return {
+    name: `projects/pressbot-80cf8/agent/sessions/${session}/contexts/${name}`,
+    lifespanCount: lifespan,
+    parameters: {},
+  };
+}
 
-  if (schoolName === 'Klein Oak') {
-    returnContext = validContext;
-  } else {
-    returnContext = invalidContext;
+export function handleInvalidTeam(queryResult: any) {
+  return _.find(queryResult.outputContext, o => !(o.name.contains('invalid-team') || o.name.contains('generic')));
+}
+
+export function verifySchool(sessionId, schoolName, maintainContext) {
+  const contexts = [maintainContext];
+
+  if (schoolName !== 'Klein Oak') {
+    contexts.push(generateContext('invalid-team', 1, sessionId));
   }
 
   return {
-    outputContexts: [
-      {
-        name: `projects/pressbot-80cf8/agent/sessions/${sessionId}/contexts/${returnContext}`,
-        lifespanCount: 5,
-        parameters: {
-          param: 'none',
-        },
-      },
-    ],
+    outputContexts: contexts,
   };
 }
 
