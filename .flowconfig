@@ -1,14 +1,12 @@
 [ignore]
-.*/node_modules/.*
-
-[untyped]
-.*/node_modules/.*
+.*/dist/.*
+.*/node_modules/
 
 [include]
 ./src/
 
 [libs]
-node_modules/
+./flow-typed
 
 [lints]
 
@@ -16,3 +14,6 @@ node_modules/
 all=true
 
 [strict]
+
+[untyped]
+.*/node_modules/

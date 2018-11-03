@@ -5,6 +5,8 @@
         "flowtype"
     ],
     "rules": {
-        "no-console":"off"
+        "no-console":"off",
+        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "lines-between-class-members": ["error", "always", {"exceptAfterSingleLine": true}]
     }
 }

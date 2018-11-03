@@ -1,166 +1,166 @@
-var Canvas = require('canvas')
-  , Image = Canvas.Image
-  , canvas = Canvas.createCanvas(480, 280)
-  , graphics = canvas.getContext('2d');
-const fs = require('fs');
+import uuid from 'uuid/v4';
+import * as fs from 'fs';
 
-function drawBorders() {
-	var topBarHeight = 60;
-	var width = canvas.width;
-	var height = canvas.height;
-	
-	// top
-	drawLine(0, 1, width, 1);
+const Canvas = require('canvas');
 
-	// left
-	drawLine(1, 0, 1, height);
+const { Image } = Canvas;
 
-	// bottom
-	drawLine(0, height - 1, width, height - 1);
+export default class ScorecardGenerator {
+  canvas: Canvas;
+  graphics: any;
+  outputPath: string;
 
-	// right
-	drawLine(width - 1, 0, width - 1, height);
+  constructor() {
+    const width = 960;
+    const height = 560;
+    this.canvas = Canvas.createCanvas(width, height);
+    this.graphics = this.canvas.getContext('2d');
+    this.graphics.quality = 'best';
+    this.graphics.antialias = 'subpixel';
+    this.outputPath = `${__dirname}/${uuid()}.png`;
+  }
 
-	// bottom of header section 
-	drawLine(0, topBarHeight, width, topBarHeight);
+  generate(
+    finalScore: boolean,
+    home: string,
+    away: string,
+    homeScore: string,
+    awayScore: string,
+    homeURI: string,
+    awayURI: string,
+    time: string,
+    quarter: string,
+    possession: 'home' | 'away',
+  ) {
+  // set background to white
+    this.graphics.fillStyle = 'white';
+    this.graphics.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this._drawBorders();
+    this._topBar(finalScore, time, quarter);
+    this._teamSection(home, away, homeScore, awayScore, homeURI, awayURI, 30, finalScore);
+
+    if (!finalScore) {
+      this._drawPossessionTriangle(possession);
+    }
+
+    fs.writeFileSync(this.outputPath, this.canvas.toBuffer());
+    return this.outputPath;
+  }
+
+  cleanup() {
+    fs.unlinkSync(this.outputPath);
+  }
+
+  _drawLine(startX: number, startY: number, endX: number, endY: number) {
+    this.graphics.beginPath();
+    this.graphics.strokeStyle = '#cbccce';
+    this.graphics.lineWidth = 4;
+    this.graphics.moveTo(startX, startY);
+    this.graphics.lineTo(endX, endY);
+    this.graphics.stroke();
+    this.graphics.closePath();
+  }
+
+  _drawBorders() {
+    const topBarHeight = 120;
+    const { width } = this.canvas;
+    this._drawLine(0, topBarHeight, width, topBarHeight); // bottom of header section
+  }
+
+  _topBar(finalScore: boolean, time: string, quarter: string) {
+    const topPadding = 40;
+    const sidePadding = 60;
+    const fontSize = 40;
+
+    this.graphics.fillStyle = '#6c6d6f';
+    this.graphics.font = `${fontSize}pt arial`;
+    const y = topPadding + fontSize;
+
+    let text;
+    let x;
+    if (finalScore) {
+      text = 'FINAL';
+      x = sidePadding;
+    } else {
+      text = `${time} - ${quarter}`;
+      x = this.canvas.width - this.graphics.measureText(text).width - sidePadding;
+    }
+
+    this.graphics.fillText(text, x, y);
+  }
+
+  _teamSection(
+    home: string,
+    away: string,
+    homeScore: string,
+    awayScore: string,
+    homeURI: string,
+    awayURI: string,
+    padding: number,
+    finalScore: boolean,
+  ) {
+    const nameSize = 40;
+    const scoreSize = 60;
+
+    const teamNameX = 220;
+    const homeNameY = 210 + nameSize;
+    const awayNameY = 430 + nameSize;
+
+    let homeColor = '#48494a';
+    let awayColor = '#48494a';
+
+    // if this is the final score, grey one of the teams out
+    if (finalScore) {
+      const homeWins = parseInt(homeScore, 10) > parseInt(awayScore, 10);
+      if (homeWins) {
+        awayColor = '#a5a6a7';
+      } else if (!homeWins && parseInt(homeScore, 10) !== parseInt(awayScore, 10)) {
+        homeColor = '#a5a6a7';
+      }
+    }
+
+    this.graphics.font = '60pt arial';
+    const homeScoreLen = this.graphics.measureText(homeScore).width;
+    const awayScoreLen = this.graphics.measureText(awayScore).width;
+    const homeScoreX = this.canvas.width - homeScoreLen - padding;
+    const awayScoreX = this.canvas.width - awayScoreLen - padding;
+    const homeScoreY = 200 + scoreSize;
+    const awayScoreY = 420 + scoreSize;
+
+    // scores
+    this.graphics.fillStyle = homeColor;
+    this.graphics.fillText(homeScore, homeScoreX, homeScoreY);
+    this.graphics.fillStyle = awayColor;
+    this.graphics.fillText(awayScore, awayScoreX, awayScoreY);
+
+    // names
+    this.graphics.font = '40pt arial';
+    this.graphics.fillStyle = homeColor;
+    this.graphics.fillText(home, teamNameX, homeNameY);
+    this.graphics.fillStyle = awayColor;
+    this.graphics.fillText(away, teamNameX, awayNameY);
+
+    // images
+    const homeImg = new Image();
+    homeImg.src = fs.readFileSync(homeURI);
+    const awayImg = new Image();
+    awayImg.src = fs.readFileSync(awayURI);
+
+    this.graphics.drawImage(homeImg, padding, 180, 100, 100);
+    this.graphics.drawImage(awayImg, padding, 400, 100, 100);
+  }
+
+  _drawPossessionTriangle(possession: 'home' | 'away') {
+    const x = this.canvas.width - 20;
+    const y = (possession !== 'home' ? 230 : 450);
+
+    this.graphics.fillStyle = '#48494a';
+    this.graphics.beginPath();
+    this.graphics.moveTo(x, y);
+    this.graphics.lineTo(x + 20, y - 24);
+    this.graphics.lineTo(x + 20, y + 24);
+    this.graphics.fill();
+    this.graphics.closePath();
+  }
 }
-
-function drawLine(startX, startY, endX, endY) {
-	graphics.beginPath();
-	graphics.strokeStyle = "#cbccce";
-	graphics.lineWidth = 2;
-	graphics.moveTo(startX, startY);
-	graphics.lineTo(endX, endY);
-	graphics.stroke();
-	graphics.closePath();
-}
-
-function topBar(finalScore, time, quarter) {
-	var topPadding = 20;
-	var sidePadding = 30;
-	var fontSize = 20;
-
-	graphics.fillStyle = "#6c6d6f";
-	graphics.font = '20pt arial';
-	var y = topPadding + fontSize;
-
-	if (finalScore) {
-		var text = "FINAL";
-		var x = sidePadding;
-		graphics.fillText(text, x, y);
-	} else {
-		var text = time + " - " + quarter;
-		var x = canvas.width - graphics.measureText(text).width - sidePadding;
-		graphics.fillText(text, x, y);
-	}
-}
-
-function teamSection(team1, team2, team1Score, team2Score, team1URI, team2URI, padding, finalScore) {
-	var nameSize = 20;
-	var imgSize = 50;
-	var scoreSize = 30;	
-
-	var teamNameX = 110;
-	var team1NameY = 105 + nameSize;
-	var team2NameY = 215 + nameSize;
-	
-	var teamImgX = padding;
-	var team1ImgY = 75 + imgSize;
-	var team2ImgY = 185 + imgSize;
-
-	var team1Color = "#48494a";
-	var team2Color = "#48494a";
-
-	// if this is the final score, grey one of the teams out 
-	if (finalScore) {
-		var team1Wins = parseInt(team1Score, 10) > parseInt(team2Score, 10);
-		if (team1Wins) {
-			team2Color = "#a5a6a7";
-		} else if (!team1Wins && parseInt(team1Score, 10) != parseInt(team2Score, 10)) {
-			team1Color = "#a5a6a7";
-		}
-	}
-
-	graphics.font = '30pt arial';
-	var team1ScoreLen = graphics.measureText(team1Score).width;
-	var team2ScoreLen = graphics.measureText(team2Score).width;
-	var team1ScoreX = canvas.width - team1ScoreLen - padding;
-	var team2ScoreX = canvas.width - team2ScoreLen - padding;
-	var team1ScoreY = 100 + scoreSize;
-	var team2ScoreY = 210 + scoreSize; 
-
-	// scores 
-	graphics.fillStyle = team1Color;
-	graphics.fillText(team1Score, team1ScoreX, team1ScoreY);	
-	graphics.fillStyle = team2Color;
-	graphics.fillText(team2Score, team2ScoreX, team2ScoreY);
-	
-	// names
-	graphics.font = '20pt arial';
-	graphics.fillStyle = team1Color;
-	graphics.fillText(team1, teamNameX, team1NameY);
-	graphics.fillStyle = team2Color;
-	graphics.fillText(team2, teamNameX, team2NameY);
-
-	// images
-	var team1Img = new Image();
-	team1Img.onload = () => {	
-		graphics.drawImage(team1Img, padding, 90, 50, 50);
-	}
-	team1Img.src = team1URI;
-	
-	var team2Img = new Image();
-	team2Img.onload = () => {
-		graphics.drawImage(team2Img, padding, 200, 50, 50);
-	}
-	team2Img.src = team2URI;
-}
-
-function drawPossessionTriangle(possession, team1, team2) {
-	var x = canvas.width - 10;
-	var y;
-	if (possession != team1) {
-		y = 115; 
-	} else {
-		y = 225;
-	}
-	
-	graphics.fillStyle = "#48494a";
-	//graphics.strokeStyle = graphics.fillStyle;
-	graphics.beginPath();
-	graphics.moveTo(x, y);
-	graphics.lineTo(x + 10, y - 12);
-	graphics.lineTo(x + 10, y + 12);
-	graphics.fill()
-	graphics.closePath();
-
-}
-
-function generateCard(finalScore, 
-											team1, 
-											team2, 
-											team1Score, 
-											team2Score, 
-											team1URI, 
-											team2URI,
-											time,
-											quarter,
-											possession) {
-
-	// set background to white 
-	graphics.fillStyle = "white";
-	graphics.fillRect(0, 0, canvas.width, canvas.height);
-	
-	drawBorders();
-	topBar(finalScore, time, quarter);
-	teamSection(team1, team2, team1Score, team2Score, team1URI, team2URI, 30, finalScore); 
-	
-	if (!finalScore) {
-		drawPossessionTriangle(possession, team1, team2);
-	} 
-
-	fs.writeFile('out.png', canvas.toBuffer());
-}
-
-generateCard(false, "Burges", "Lake Highlands", "40", "35", "BurgesHS_Logo.png", "LakeHighland.png", "10:58", "3rd", "Burges");
-
