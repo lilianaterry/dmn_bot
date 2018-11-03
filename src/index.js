@@ -1,4 +1,6 @@
-import { Intents, welcomeUser, handleInvalidTeam } from './intent-handlers';
+import {
+  Intents, welcomeUser, handleInvalidTeam, handleUserProvidesRivalName, handleUserProvidesTeamName,
+} from './intent-handlers';
 
 // Imports dependencies and set up http server
 const express = require('express');
@@ -22,9 +24,19 @@ app.post('/webhook', (req: any, res: any) => {
     case Intents.WelcomeIntent:
       console.log('Inside welcome intent');
       return res.json(welcomeUser(sessionId));
+
+    case Intents.UserProvidesRivalName:
+      console.log('Inside user provides rival intent');
+      return res.json(handleUserProvidesRivalName(req.body.queryResult));
+
+    case Intents.UserProvidesTeamName:
+      console.log('Inside user provides team intent');
+      return res.json(handleUserProvidesTeamName(req.body.queryResult));
+
     case Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');
       return res.json(handleInvalidTeam(req.body.queryResult));
+
     default:
       return res.json({ source: 'pressbot.com' });
   }

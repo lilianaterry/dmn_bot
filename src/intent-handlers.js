@@ -2,9 +2,10 @@ import * as _ from 'lodash';
 import Database from './table-operations';
 import { messages } from './strings';
 
-const Intents = {
+export const Intents = {
   WelcomeIntent: 'Welcome',
-  AddTeamSubscriptionIntent: 'Add Team Subscription',
+  UserProvidesTeamName: 'UserProvidesTeamName',
+  UserProvidesRivalName: 'UserProvidesRivalName',
   InvalidTeamProvided: 'InvalidTeamProvided',
 };
 
@@ -12,7 +13,7 @@ const Events = {
   AddTeamSubscriptionEvent: 'ADD-TEAM-SUBSCRIPTION',
 };
 
-export { Intents, Events };
+export { Events };
 
 function generateResult(text) {
   return {
@@ -25,28 +26,56 @@ function generateResult(text) {
   };
 }
 
-function generateContext(name: string, lifespan: number, session: string) {
+function generateContext(name: string, lifespan: number, session: string, parameters: {}) {
   return {
-    name: `projects/pressbot-80cf8/agent/sessions/${session}/contexts/${name}`,
+    name: `${session}/contexts/${name}`,
     lifespanCount: lifespan,
-    parameters: {},
+    parameters,
+  };
+}
+
+export function verifySchool(sessionId:string, schoolName:string, nextContext:string|null) {
+  const contexts = [];
+  let text;
+  if (schoolName === 'Klein Oak') {
+    if (nextContext) {
+		  contexts.push(generateContext(nextContext, 1, sessionId, {}));
+    }
+    text = 'yay';
+  } else {
+    contexts.push(generateContext('invalid-team', 1, sessionId, { next: nextContext }));
+    text = 'nay';
+  }
+
+  return {
+    source: 'pressbotbox.com',
+    outputContexts: contexts,
+    payload: {
+      facebook: {
+        text,
+      },
+    },
   };
 }
 
 export function handleInvalidTeam(queryResult: any) {
-  return _.find(queryResult.outputContext, o => !(o.name.contains('invalid-team') || o.name.contains('generic')));
+  const context = _.find(queryResult.outputContext, o => !(o.name.includes('invalid-team') || o.name.includes('generic')));
+  const name = context ? _.last(context.name.split('/')) : null;
+  return verifySchool(queryResult.session, queryResult.parameters.schoolname, name);
 }
 
-export function verifySchool(sessionId, schoolName, maintainContext) {
-  const contexts = [maintainContext];
+export function handleUserProvidesTeamName(queryResult: any) {
+  const context = _.find(queryResult.outputContext, o => !(o.name.includes('generic')));
+  const name = context ? _.last(context.name.split('/')) : null;
+  console.log(JSON.stringify(context, null, 2));
+  console.log(name);
+  return verifySchool(queryResult.session, queryResult.parameters.schoolname, name);
+}
 
-  if (schoolName !== 'Klein Oak') {
-    contexts.push(generateContext('invalid-team', 1, sessionId));
-  }
-
-  return {
-    outputContexts: contexts,
-  };
+export function handleUserProvidesRivalName(queryResult: any) {
+  const context = _.find(queryResult.outputContext, o => !(o.name.includes('generic')));
+  const name = context ? _.last(context.name.split('/')) : null;
+  return verifySchool(queryResult.session, queryResult.parameters.schoolname, name);
 }
 
 export function addTeamSubscription() {
