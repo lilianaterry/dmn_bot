@@ -27,15 +27,15 @@ app.post('/webhook', (req: any, res: any) => {
 
     case Intents.UserProvidesRivalName:
       console.log('Inside user provides rival intent');
-      return res.json(handleUserProvidesRivalName(req.body.queryResult));
+      return res.json(handleUserProvidesRivalName(req.body.queryResult, req.body.session));
 
     case Intents.UserProvidesTeamName:
       console.log('Inside user provides team intent');
-      return res.json(handleUserProvidesTeamName(req.body.queryResult));
+      return res.json(handleUserProvidesTeamName(req.body.queryResult, req.body.session));
 
     case Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');
-      return res.json(handleInvalidTeam(req.body.queryResult));
+      return res.json(handleInvalidTeam(req.body.queryResult, req.body.session));
 
     default:
       return res.json({ source: 'pressbot.com' });

@@ -58,24 +58,24 @@ export function verifySchool(sessionId:string, schoolName:string, nextContext:st
   };
 }
 
-export function handleInvalidTeam(queryResult: any) {
-  const context = _.find(queryResult.outputContext, o => !(o.name.includes('invalid-team') || o.name.includes('generic')));
+export function handleInvalidTeam(queryResult: any, session: string) {
+  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('invalid-team') || o.name.includes('generic')));
   const name = context ? _.last(context.name.split('/')) : null;
-  return verifySchool(queryResult.session, queryResult.parameters.schoolname, name);
+  return verifySchool(session, queryResult.parameters.schoolname, name);
 }
 
-export function handleUserProvidesTeamName(queryResult: any) {
-  const context = _.find(queryResult.outputContext, o => !(o.name.includes('generic')));
+export function handleUserProvidesTeamName(queryResult: any, session: string) {
+  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const name = context ? _.last(context.name.split('/')) : null;
   console.log(JSON.stringify(context, null, 2));
   console.log(name);
-  return verifySchool(queryResult.session, queryResult.parameters.schoolname, name);
+  return verifySchool(session, queryResult.parameters.schoolname, name);
 }
 
-export function handleUserProvidesRivalName(queryResult: any) {
-  const context = _.find(queryResult.outputContext, o => !(o.name.includes('generic')));
+export function handleUserProvidesRivalName(queryResult: any, session: string) {
+  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const name = context ? _.last(context.name.split('/')) : null;
-  return verifySchool(queryResult.session, queryResult.parameters.schoolname, name);
+  return verifySchool(session, queryResult.parameters.schoolname, name);
 }
 
 export function addTeamSubscription() {
