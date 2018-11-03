@@ -1,21 +1,21 @@
 
 export default class MessengerState {
-	/*
-		outputText: 
+  /*
+		outputText:
 		parseText: function;
 		determineNextState: function;
 	*/
 
-	constructor(stateNumber, outputTextFunc, determineNextStateFunc) {
-		this.determineNextState = determineNextStateFunc;
-		this.outputText = outputTextFunc;
-		this.stateNumber = stateNumber;
-	}
+  //   constructor(stateNumber, outputTextFunc, determineNextStateFunc) {
+  //     this.determineNextState = determineNextStateFunc;
+  //     this.outputText = outputTextFunc;
+  //     this.stateNumber = stateNumber;
+  //   }
 
-	get stateNumber() {
-		return this.stateNumber;
-	}
-};
+  get stateNumber() {
+    return this.stateNumber;
+  }
+}
 // Called in Flow Constructor
 // var stateNumber = 0;
 // var outputTextFunc = ( teamName ) => {return "Go {teamname}!"};

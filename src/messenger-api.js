@@ -5,9 +5,12 @@ import { flattenJSON } from 'lomath';
 export default class MessengerApi {
   static instance: MessengerApi;
 
+  MESSAGES_API: string;
+
+  ATTACHMENTS_API: string;
+
   constructor() {
     if (!process.env.MESSENGER_KEY) {
-      console.log(`process env: ${process.env}`);
       throw new Error('MESSENGER_KEY environment variable not set.');
     }
 
@@ -43,7 +46,7 @@ export default class MessengerApi {
     });
   }
 
-  sendImageAttachmentWithUrl(psid: string, message: string, imageUrl: string) {
+  sendImageAttachmentWithUrl(psid: string, imageUrl: string) {
     return request.post(this.MESSAGES_API, {
       json: {
         recipient: {
@@ -92,7 +95,7 @@ export default class MessengerApi {
     });
   }
 
-  uploadImageAttachmentWithUrl(imageUrl: string) {
+  uploadImageAttachmentWithUrl(imageUrl: string): Promise<any> {
     return request.post(this.ATTACHMENTS_API, {
       json: {
         message: {
@@ -114,7 +117,7 @@ export default class MessengerApi {
     });
   }
 
-  uploadImageAttachment(filepath) {
+  uploadImageAttachment(filepath: string): Promise<any> {
     const formData = {
       message: JSON.stringify({
         attachment: {
@@ -137,5 +140,37 @@ export default class MessengerApi {
       console.error(error);
       throw error;
     });
+  }
+
+  sendButtonTemplate(psid: string, text: string, responses: any[]): Promise<any> {
+    return request.post(this.MESSAGES_API, {
+      json: {
+        recipient: {
+          id: psid,
+        },
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: 'What do you want to do next?',
+              buttons: MessengerApi.generateButtons(responses),
+            },
+          },
+        },
+      },
+    });
+  }
+
+  static generateButtons(responses: {titleText: string, payload: string}[]): any[] {
+    if (responses.length <= 0 || responses.length > 3) {
+      throw new Error('Must have 1 to 3 responses');
+    }
+
+    return responses.map(response => ({
+      type: 'postback',
+      title: response.titleText,
+      payload: response.payload,
+    }));
   }
 }
