@@ -15,10 +15,11 @@ app.post('/webhook', (req: any, res: any) => {
 
   const intent = req.body.queryResult.intent.displayName;
   // const facebookPayload = req.body.originalDetectIntentRequest.payload;
+  const sessionId = req.body.session;
 
   switch (intent) {
-    case 'Default Welcome Intent':
-      return res.json(Intents.enrollUser('dummyId'));
+    case 'Welcome Intent':
+      return res.json(Intents.enrollUser(sessionId));
 
     default:
       return res.json({ source: 'pressbot.com' });
