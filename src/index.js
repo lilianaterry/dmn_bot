@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import MessengerApi from './messenger-api';
 import * as Commands from './commands';
 import ImageGenerator from './gen-images';
+import * as Intents from './intent-handlers';
 
 // Imports dependencies and set up http server
 const express = require('express');
@@ -16,15 +17,18 @@ app.listen(process.env.PORT || 8000, () => console.log('Listening for requests f
 //Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
   console.log('Received webhook POST request');
+
+	var intent = req.body.queryResult.intent.displayName;
+	var facebookPayload = req.body.originalDetectIntentRequest.payload;
 	
-	return res.json({
-		"source": "pressbotbox.com",
-		"payload": {
-			"facebook": {
-    		"text": "Hello, welcome to Pressbot!"
-  		}
-		}
-	});
+	switch (intent) {
+		case "Default Welcome Intent":
+			return res.json(Intents.enrollUser("dummyId"));
+	
+		default:
+			return res.json({"source": "pressbot.com"});
+	}
+	
   // Returns a '200 OK' response to all requests
   res.status(200).send('EVENT_RECEIVED');
 });
