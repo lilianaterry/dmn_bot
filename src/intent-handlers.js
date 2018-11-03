@@ -44,6 +44,7 @@ export function verifySchool(sessionId:string, schoolName:string, nextContext:st
     text = 'yay';
   } else {
     contexts.push(generateContext('invalid-team', 1, sessionId, { next: nextContext }));
+    contexts.push(generateContext(nextContext, 0, sessionId, {}));
     text = 'nay';
   }
 
@@ -59,8 +60,8 @@ export function verifySchool(sessionId:string, schoolName:string, nextContext:st
 }
 
 export function handleInvalidTeam(queryResult: any, session: string) {
-  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('invalid-team') || o.name.includes('generic')));
-  const name = context ? _.last(context.name.split('/')) : null;
+  const context = _.find(queryResult.outputContexts, o => o.name.includes('invalid-team'));
+  const name = context ? context.parameters.next : null;
   return verifySchool(session, queryResult.parameters.schoolname, name);
 }
 
