@@ -4,7 +4,7 @@ export default class Database {
   table: any;
   docClient: any;
 
-  constructor(tableName) {
+  constructor(tableName: string) {
     AWS.config.update({
       region: 'us-east-1',
     });
@@ -15,9 +15,9 @@ export default class Database {
 
   /**
    * Add new user id to master table of all subscribers
-   * @param {int} userId
+   * @param {number} userId
    */
-  addNewUser(userId) {
+  addNewUser(userId: number) {
     const params = {
       TableName: this.table,
       Item: {
@@ -27,33 +27,33 @@ export default class Database {
       },
     };
 
-    this.docClient.put(params, (err, data) => {
+    this.docClient.put(params, (err) => {
       if (err) {
         console.error('Unable to add item. Error JSON:', JSON.stringify(err, null, 2));
       }
     });
   }
 
-  // TODO
-  setUserSubscriptions(userId) {
+  // // TODO
+  // setUserSubscriptions(userId) {
 
-  }
+  // }
 
-  // TODO
-  setUserPreferences(userId) {
+  // // TODO
+  // setUserPreferences(userId) {
 
-  }
+  // }
 
-  // TODO
-  getUser(userId) {
+  // // TODO
+  // getUser(userId) {
 
-  }
+  // }
 
   /**
    * Return the current message state for this user.
-   * @param {int} userId
+   * @param {number} userId
    */
-  getUserFlowState(userId) {
+  getUserFlowState(userId: number) {
     const params = {
       TableName: this.table,
       Key: {
@@ -61,7 +61,7 @@ export default class Database {
       },
     };
 
-    const response = this.docClient.get(params, (err, data) => {
+    this.docClient.get(params, (err, data) => {
       if (err) console.log(err);
       else console.log(data);
     });
@@ -72,7 +72,7 @@ export default class Database {
  * @param {int} userId
  * @param {int} userState
  */
-  setUserFlowState(userId, userState) {
+  setUserFlowState(userId: number, userState: number) {
     const params = {
       TableName: this.table,
       Key: {
