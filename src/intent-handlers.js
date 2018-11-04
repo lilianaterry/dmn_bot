@@ -34,18 +34,18 @@ function generateContext(name: string, lifespan: number, session: string, parame
   };
 }
 
-export function verifySchool(sessionId:string, schoolName:string, nextContext:string|null) {
+export function verifySchool(sessionId:string, schoolName:string, nextContext:string|null, validTeamReply:string) {
   const contexts = [];
   let text;
   if (schoolName === 'Klein Oak') {
     if (nextContext) {
 		  contexts.push(generateContext(nextContext, 1, sessionId, {}));
     }
-    text = 'yay';
+    text = validTeamReply;
   } else {
     contexts.push(generateContext('invalid-team', 1, sessionId, { next: nextContext }));
     contexts.push(generateContext(nextContext, 0, sessionId, {}));
-    text = 'nay';
+    text = 'Sorry we do not know that team. Try again.';
   }
 
   return {
@@ -67,33 +67,22 @@ export function handleInvalidTeam(queryResult: any, session: string) {
 
 export function handleUserProvidesTeamName(queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
-  const name = context ? _.last(context.name.split('/')) : null;
-  console.log(JSON.stringify(context, null, 2));
-  console.log(name);
-  return verifySchool(session, queryResult.parameters.schoolname, name);
+	const name = context ? _.last(context.name.split('/')) : null;
+  const validTeamReply = queryResult.fulfillmentText;
+	return verifySchool(session, queryResult.parameters.schoolname, name, validTeamReply);
 }
 
 export function handleUserProvidesRivalName(queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const name = context ? _.last(context.name.split('/')) : null;
-  return verifySchool(session, queryResult.parameters.schoolname, name);
+	const validTeamReply = queryResult.fulfillmentText;
+  return verifySchool(session, queryResult.parameters.schoolname, name, validTeamReply);
+}
+
+export function handleUserProvidesOtherTeamName(queryResult: any, session: string) {
+
 }
 
 export function addTeamSubscription() {
 
-}
-
-export function welcomeUser(userId: number) {
-  return {
-    source: 'pressbotbox.com',
-    payload: {
-      facebook: {
-        text: messages.welcome_message,
-      },
-      followupEventInput: {
-        name: Events.AddTeamSubscriptionEvent,
-        languageCode: 'en-US',
-      },
-    },
-  };
 }
