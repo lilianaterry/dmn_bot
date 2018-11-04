@@ -56,19 +56,12 @@ export function verifySchool(sessionId:string, schoolName:string,
   };
 }
 
-export function changeOutputContext(sessionId: string, currContext: string,
-  nextContext: string, outputMessage: string) {
+export function changeOutputContext(sessionId: string, nextContext: string, outputMessage: string) {
   const contexts = [];
-  contexts.push(generateContext(currContext, 0, sessionId, {}));
   contexts.push(generateContext(nextContext, 1, sessionId, {}));
   return {
     source: 'pressbotbox.com',
-    outputContext: contexts,
-    payload: {
-      facebook: {
-        outputMessage,
-      },
-    },
+    outputContexts: contexts
   };
 }
 
@@ -79,7 +72,7 @@ export function handleInvalidTeam(queryResult: any, session: string) {
 }
 
 export function handleUserProvidesTeamName(queryResult: any, session: string) {
-  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
+	const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const nextContext = context ? _.last(context.name.split('/')) : null;
   const validTeamReply = queryResult.fulfillmentText;
   return verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
@@ -94,17 +87,18 @@ export function handleUserProvidesRivalName(queryResult: any, session: string) {
 
 export function handleUserProvidesOtherName(queryResult: any, session: string) {
   const userText = queryResult.queryText;
-  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
-  const currContext = queryResult.intent.name;
-  const nextContext = context ? _.last(context.name.split('/')) : null;
+	const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
+  let nextContext = context ? _.last(context.name.split('/')) : null;
   const validTeamReply = queryResult.fulfillmentText;
 
   // time to ask for preferences
   if (userText === 'Skip') {
-    return changeOutputContext(session, currContext, nextContext,
-      messages.featurePreference_message);
+		const currContext = nextContext;
+		nextContext = 'awaiting-type-preferences';
+		console.log(changeOutputContext(session, nextContext, messages.featurePreference_message));
+		return changeOutputContext(session, nextContext, messages.featurePreference_message);
   }
-  return verifySchool(session, queryResult.parameters.schoolname, currContext, validTeamReply);
+  return verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
 }
 
 export function addTeamSubscription() {

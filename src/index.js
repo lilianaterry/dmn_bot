@@ -1,5 +1,6 @@
 import {
   Intents, welcomeUser, handleInvalidTeam, handleUserProvidesRivalName, handleUserProvidesTeamName,
+	handleUserProvidesOtherName
 } from './intent-handlers';
 
 // Imports dependencies and set up http server
@@ -14,7 +15,7 @@ app.listen(process.env.PORT || 8000, () => console.log('Listening for requests f
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
   console.log('Received webhook POST request');
-  console.log(JSON.stringify(req.body, null, 2));
+  //console.log(JSON.stringify(req.body, null, 2));
 
   const intent = req.body.queryResult.intent.displayName;
   // const facebookPayload = req.body.originalDetectIntentRequest.payload;
