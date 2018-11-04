@@ -33,6 +33,10 @@ app.post('/webhook', (req: any, res: any) => {
       console.log('Inside user provides team intent');
       return res.json(handleUserProvidesTeamName(req.body.queryResult, req.body.session));
 
+    case Intents.UserProvidesOtherName:
+      console.log('Inside user provides other name intent');
+      return res.json(handleUserProvidesOtherName(req.body.queryResult, req.body.session));
+
     case Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');
       return res.json(handleInvalidTeam(req.body.queryResult, req.body.session));
