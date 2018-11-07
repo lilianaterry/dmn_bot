@@ -26,19 +26,8 @@ export default class MessengerApi {
   }
 
   sendTextMessage(psid: string, message: string) {
-    return request.post(this.MESSAGES_API, {
-      json: true,
-      body: {
-        messaging_type: 'MESSAGE_TAG',
-        tag: 'NON_PROMOTIONAL_SUBSCRIPTION',
-        recipient: {
-          id: psid,
-        },
-        message: {
-          text: message,
-        },
-      },
-    }).then(() => {
+    const json = MessengerApi.generateTextMessageJSON(psid, message);
+    return request.post(this.MESSAGES_API, json).then(() => {
       console.log('Message sent successfully');
       // console.log(JSON.stringify(body, null, 4));
     }).catch((error) => {
@@ -47,52 +36,29 @@ export default class MessengerApi {
   }
 
   sendImageAttachmentWithUrl(psid: string, imageUrl: string) {
-    return request.post(this.MESSAGES_API, {
-      json: {
-        recipient: {
-          id: psid,
-        },
-        message: {
-          attachment: {
-            type: 'image',
-            payload: {
-              url: imageUrl,
-              is_reusable: true,
-            },
-          },
-        },
-      },
-    }).then((body) => {
-      console.log('Message sent successfully');
-      return body;
+    const json = MessengerApi.generateImageWithUrlJSON(psid, imageUrl);
+
+    return request.post(this.MESSAGES_API, json)
+      .then((body) => {
+        console.log('Message sent successfully');
+        return body;
       // console.log(JSON.stringify(body, null, 4));
-    }).catch((error) => {
-      console.error(error);
-    });
+      }).catch((error) => {
+        console.error(error);
+      });
   }
 
   sendImageAttachmentWithId(psid: string, imageId: string) {
-    return request.post(this.MESSAGES_API, {
-      json: {
-        recipient: {
-          id: psid,
-        },
-        message: {
-          attachment: {
-            type: 'image',
-            payload: {
-              attachment_id: imageId,
-            },
-          },
-        },
-      },
-    }).then((body) => {
-      console.log('Message sent successfully');
-      return body;
+    const json = MessengerApi.generateImageWithIdJSON(psid, imageId);
+
+    return request.post(this.MESSAGES_API, json)
+      .then((body) => {
+        console.log('Message sent successfully');
+        return body;
       // console.log(JSON.stringify(body, null, 4));
-    }).catch((error) => {
-      console.error(error);
-    });
+      }).catch((error) => {
+        console.error(error);
+      });
   }
 
   uploadImageAttachmentWithUrl(imageUrl: string): Promise<any> {
@@ -142,23 +108,19 @@ export default class MessengerApi {
     });
   }
 
+  // TODO
+  // sendQuickReply(psid: string, quickReplies: any[]): Promise<any> {
+  //   const jsonData = '';
+  // }
+
   sendButtonTemplate(psid: string, text: string, responses: any[]): Promise<any> {
-    return request.post(this.MESSAGES_API, {
-      json: {
-        recipient: {
-          id: psid,
-        },
-        message: {
-          attachment: {
-            type: 'template',
-            payload: {
-              template_type: 'button',
-              text: 'What do you want to do next?',
-              buttons: MessengerApi.generateButtons(responses),
-            },
-          },
-        },
-      },
+    const json = MessengerApi.generateButtonTemplateJSON(psid, text, responses);
+
+    return request.post(this.MESSAGES_API, json).then(() => {
+      console.log('Button template sent successfully');
+      // console.log(JSON.stringify(body, null, 4));
+    }).catch((error) => {
+      console.error(error);
     });
   }
 
@@ -172,5 +134,117 @@ export default class MessengerApi {
       title: response.titleText,
       payload: response.payload,
     }));
+  }
+
+  static generateQuickReplies(quickReplies: {title: string,
+                                              payload: string,
+                                              image_url: string}[]): any[] {
+    if (quickReplies.length <= 0 || quickReplies.length > 11) {
+      throw new Error('Must have 1 to 11 quick replies');
+    }
+
+    return quickReplies.map(quickReply => (
+      {
+        content_type: 'text',
+        title: quickReply.title,
+        payload: quickReply.payload,
+        image_url: quickReply.image_url,
+      }
+    ));
+  }
+
+  static generateDialogFlowResponse(messengerPayload: string) {
+    return {
+      messages: {
+        type: 4,
+        platform: 'facebook',
+        payload: messengerPayload,
+      },
+    };
+  }
+
+  static generateTextMessageJSON(psid: string, message: string) {
+    return {
+      json: true,
+      body: {
+        messaging_type: 'MESSAGE_TAG',
+        tag: 'NON_PROMOTIONAL_SUBSCRIPTION',
+        recipient: {
+          id: psid,
+        },
+        message: {
+          text: message,
+        },
+      },
+    };
+  }
+
+  static generateImageWithUrlJSON(psid: string, imageUrl: string) {
+    return {
+      json: {
+        recipient: {
+          id: psid,
+        },
+        message: {
+          attachment: {
+            type: 'image',
+            payload: {
+              url: imageUrl,
+              is_reusable: true,
+            },
+          },
+        },
+      },
+    };
+  }
+
+  static generateImageWithIdJSON(psid: string, imageId: string) {
+    return {
+      json: {
+        recipient: {
+          id: psid,
+        },
+        message: {
+          attachment: {
+            type: 'image',
+            payload: {
+              attachment_id: imageId,
+            },
+          },
+        },
+      },
+    };
+  }
+
+  static generateQuickReplyJSON(psid: string, message: string, quickReplies: any[]) {
+    return {
+      recipient: {
+        id: psid,
+      },
+      message: {
+        text: message,
+        quick_replies: MessengerApi.generateQuickReplies(quickReplies),
+      },
+    };
+  }
+
+  static generateButtonTemplateJSON(psid: string, text: string, responses: any[]) {
+    return {
+      json: {
+        recipient: {
+          id: psid,
+        },
+        message: {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text,
+              buttons: MessengerApi.generateButtons(responses),
+            },
+          },
+        },
+      },
+    };
   }
 }

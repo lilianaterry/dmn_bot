@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import Database from './table-operations';
 import { messages } from './strings';
+import * as MessengerApi from './messenger-api';
 
 export const Intents = {
   WelcomeIntent: 'Welcome',
@@ -8,6 +9,7 @@ export const Intents = {
   UserProvidesRivalName: 'UserProvidesRivalName',
   UserProvidesOtherName: 'UserProvidesOtherName',
   InvalidTeamProvided: 'InvalidTeamProvided',
+  TestIntent: 'Test',
 };
 
 function generateResult(text) {
@@ -19,6 +21,11 @@ function generateResult(text) {
       },
     },
   };
+}
+
+export function handleTestIntent(psid: string) {
+  const messengerApi = new MessengerApi();
+  return messengerApi.generateTextMessageJSON(psid, 'testing testing 123');
 }
 
 function generateContext(name: string, lifespan: number, session: string, parameters: {}) {

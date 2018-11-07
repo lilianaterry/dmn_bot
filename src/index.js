@@ -1,6 +1,6 @@
 import {
   Intents, handleInvalidTeam, handleUserProvidesRivalName, handleUserProvidesTeamName,
-  handleUserProvidesOtherName,
+  handleUserProvidesOtherName, handleTestIntent,
 } from './intent-handlers';
 
 // Imports dependencies and set up http server
@@ -18,10 +18,16 @@ app.post('/webhook', (req: any, res: any) => {
   console.log(JSON.stringify(req.body, null, 2));
 
   const intent = req.body.queryResult.intent.displayName;
-  // const facebookPayload = req.body.originalDetectIntentRequest.payload;
+  const facebookPayload = req.body.originalDetectIntentRequest.payload;
   const sessionId = req.body.session;
 
   switch (intent) {
+    case Intents.TestIntent:
+      console.log('Inside test intent');
+      console.log(facebookPayload);
+      return null;
+      return res.json(handleTestIntent(facebookPayload.psid));
+
     case Intents.WelcomeIntent:
       console.log('Inside welcome intent');
       return null;
