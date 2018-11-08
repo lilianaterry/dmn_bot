@@ -26,8 +26,11 @@ export default class MessengerApi {
   }
 
   sendTextMessage(psid: string, message: string) {
-    const json = MessengerApi.generateTextMessageJSON(psid, message);
-    return request.post(this.MESSAGES_API, json).then(() => {
+    const json = {
+			json: "true",
+			body: MessengerApi.generateTextMessageJSON(psid, message)
+		};
+		return request.post(this.MESSAGES_API, json).then(() => {
       console.log('Message sent successfully');
       // console.log(JSON.stringify(body, null, 4));
     }).catch((error) => {
@@ -153,29 +156,25 @@ export default class MessengerApi {
     ));
   }
 
-  static generateDialogFlowResponse(messengerPayload: string) {
-    return {
-      messages: {
-        type: 4,
-        platform: 'facebook',
-        payload: messengerPayload,
-      },
-    };
+  static generateDialogFlowResponse(messengerPayload: string, messageType: string) {
+ 		return {
+					fulfillmentMessages: [{
+					platform: "FACEBOOK",	
+					payload: messengerPayload
+			}]
+		}; 
   }
 
   static generateTextMessageJSON(psid: string, message: string) {
     return {
-      json: true,
-      body: {
-        messaging_type: 'MESSAGE_TAG',
-        tag: 'NON_PROMOTIONAL_SUBSCRIPTION',
-        recipient: {
-          id: psid,
-        },
-        message: {
-          text: message,
-        },
+    	messaging_type: 'MESSAGE_TAG',
+      tag: 'NON_PROMOTIONAL_SUBSCRIPTION',
+      recipient: {
+        id: psid,
       },
+      message: {
+        text: message,
+   		},
     };
   }
 

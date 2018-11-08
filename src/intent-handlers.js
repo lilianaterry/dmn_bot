@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import Database from './table-operations';
 import { messages } from './strings';
-import * as MessengerApi from './messenger-api';
+import MessengerApi from './messenger-api';
 
 export const Intents = {
   WelcomeIntent: 'Welcome',
@@ -24,8 +24,8 @@ function generateResult(text) {
 }
 
 export function handleTestIntent(psid: string) {
-  const messengerApi = new MessengerApi();
-  return messengerApi.generateTextMessageJSON(psid, 'testing testing 123');
+  const payload = MessengerApi.generateTextMessageJSON(psid, 'testing testing 123');
+	return MessengerApi.generateDialogFlowResponse(payload);
 }
 
 function generateContext(name: string, lifespan: number, session: string, parameters: {}) {
