@@ -15,7 +15,7 @@ app.listen(process.env.PORT || 8000, () => console.log('Listening for requests f
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
   console.log('Received webhook POST request');
-  //console.log(JSON.stringify(req.body, null, 2));
+  // console.log(JSON.stringify(req.body, null, 2));
 
   const intent = req.body.queryResult.intent.displayName;
   const facebookPayload = req.body.originalDetectIntentRequest.payload;
@@ -24,9 +24,9 @@ app.post('/webhook', (req: any, res: any) => {
   switch (intent) {
     case Intents.TestIntent:
       console.log('Inside test intent');
-      const result = handleTestIntent(facebookPayload.data.sender.id);
-			console.log(JSON.stringify(result, null, 2)); 
-			return result;
+      const result = handleTestIntent();
+      console.log(JSON.stringify(result, null, 2));
+      return result;
 
     case Intents.WelcomeIntent:
       console.log('Inside welcome intent');

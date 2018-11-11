@@ -27,10 +27,10 @@ export default class MessengerApi {
 
   sendTextMessage(psid: string, message: string) {
     const json = {
-			json: "true",
-			body: MessengerApi.generateTextMessageJSON(psid, message)
-		};
-		return request.post(this.MESSAGES_API, json).then(() => {
+      json: 'true',
+      body: MessengerApi.generateTextMessageJSON(psid, message),
+    };
+    return request.post(this.MESSAGES_API, json).then(() => {
       console.log('Message sent successfully');
       // console.log(JSON.stringify(body, null, 4));
     }).catch((error) => {
@@ -158,11 +158,11 @@ export default class MessengerApi {
 
   static generateDialogFlowResponse(messengerPayload: string, messageType: string) {
  		return {
-					fulfillmentMessages: [{
-					platform: "FACEBOOK",	
-					payload: messengerPayload
-			}]
-		}; 
+      fulfillmentMessages: [{
+        platform: 'FACEBOOK',
+        payload: messengerPayload,
+      }],
+    };
   }
 
   static generateTextMessageJSON(psid: string, message: string) {
@@ -175,6 +175,17 @@ export default class MessengerApi {
       message: {
         text: message,
    		},
+    };
+  }
+
+  static textResponseJSON(message: string) {
+    return {
+      text: {
+        text: [
+          message,
+        ],
+      },
+      platform: 'FACEBOOK',
     };
   }
 
