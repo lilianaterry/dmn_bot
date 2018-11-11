@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import Database from './table-operations';
 import { messages } from './strings';
 import MessengerApi from './messenger-api';
+import DialogflowApi from './dialogflow-api';
 
 export const Intents = {
   WelcomeIntent: 'Welcome',
@@ -12,19 +13,9 @@ export const Intents = {
   TestIntent: 'Test',
 };
 
-function generateResult(text) {
-  return {
-    source: 'pressbotbox.com',
-    payload: {
-      facebook: {
-        text,
-      },
-    },
-  };
-}
-
 export function handleTestIntent() {
-  return MessengerApi.imageResponseJSON('testing 123');
+  const buttons = [{ text: 'button1_text', postback: 'pressed_button1' }, { text: 'button2_text', postback: 'pressed_button2' }];
+  return DialogflowApi.getCardResponseJSON('TEST_TITLE', 'TEST_SUBTITLE', 'IMAGE_URL', buttons);
 }
 
 function generateContext(name: string, lifespan: number, session: string, parameters: {}) {
