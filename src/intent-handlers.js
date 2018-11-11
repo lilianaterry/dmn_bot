@@ -24,7 +24,7 @@ function generateResult(text) {
 }
 
 export function handleTestIntent() {
-  return MessengerApi.textResponseJSON('testing 123');
+  return MessengerApi.imageResponseJSON('testing 123');
 }
 
 function generateContext(name: string, lifespan: number, session: string, parameters: {}) {

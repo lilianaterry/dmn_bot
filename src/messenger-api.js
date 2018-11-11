@@ -135,9 +135,11 @@ export default class MessengerApi {
     return responses.map(response => ({
       type: 'postback',
       title: response.titleText,
-      payload: response.payload,
+     	payload: response.payload,
     }));
   }
+
+	static buttonJSON()
 
   static generateQuickReplies(quickReplies: {title: string,
                                               payload: string,
@@ -180,15 +182,56 @@ export default class MessengerApi {
 
   static textResponseJSON(message: string) {
     return {
-      text: {
-        text: [
-          message,
-        ],
+    	"fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "123"
+          ]
+        },
+        "platform": "FACEBOOK"
       },
-      platform: 'FACEBOOK',
-    };
+			]
+		}; 
   }
 
+	static imageResponseJSON(image_url: string) {
+		return {
+			fulfillmentMessages: [
+ 				{
+					image: {
+						imageUri: image_url
+					},
+					platform: "FACEBOOK"
+				},
+			]
+		};
+	}
+
+	static cardResponseJSON() {
+			"fulfillmentMessages": [
+      	{
+        	"card": {
+          	"title": "TITLE",
+          	"subtitle": "SUBTITLE",
+          	"imageUri": "IMAGE URL",
+          	"buttons": [
+            	{
+              	"text": "BUTTON_TITLE1",
+              	"postback": "TEXT_POSTBACK_BUTTON1"
+            	},
+            	{
+              	"text": "BUTTON_TITLE2",
+              	"postback": "TEXT_POSTBACK_BUTTON2"
+            	}
+          	]
+        	},
+        	"platform": "FACEBOOK"
+      	},
+	}
+
+	// TODO: try to get image with id working as well 
+	
   static generateImageWithUrlJSON(psid: string, imageUrl: string) {
     return {
       json: {

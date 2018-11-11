@@ -26,7 +26,7 @@ app.post('/webhook', (req: any, res: any) => {
       console.log('Inside test intent');
       const result = handleTestIntent();
       console.log(JSON.stringify(result, null, 2));
-      return result;
+      return res.json(result);
 
     case Intents.WelcomeIntent:
       console.log('Inside welcome intent');
