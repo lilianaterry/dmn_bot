@@ -22,14 +22,6 @@ export const Intents = {
 //   return context.toJSON();
 // }
 
-// function generateContext(name: string, lifespan: number, session: string, parameters: {}) {
-//   return {
-//     name: `${session}/contexts/${name}`,
-//     lifespanCount: lifespan,
-//     parameters,
-//   };
-// }
-
 export function verifySchool(sessionId: string, schoolName: string,
   nextContext: string|null, validTeamReply: any) {
   const validTeams = ['Klein Oak', 'Klein Collins'];
@@ -37,36 +29,31 @@ export function verifySchool(sessionId: string, schoolName: string,
   const context = new SessionContext(sessionId, []);
 
   let outputContexts;
+	let responseItems = [];
   if (_.find(validTeams, team => team === schoolName)) {
     if (nextContext) {
       context.addContext(nextContext, 1, {});
     }
+		responseItems = validTeamReply;
     outputContexts = context.toJSON();
   } else {
-    context.addContext('invalid-team', 1, { next: nextContext });
+    context.addContext('invalid-team', 1, { next: nextContext, validReply: validTeamReply });
     context.addContext(nextContext, 0, {});
+		responseItems = [DialogflowApi.getTextResponseJSON(messages.teamName_error)];
     outputContexts = context.toJSON();
   }
 
   return {
-    fullfillmentMessages: validTeamReply,
-    outputContexts,
-  };
+		fulfillmentMessages: responseItems,  	
+		outputContexts,
+	};
 }
-
-// export function changeOutputContext(sessionId: string, nextContext: string, outputMessage: string) {
-//   const contexts = [];
-//   contexts.push(generateContext(nextContext, 1, sessionId, {}));
-//   return {
-//     source: 'pressbotbox.com',
-//     outputContexts: contexts,
-//   };
-// }
 
 export function handleInvalidTeam(queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => o.name.includes('invalid-team'));
   const nextContext = context ? context.parameters.next : null;
-  return verifySchool(session, queryResult.parameters.schoolname, nextContext);
+	const validTeamReply = context ? context.parameters.validReply : null;
+  return verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
 }
 
 export function handleUserProvidesTeamName(queryResult: any, session: string) {
@@ -74,13 +61,12 @@ export function handleUserProvidesTeamName(queryResult: any, session: string) {
   const nextContext = context ? _.last(context.name.split('/')) : null;
   const validTeamReply = queryResult.fulfillmentText;
   const fulfillmentMessages = [];
-  const cardJSON = DialogflowApi.getCardResponseJSON(validTeamReply, 
+ 	fulfillmentMessages.push(DialogflowApi.getCardResponseJSON(validTeamReply, 
                                                       null, 
                                                       null, 
-                                                      {text: messages.skipButton_message, postback: null});
-  const quickReplyJSON = DialogflowApi.getQuickReplyResponseJSON(messages.suggestedRivals_message, 
-                                                                  ["Klein Collins", "Klein Oak"]);
-  fulfillmentMessages.add(cardJSON, quickReplyJSON);
+                                                      [{text: messages.skipButton_message, postback: null}]));
+  fulfillmentMessages.push(DialogflowApi.getQuickReplyResponseJSON(messages.suggestedRivals_message, 
+                                                                  ["Klein Collins", "Klein Oak"]));
   return verifySchool(session, queryResult.parameters.schoolname, nextContext, fulfillmentMessages);
 }
 
@@ -92,7 +78,6 @@ export function handleUserProvidesRivalName(queryResult: any, session: string) {
 }
 
 export function handleUserProvidesOtherName(queryResult: any, session: string) {
-  const 
 
 }
 

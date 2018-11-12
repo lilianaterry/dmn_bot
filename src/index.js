@@ -40,7 +40,9 @@ app.post('/webhook', (req: any, res: any) => {
 
     case Intents.UserProvidesTeamName:
       console.log('Inside user provides team intent');
-      return res.json(handleUserProvidesTeamName(queryResult, sessionId));
+      const result = handleUserProvidesTeamName(queryResult, sessionId);
+			console.log(JSON.stringify(result));
+			return res.json(result);
 
     case Intents.UserProvidesOtherName:
       console.log('Inside user provides other name intent');

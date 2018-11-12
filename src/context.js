@@ -56,9 +56,7 @@ export default class SessionContext {
   }
 
   toJSON() {
-    return {
-      outputContexts: this.contexts,
-    };
+    return this.contexts;
   }
 
   static getShortName(context: any) {

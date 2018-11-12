@@ -11,6 +11,8 @@ export default class DialogflowApi {
       throw new Error('Must have 1 to 3 responses');
     }
 
+		buttons = Array.from(buttons);
+
     return buttons.map(button => ({
       text: button.text,
       postback: button.postback,
