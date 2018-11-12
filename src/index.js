@@ -20,12 +20,12 @@ app.post('/webhook', (req: any, res: any) => {
   const intent = req.body.queryResult.intent.displayName;
   const facebookPayload = req.body.originalDetectIntentRequest.payload;
   const sessionId = req.body.session;
-
+	const outputContext = req.body.queryResult.outputContexts;
 
   switch (intent) {
     case Intents.TestIntent:
       console.log('Inside test intent');
-      const testResult = handleTestIntent();
+      const result = handleTestIntent(sessionId, outputContext, req.body.queryResult.queryText);
       console.log(JSON.stringify(result, null, 2));
       return res.json(result);
 

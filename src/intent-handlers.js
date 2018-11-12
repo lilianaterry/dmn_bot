@@ -3,6 +3,7 @@ import Database from './table-operations';
 import { messages } from './strings';
 import MessengerApi from './messenger-api';
 import DialogflowApi from './dialogflow-api';
+import SessionContext from './context';
 
 export const Intents = {
   WelcomeIntent: 'Welcome',
@@ -13,9 +14,12 @@ export const Intents = {
   TestIntent: 'Test',
 };
 
-export function handleTestIntent() {
-  const buttons = [{ text: 'button1_text', postback: 'pressed_button1' }, { text: 'button2_text', postback: 'pressed_button2' }];
-  return DialogflowApi.getCardResponseJSON('TEST_TITLE', 'TEST_SUBTITLE', 'IMAGE_URL', buttons);
+export function handleTestIntent(session: string, contexts: any[], text: string) {
+	let context = new SessionContext(session, contexts);
+	context.clearContexts();
+	context.addContext(text, 1, null);
+	console.log('******CONTEXT: ' + context.toJSON());
+	return context.toJSON();
 }
 
 function generateContext(name: string, lifespan: number, session: string, parameters: {}) {

@@ -10,7 +10,11 @@ export default class SessionContext {
 
   constructor(session: string, contexts: any[]) {
     this.session = session;
-    this.contexts = contexts;
+    if (contexts != null) {
+			this.contexts = contexts;
+		} else {
+			this.contexts = [];
+		}
   }
 
   removeContext(name: string) {
@@ -30,6 +34,10 @@ export default class SessionContext {
     return this;
   }
 
+	clearContexts() {
+		this.contexts = [];
+	}	
+
   getContext(name: string) {
     return _.find(this.contexts, o => o.name.includes(name));
   }
@@ -48,7 +56,9 @@ export default class SessionContext {
   }
 
   toJSON() {
-    return this.contexts;
+		return {
+			outputContexts: this.contexts,
+		};
   }
 
   static getShortName(context: any) {
