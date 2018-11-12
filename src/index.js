@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import {
   Intents, handleInvalidTeam, handleUserProvidesRivalName, handleUserProvidesTeamName,
-  handleUserProvidesOtherName,
+  handleUserProvidesAnotherName,
 } from './intent-handlers';
 
 // Imports dependencies and set up http server
@@ -34,19 +34,15 @@ app.post('/webhook', (req: any, res: any) => {
       console.log('Inside welcome intent');
       return null;
 
-    case Intents.UserProvidesRivalName:
-      console.log('Inside user provides rival intent');
-      return res.json(handleUserProvidesRivalName(queryResult, sessionId));
-
     case Intents.UserProvidesTeamName:
       console.log('Inside user provides team intent');
       const result = handleUserProvidesTeamName(queryResult, sessionId);
 			console.log(JSON.stringify(result));
 			return res.json(result);
 
-    case Intents.UserProvidesOtherName:
-      console.log('Inside user provides other name intent');
-      return res.json(handleUserProvidesOtherName(queryResult, sessionId));
+    case Intents.UserProvidesAnotherName:
+      console.log('Inside user provides another name intent');
+      return res.json(handleUserProvidesAnotherName(queryResult, sessionId));
 
     case Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');

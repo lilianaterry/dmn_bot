@@ -9,7 +9,7 @@ export const Intents = {
   WelcomeIntent: 'Welcome',
   UserProvidesTeamName: 'UserProvidesTeamName',
   UserProvidesRivalName: 'UserProvidesRivalName',
-  UserProvidesOtherName: 'UserProvidesOtherName',
+  UserProvidesAnotherName: 'UserProvidesAnotherName',
   InvalidTeamProvided: 'InvalidTeamProvided',
   TestIntent: 'Test',
 };
@@ -70,17 +70,15 @@ export function handleUserProvidesTeamName(queryResult: any, session: string) {
   return verifySchool(session, queryResult.parameters.schoolname, nextContext, fulfillmentMessages);
 }
 
-export function handleUserProvidesRivalName(queryResult: any, session: string) {
+export function handleUserProvidesAnotherName(queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const nextContext = context ? _.last(context.name.split('/')) : null;
-  const validTeamReply = queryResult.fulfillmentText;
-  return verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
+	const userSelectedSkip = context ? context.parameters.skip : null;
+	
+	if (!userSelectedSkip) {
+		const validTeamReply = queryResult.fulfillmentText;
+		const fulfillmentMessages = [DialogflowApi.getCardResponseJSON(validTeamReply, null, null, [{text: messages.skipButton_message, postback: null}])];
+  	return verifySchool(session, queryResult.parameters.schoolname, 'awaiting-another-name', fulfillmentMessages);
+	}
 }
 
-export function handleUserProvidesOtherName(queryResult: any, session: string) {
-
-}
-
-export function addTeamSubscription() {
-
-}
