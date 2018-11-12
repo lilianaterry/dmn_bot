@@ -1,6 +1,7 @@
+/* eslint-disable prefer-destructuring */
 import {
   Intents, handleInvalidTeam, handleUserProvidesRivalName, handleUserProvidesTeamName,
-  handleUserProvidesOtherName, handleTestIntent,
+  handleUserProvidesOtherName,
 } from './intent-handlers';
 
 // Imports dependencies and set up http server
@@ -17,17 +18,17 @@ app.post('/webhook', (req: any, res: any) => {
   console.log('Received webhook POST request');
   // console.log(JSON.stringify(req.body, null, 2));
 
-  const intent = req.body.queryResult.intent.displayName;
-  const facebookPayload = req.body.originalDetectIntentRequest.payload;
-  const sessionId = req.body.session;
-	const outputContext = req.body.queryResult.outputContexts;
+  const body = req.body;
+  const queryResult = body.queryResult;
+  const sessionId = body.session;
+  const intent = queryResult.intent.displayName;
 
   switch (intent) {
-    case Intents.TestIntent:
-      console.log('Inside test intent');
-      const result = handleTestIntent(sessionId, outputContext, req.body.queryResult.queryText);
-      console.log(JSON.stringify(result, null, 2));
-      return res.json(result);
+    // case Intents.TestIntent:
+    //   console.log('Inside test intent');
+    //   const result = handleTestIntent(sessionId, outputContext, req.body.queryResult.queryText);
+    //   console.log(JSON.stringify(result, null, 2));
+    //   return res.json(result);
 
     case Intents.WelcomeIntent:
       console.log('Inside welcome intent');
@@ -35,19 +36,19 @@ app.post('/webhook', (req: any, res: any) => {
 
     case Intents.UserProvidesRivalName:
       console.log('Inside user provides rival intent');
-      return res.json(handleUserProvidesRivalName(req.body.queryResult, sessionId));
+      return res.json(handleUserProvidesRivalName(queryResult, sessionId));
 
     case Intents.UserProvidesTeamName:
       console.log('Inside user provides team intent');
-      return res.json(handleUserProvidesTeamName(req.body.queryResult, sessionId));
+      return res.json(handleUserProvidesTeamName(queryResult, sessionId));
 
     case Intents.UserProvidesOtherName:
       console.log('Inside user provides other name intent');
-      return res.json(handleUserProvidesOtherName(req.body.queryResult, sessionId));
+      return res.json(handleUserProvidesOtherName(queryResult, sessionId));
 
     case Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');
-      return res.json(handleInvalidTeam(req.body.queryResult, sessionId));
+      return res.json(handleInvalidTeam(queryResult, sessionId));
 
     default:
       return res.json({ source: 'pressbot.com' });
