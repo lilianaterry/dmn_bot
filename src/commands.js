@@ -1,4 +1,4 @@
-import Database from './table-operations';
+import Database from './database-api';
 
 export function startConversation(userId: number) {
   // save user to dynamo table

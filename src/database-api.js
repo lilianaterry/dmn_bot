@@ -22,8 +22,18 @@ export default class Database {
       TableName: this.table,
       Item: {
         user_id: userId,
-        preferences: null,
-        message_state: 0,
+        type_preferences: {
+          kickoff: true,
+          midGame: true,
+          weeklyStandings: true,
+          sportsDayHSNews: true,
+        },
+        freq_preferences: {
+          everyScore: false,
+          everyTD: false,
+          everyQTR: true,
+        },
+        teams: [],
       },
     };
 
@@ -33,6 +43,8 @@ export default class Database {
       }
     });
   }
+
+  // TODO: Remove user
 
   // // TODO
   // setUserSubscriptions(userId) {
@@ -44,16 +56,8 @@ export default class Database {
 
   // }
 
-  // // TODO
-  // getUser(userId) {
-
-  // }
-
-  /**
-   * Return the current message state for this user.
-   * @param {number} userId
-   */
-  getUserFlowState(userId: number) {
+  // TODO
+  getUser(userId) {
     const params = {
       TableName: this.table,
       Key: {
@@ -61,32 +65,11 @@ export default class Database {
       },
     };
 
-    this.docClient.get(params, (err, data) => {
+    const user = this.docClient.get(params, (err, data) => {
       if (err) console.log(err);
       else console.log(data);
     });
-  }
-
-  /**
- * Update the user's message state after their message is received and answered.
- * @param {int} userId
- * @param {int} userState
- */
-  setUserFlowState(userId: number, userState: number) {
-    const params = {
-      TableName: this.table,
-      Key: {
-        user_id: userId,
-      },
-      UpdateExpression: 'set message_state = :userState',
-      ExpressionAttributeValues: {
-        ':userState': userState,
-      },
-      ReturnValues: 'UPDATED_NEW',
-    };
-    this.docClient.update(params, (err, data) => {
-      if (err) console.log(err);
-      else console.log(data);
-    });
+    console.log(`***USER: ${user}`);
+    return user;
   }
 }

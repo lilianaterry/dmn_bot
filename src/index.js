@@ -1,8 +1,5 @@
 /* eslint-disable prefer-destructuring */
-import {
-  Intents, handleInvalidTeam, handleUserProvidesRivalName, handleUserProvidesTeamName,
-  handleUserProvidesAnotherName,
-} from './intent-handlers';
+import * as IntentHandler from './intent-handlers';
 
 // Imports dependencies and set up http server
 const express = require('express');
@@ -24,32 +21,24 @@ app.post('/webhook', (req: any, res: any) => {
   const intent = queryResult.intent.displayName;
 
   switch (intent) {
-    // case Intents.TestIntent:
-    //   console.log('Inside test intent');
-    //   const result = handleTestIntent(sessionId, outputContext, req.body.queryResult.queryText);
-    //   console.log(JSON.stringify(result, null, 2));
-    //   return res.json(result);
-
-    case Intents.WelcomeIntent:
+    case IntentHandler.Intents.Welcome:
       console.log('Inside welcome intent');
       return null;
 
-    case Intents.UserProvidesTeamName:
+    case IntentHandler.Intents.UserProvidesTeamName:
       console.log('Inside user provides team intent');
-      const result = handleUserProvidesTeamName(queryResult, sessionId);
-			console.log(JSON.stringify(result));
-			return res.json(result);
+      return res.json(IntentHandler.handleUserProvidesTeamName(queryResult, sessionId));
 
-    case Intents.UserProvidesAnotherName:
+    case IntentHandler.Intents.UserProvidesAnotherName:
       console.log('Inside user provides another name intent');
-      return res.json(handleUserProvidesAnotherName(queryResult, sessionId));
+      return res.json(IntentHandler.handleUserProvidesAnotherName(queryResult, sessionId));
 
-    case Intents.InvalidTeamProvided:
+    case IntentHandler.Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');
-      return res.json(handleInvalidTeam(queryResult, sessionId));
+      return res.json(IntentHandler.handleInvalidTeam(queryResult, sessionId));
 
     default:
-      return res.json({ source: 'pressbot.com' });
+      return {};
   }
 });
 
