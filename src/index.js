@@ -1,5 +1,9 @@
-/* eslint-disable prefer-destructuring */
+import { CronJob } from 'cron';
+import debug from 'debug';
 import * as IntentHandler from './replies/intent-handlers';
+import checkForUpdates from './updates/score-listener';
+
+const log = debug('index');
 
 // Imports dependencies and set up http server
 const express = require('express');
@@ -8,15 +12,19 @@ const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // creates express http server
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 8000, () => console.log('Listening for requests from Messenger'));
+app.listen(process.env.PORT || 8000, () => log('Listening for requests from Messenger'));
+
+// Check for score updates every minute
+const scoreListener = new CronJob('* * * * *', checkForUpdates);
+scoreListener.start();
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
-  console.log('Received webhook POST request');
-  // console.log(JSON.stringify(req.body, null, 2));
+  log('Received webhook POST request');
+  // log(JSON.stringify(req.body, null, 2));
 
-  const body = req.body;
-  const queryResult = body.queryResult;
+  const { body } = req;
+  const { queryResult } = body;
   const sessionId = body.session;
   const intent = queryResult.intent.displayName;
 
