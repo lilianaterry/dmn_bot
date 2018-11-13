@@ -48,11 +48,23 @@ export function verifySchool(sessionId: string, schoolName: string,
   };
 }
 
-export function handleWelcome(queryResult: any, session: string) {
-  console.log(queryResult);
-  // look up user in database
-  // if no entry, add user with blank entries
-  // if user, print out TODO and ask journalism students to design what happens then
+export function handleWelcome(req: any) {
+	const database = new Database('dmn_users');
+	let userId = req.originalDetectIntentRequest.payload.data.sender.id;
+	let userParams = database.getUserParams(userId);
+	
+	database.docClient.get(userParams, (err, data) => {
+		if (err) console.log(err);
+		else {
+			// user not found
+			if (_.isEmpty(data)) {
+				database.addNewUser(userId);
+			}	else {
+				console.log('found user!');
+				console.log(data);
+			}
+		}
+	});
 }
 
 export function handleInvalidTeam(queryResult: any, session: string) {

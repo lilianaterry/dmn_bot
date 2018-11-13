@@ -17,7 +17,7 @@ export default class Database {
    * Add new user id to master table of all subscribers
    * @param {number} userId
    */
-  addNewUser(userId: number) {
+  addNewUser(userId: string) {
     const params = {
       TableName: this.table,
       Item: {
@@ -57,19 +57,14 @@ export default class Database {
   // }
 
   // TODO
-  getUser(userId) {
+  getUserParams(userId: string) {
     const params = {
       TableName: this.table,
       Key: {
         user_id: userId,
       },
     };
-
-    const user = this.docClient.get(params, (err, data) => {
-      if (err) console.log(err);
-      else console.log(data);
-    });
-    console.log(`***USER: ${user}`);
-    return user;
+		
+		return params;
   }
 }

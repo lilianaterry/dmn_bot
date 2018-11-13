@@ -13,7 +13,7 @@ app.listen(process.env.PORT || 8000, () => console.log('Listening for requests f
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
   console.log('Received webhook POST request');
-  // console.log(JSON.stringify(req.body, null, 2));
+  //console.log(JSON.stringify(req.body, null, 2));
 
   const body = req.body;
   const queryResult = body.queryResult;
@@ -23,7 +23,8 @@ app.post('/webhook', (req: any, res: any) => {
   switch (intent) {
     case IntentHandler.Intents.Welcome:
       console.log('Inside welcome intent');
-      return null;
+      IntentHandler.handleWelcome(req.body);
+			return null;
 
     case IntentHandler.Intents.UserProvidesTeamName:
       console.log('Inside user provides team intent');
@@ -38,7 +39,7 @@ app.post('/webhook', (req: any, res: any) => {
       return res.json(IntentHandler.handleInvalidTeam(queryResult, sessionId));
 
     default:
-      return {};
+      return null;
   }
 });
 
