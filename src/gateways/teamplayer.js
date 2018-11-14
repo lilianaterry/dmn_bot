@@ -1,6 +1,7 @@
 import * as request from 'request-promise';
 import { Moment } from 'moment';
 import debug from 'debug';
+import { ScoreUpdate, GameData } from '../models/teamplayer';
 
 const log = debug('teamplayer');
 
@@ -17,7 +18,7 @@ function callApi(template: string, params: any) {
   });
 }
 
-export async function getInProgressGames(searchDate: Moment) {
+export async function getInProgressGames(searchDate: Moment): Promise<any[]> {
   log(`Calling getInProgressGames() with date: ${searchDate.toString()}`);
   let response;
   try {
@@ -25,11 +26,11 @@ export async function getInProgressGames(searchDate: Moment) {
   } catch (e) {
     throw new Error(`Something went wrong with getting in progress games: ${e.message}`);
   }
-  log('Response: %O', response);
+  log('Got response');
   return JSON.parse(response);
 }
 
-export async function getGameData(gameId: number) {
+export async function getGameData(gameId: number): Promise<GameData> {
   log(`Calling getGameData() with gameId: ${gameId}`);
   let response;
   try {
@@ -37,11 +38,11 @@ export async function getGameData(gameId: number) {
   } catch (e) {
     throw new Error(`Something went wrong with getting game data: ${e.message}`);
   }
-  log('Response: %O', response);
+  log('Got response');
   return JSON.parse(response);
 }
 
-export async function getScoreUpdates(gameId: number) {
+export async function getScoreUpdates(gameId: number): Promise<ScoreUpdate> {
   log(`Calling getScoreUpdates() with gameId: ${gameId}`);
   let response;
   try {
@@ -49,6 +50,6 @@ export async function getScoreUpdates(gameId: number) {
   } catch (e) {
     throw new Error(`Something went wrong with getting score updates: ${e.message}`);
   }
-  log('Response: %O', response);
+  log('Got response');
   return JSON.parse(response);
 }

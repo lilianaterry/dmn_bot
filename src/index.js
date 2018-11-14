@@ -12,10 +12,11 @@ const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json()); // creates express http server
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 8000, () => log('Listening for requests from Messenger'));
+app.listen(process.env.PORT || 8000, () => log('Listening for webhook requests'));
 
 // Check for score updates every minute
 const scoreListener = new CronJob('* * * * *', checkForUpdates);
+log('Starting job to check for score updates');
 scoreListener.start();
 
 // Creates the endpoint for our webhook
