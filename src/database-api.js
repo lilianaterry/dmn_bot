@@ -56,7 +56,6 @@ export default class Database {
 
   // }
 
-  // TODO
   getUserParams(userId: string) {
     const params = {
       TableName: this.table,
@@ -67,4 +66,28 @@ export default class Database {
 		
 		return params;
   }
+
+  getAllTeamsParams() {
+    const params = {
+      TableName: this.table,
+      AttributesToGet: [
+        'team_id',
+        'team_name',
+      ],
+    };
+
+    return params;
+  }
+
+  getTeamParams(teamName: string) {
+    const params = {
+      TableName : this.table,
+      FilterExpression : 'team_name = :teamName',
+      ExpressionAttributeValues : {':teamName' : teamName},
+    };
+
+    return params;
+  }
+
+  
 }

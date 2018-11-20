@@ -21,31 +21,65 @@ export const Intents = {
 //   return context.toJSON();
 // }
 
-export function verifySchool(sessionId: string, schoolName: string,
+export async function verifySchool(sessionId: string, teamName: string,
   nextContext: string|null, validTeamReply: any) {
-  const validTeams = ['Klein Oak', 'Klein Collins'];
 
-  const context = new SessionContext(sessionId, []);
+  const database = new Database('dmn_teams');
+  const teamParams = database.getTeamParams(teamName);
 
-  let outputContexts;
-  let responseItems = [];
-  if (_.find(validTeams, team => team === schoolName)) {
-    if (nextContext) {
-      context.addContext(nextContext, 1, {});
-    }
-    responseItems = validTeamReply;
-    outputContexts = context.toJSON();
-  } else {
-    context.addContext('invalid-team', 1, { next: nextContext, validReply: validTeamReply });
-    context.addContext(nextContext, 0, {});
-    responseItems = [DialogflowApi.getTextResponseJSON(messages.teamName_error)];
-    outputContexts = context.toJSON();
-  }
+  console.log('teamName: ' + teamName);
+  console.log("***TEAM PARAMS: " + JSON.stringify(teamParams));
 
-  return {
-    fulfillmentMessages: responseItems,
-    outputContexts,
+  const getItems = async () => {
+    const { Items } = await database.docClient.scan(teamParams, (err, data) => {
+      console.log("******INSIDE DATA: " + JSON.stringify(data));
+    }).promise();
+
+    const item = Items[0];
+    console.log('*********ITEM: ' + JSON.stringify(item));
+
+    return {
+        item
+    };
   };
+
+  console.log("*********GET ITEMS: " + JSON.stringify(getItems()));
+
+
+  // database.docClient.scan(teamParams, (err, data) => {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+	// 	else {
+  //     const context = new SessionContext(sessionId, []);
+
+  //     let outputContexts;
+  //     let responseItems = [];
+  //     count += 1;
+  //     word = "hello world";
+  //     console.log('********* COUNT: ' + count);
+
+  //     // team not found 
+  //     if (data.Count == 0) {
+  //       context.addContext('invalid-team', 1, { next: nextContext, validReply: validTeamReply });
+  //       context.addContext(nextContext, 0, {});
+  //       responseItems = [DialogflowApi.getTextResponseJSON(messages.teamName_error)];
+  //       outputContexts = context.toJSON();
+  //     // team found 
+  //     } else {
+  //       if (nextContext) {
+  //         context.addContext(nextContext, 1, {});
+  //       }
+  //       responseItems = validTeamReply;
+  //       outputContexts = context.toJSON();
+  //     }
+
+  //     return {
+  //       fulfillmentMessages: responseItems,
+  //       outputContexts,
+  //     };
+  //   }
+  // });
 }
 
 export function handleWelcome(req: any) {
@@ -61,7 +95,6 @@ export function handleWelcome(req: any) {
 				database.addNewUser(userId);
 			}	else {
 				console.log('found user!');
-				console.log(data);
 			}
 		}
 	});
@@ -80,7 +113,7 @@ export function handleUserProvidesTeamName(queryResult: any, session: string) {
   const validTeamReply = queryResult.fulfillmentText;
   const fulfillmentMessages = [];
   fulfillmentMessages.push(DialogflowApi.getCardResponseJSON(validTeamReply,
-    null,
+   	null,
     null,
     [{ text: messages.skipButton_message, postback: null }]));
   fulfillmentMessages.push(DialogflowApi.getQuickReplyResponseJSON(messages.suggestedRivals_message,

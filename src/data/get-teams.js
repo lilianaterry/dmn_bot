@@ -2,7 +2,7 @@ const request = require('request-promise');
 const _ = require('lodash');
 const AWS = require('aws-sdk');
 
-function addTeamsToDatabase(teams) {
+export function addTeamsToDatabase(teams) {
   AWS.config.update({
     region: 'us-east-1',
   });
@@ -27,7 +27,7 @@ function addTeamsToDatabase(teams) {
   });
 }
 
-function queryAllTeams() {
+export function queryAllTeams() {
   TEAM_PLAYER_API = "http://belo-web1.newsengin.com/dallas/tpweb/web/gateway.php?site=default&tpl=API_ActiveTeams&contentType=json";
 
   const options = {
