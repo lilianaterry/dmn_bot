@@ -4,3 +4,4 @@
 .env
 *.png
 *.swp
+*.log

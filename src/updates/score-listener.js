@@ -3,7 +3,7 @@ import debug from 'debug';
 import chalk from 'chalk';
 import * as _ from 'lodash';
 import * as TeamPlayer from '../gateways/teamplayer';
-import Database from '../table-operations';
+import Database from '../database-api';
 import { ScoreUpdate } from '../models/teamplayer';
 
 const log = debug('scorelistener');

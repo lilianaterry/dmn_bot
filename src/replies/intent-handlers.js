@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import Database from './database-api';
+import Database from '../database-api';
 import { messages } from '../strings';
 import MessengerApi from './messenger-api';
 import DialogflowApi from './dialogflow-api';
