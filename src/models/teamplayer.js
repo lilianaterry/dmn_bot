@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 
 interface Team {
   id: string;
@@ -167,7 +168,7 @@ interface SeasonStats {
   AverageRush: number;
 }
 
-export interface ScoreUpdate {
+export interface ScoreUpdateModel {
   away: Team;
   home: Team;
   gameData: Game;
@@ -186,4 +187,29 @@ export interface GameData {
    roster: Player[],
    seasonstats: SeasonStats,
  };
+}
+
+export interface InProgressGame {
+  GameID: string;
+}
+
+export class ScoreUpdate {
+  data: ScoreUpdateModel
+
+  constructor(data: ScoreUpdateModel) {
+    this.data = data;
+  }
+
+  getLastPlay(): Possession | null {
+    let last = null;
+    _.forEach(this.data.pbpData.SummaryQuarters, (v: BallPosessionList) => {
+      // console.log('posession', v);
+      if (!_.isEmpty(v.BallPossession)) {
+        const lastKey = _.last(_.keys(v.BallPossession));
+        // console.log('last key', lastKey);
+        last = v.BallPossession[lastKey];
+      }
+    });
+    return last;
+  }
 }
