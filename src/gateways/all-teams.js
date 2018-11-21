@@ -2,7 +2,7 @@ const request = require('request-promise');
 const _ = require('lodash');
 const AWS = require('aws-sdk');
 
-export function addTeamsToDatabase(teams) {
+function addTeamsToDatabase(teams) {
   AWS.config.update({
     region: 'us-east-1',
   });
@@ -15,7 +15,8 @@ export function addTeamsToDatabase(teams) {
       TableName: table,
       Item: {
         team_id: team.teamId,
-        team_name: team.teamName,
+        team_name: team.teamName.toLowerCase(),
+        display_name: team.teamName,
       },
     };
 
@@ -27,7 +28,7 @@ export function addTeamsToDatabase(teams) {
   });
 }
 
-export function queryAllTeams() {
+function queryAllTeams() {
   TEAM_PLAYER_API = "http://belo-web1.newsengin.com/dallas/tpweb/web/gateway.php?site=default&tpl=API_ActiveTeams&contentType=json";
 
   const options = {
@@ -52,3 +53,5 @@ export function queryAllTeams() {
       throw new Error('Get team request failed.');
     });
 }
+
+queryAllTeams();

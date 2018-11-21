@@ -3,6 +3,7 @@ export const messages = {
   welcome_message: "Hello! Welcome to PressBot, the best way to stay locked in with your favorite high school sports here in Texas. First things first, who's your team?",
   teamName_success: 'Go ${0}!',
   teamName_error: "FUMBLE! Sorry we don't recognize that team. Type the name of any high school football team in the DFW area and PressBot will get you in the game!",
+  suggestedTeams_message: 'Would you like to follow any of these teams as well?:',
   suggestedRivals_message: 'Suggested rival teams:',
   rivalTeamName_message: "It's always good to keep an eye on your rival. Would you like to keep tabs on any of these teams below? Or send another school's name?",
   teamNickName_success: "Great, we've added the ${0}. Would you like to subscribe to another?",

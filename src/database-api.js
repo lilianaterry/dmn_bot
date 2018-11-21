@@ -12,6 +12,8 @@ export default class Database {
 
   static USER_TABLE = 'dmn_users';
   static GAME_TABLE = 'dmn_games';
+  static TEAM_TABLE = 'dmn_teams';
+  static SUBSCRIPTION_TABLE = 'dmn_subscriptions';
 
   constructor() {
     AWS.config.update({
@@ -53,11 +55,9 @@ export default class Database {
   }
 
   // TODO: Remove user
+  addSubscription(userId: string, teamId: string, ) {
 
-  // // TODO
-  // setUserSubscriptions(userId) {
-
-  // }
+  }
 
   // // TODO
   // setUserPreferences(userId) {
@@ -77,7 +77,7 @@ export default class Database {
 
   getAllTeamsParams() {
     const params = {
-      TableName: this.table,
+      TableName: Database.TEAM_TABLE,
       AttributesToGet: [
         'team_id',
         'team_name',
@@ -87,15 +87,34 @@ export default class Database {
     return params;
   }
 
-  getTeamParams(teamName: string) {
-    const params = {
-      TableName: this.table,
-      FilterExpression: 'team_name = :teamName',
-      ExpressionAttributeValues: { ':teamName': teamName },
-    };
+  getTeamByName(teamName: string): Promise<any> {
+    let lowerCaseName = teamName.toLowerCase();
+    log (`Getting team ${teamName} from dyanmo`);
+    return new Promise ((resolve, reject) => {
+      const params = {
+        TableName: Database.TEAM_TABLE,
+        FilterExpression: 'team_name = :teamName',
+        ExpressionAttributeValues: { ':teamName': lowerCaseName },
+      };
 
-    return params;
+      this.docClient.scan(params, (err, data) => {
+        if (err) {
+          log(chalk.red('There was an error retrieving the team from the database.'));
+          log(err);
+          reject(err);
+        } else {
+          log(`Successfully retrieved team from database`);
+          if (data.Items) {
+            resolve(data.Items[0]);
+          } else {
+            resolve(null);
+          }
+        }
+      });
+    });
   }
+
+  // TODO get team by ID
 
 
   getGame(gameId: string): Promise<any> {

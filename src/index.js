@@ -15,9 +15,9 @@ const app = express().use(bodyParser.json()); // creates express http server
 app.listen(process.env.PORT || 8000, () => log('Listening for webhook requests'));
 
 // Check for score updates every minute
-const scoreListener = new CronJob('* * * * *', checkForUpdates);
-log('Starting job to check for score updates');
-scoreListener.start();
+// const scoreListener = new CronJob('* * * * *', checkForUpdates);
+// log('Starting job to check for score updates');
+// scoreListener.start();
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
@@ -31,24 +31,38 @@ app.post('/webhook', (req: any, res: any) => {
 
   switch (intent) {
     case IntentHandler.Intents.Welcome:
-      console.log('Inside welcome intent');
+      log('Inside welcome intent');
       IntentHandler.handleWelcome(req.body);
       return null;
 
     case IntentHandler.Intents.UserProvidesTeamName:
-      console.log('Inside user provides team intent');
-      return res.json(IntentHandler.handleUserProvidesTeamName(queryResult, sessionId));
+      log('Inside user provides team intent');
+      IntentHandler.handleUserProvidesTeamName(queryResult, sessionId).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log(`There was an error in UserProvidesTeamName`);
+        log(err);
+      });
+      break;
 
     case IntentHandler.Intents.UserProvidesAnotherName:
       console.log('Inside user provides another name intent');
-      return res.json(IntentHandler.handleUserProvidesAnotherName(queryResult, sessionId));
+      IntentHandler.handleUserProvidesAnotherName(queryResult, sessionId).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log(`There was an error in UserProvidesAnotherName`);
+        log(err);
+      });
+      break;
 
     case IntentHandler.Intents.InvalidTeamProvided:
       console.log('Inside invalid team intent');
       return res.json(IntentHandler.handleInvalidTeam(queryResult, sessionId));
 
     default:
-      return null;
+      break;
   }
 });
 
