@@ -17,7 +17,7 @@ export const Intents = {
   TestIntent: 'Test',
 };
 
-export async function verifySchool(sessionId: string, teamName: string,
+export async function verifySchool(userId: string, sessionId: string, teamName: string,
   nextContext: string|null, validTeamReply: any): Promise<any> {
   log(`Verifying school name: ${teamName}`);
   const database = new Database();
@@ -35,7 +35,8 @@ export async function verifySchool(sessionId: string, teamName: string,
         responseItems = [DialogflowApi.getTextResponseJSON(messages.teamName_error)];
         outputContexts = context.toJSON();
       } else {
-        // team found
+        // team found, add subscription
+        database.addSubscription(userId, teamResponse.team_id);
         if (nextContext) {
           context.addContext(nextContext, 1, {});
         }
@@ -52,9 +53,8 @@ export async function verifySchool(sessionId: string, teamName: string,
   });
 }
 
-export function handleWelcome(req: any) {
+export function handleWelcome(userId: string) {
   const database = new Database();
-  const userId = req.originalDetectIntentRequest.payload.data.sender.id;
   const userParams = database.getUserParams(userId);
 
   database.docClient.get(userParams, (err, data) => {
@@ -70,14 +70,14 @@ export function handleWelcome(req: any) {
   });
 }
 
-export function handleInvalidTeam(queryResult: any, session: string) {
+export function handleInvalidTeam(userId: string, queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => o.name.includes('invalid-team'));
   const nextContext = context ? context.parameters.next : null;
   const validTeamReply = context ? context.parameters.validReply : null;
   return verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
 }
 
-export async function handleUserProvidesTeamName(queryResult: any, session: string) {
+export async function handleUserProvidesTeamName(userId: string, queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const nextContext = context ? _.last(context.name.split('/')) : null;
   const validTeamReply = queryResult.fulfillmentText;
@@ -88,10 +88,10 @@ export async function handleUserProvidesTeamName(queryResult: any, session: stri
     [{ text: messages.skipButton_message, postback: null }]));
   fulfillmentMessages.push(DialogflowApi.getQuickReplyResponseJSON(null,
     ['Sanger', 'Carter', 'Denton', 'Greenhill']));
-  return await verifySchool(session, queryResult.parameters.schoolname, nextContext, fulfillmentMessages);
+  return await verifySchool(userId, session, queryResult.parameters.schoolname, nextContext, fulfillmentMessages);
 }
 
-export async function handleUserProvidesAnotherName(queryResult: any, session: string) {
+export async function handleUserProvidesAnotherName(userId: string, queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const nextContext = context ? _.last(context.name.split('/')) : null;
   const userSelectedSkip = context ? context.parameters.skip : null;
@@ -100,6 +100,8 @@ export async function handleUserProvidesAnotherName(queryResult: any, session: s
     const validTeamReply = queryResult.fulfillmentText;
     const fulfillmentMessages = [DialogflowApi.getCardResponseJSON(validTeamReply, null, null,
       [{ text: messages.skipButton_message, postback: null }])];
-    return await verifySchool(session, queryResult.parameters.schoolname, 'awaiting-another-name', fulfillmentMessages);
+    return await verifySchool(userId, session, queryResult.parameters.schoolname, 'awaiting-another-name', fulfillmentMessages);
+  } else {
+    return null;
   }
 }

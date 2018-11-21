@@ -32,31 +32,39 @@ export default class Database {
       TableName: Database.USER_TABLE,
       Item: {
         user_id: userId,
+      },
+    };
+
+    this.docClient.put(params, (err) => {
+      if (err) {
+        console.error('Unable to add new user. Error JSON:', JSON.stringify(err, null, 2));
+      }
+    });
+  }
+
+  // TODO: Remove user
+  addSubscription(userId: string, teamId: string) {
+    const params = {
+      TableName: Database.SUBSCRIPTION_TABLE,
+      Item: {
+        team_id: teamId,
+        user_id: userId,
         type_preferences: {
           kickoff: true,
-          midGame: true,
-          weeklyStandings: true,
-          sportsDayHSNews: true,
         },
         freq_preferences: {
           everyScore: false,
           everyTD: false,
           everyQTR: true,
         },
-        teams: [],
       },
     };
 
     this.docClient.put(params, (err) => {
       if (err) {
-        console.error('Unable to add item. Error JSON:', JSON.stringify(err, null, 2));
+        console.error('Unable to add subscription. Error JSON:', JSON.stringify(err, null, 2));
       }
     });
-  }
-
-  // TODO: Remove user
-  addSubscription(userId: string, teamId: string, ) {
-
   }
 
   // // TODO
@@ -70,18 +78,6 @@ export default class Database {
       Key: {
         user_id: userId,
       },
-    };
-
-    return params;
-  }
-
-  getAllTeamsParams() {
-    const params = {
-      TableName: Database.TEAM_TABLE,
-      AttributesToGet: [
-        'team_id',
-        'team_name',
-      ],
     };
 
     return params;
@@ -113,9 +109,6 @@ export default class Database {
       });
     });
   }
-
-  // TODO get team by ID
-
 
   getGame(gameId: string): Promise<any> {
     log(`Getting game ${gameId} from dynamo.`);
