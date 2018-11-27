@@ -22,15 +22,13 @@ app.listen(process.env.PORT || 8000, () => log('Listening for webhook requests')
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
   log('Received webhook POST request');
-  log(JSON.stringify(req.body, null, 2));
+  // log(JSON.stringify(req.body, null, 2));
 
   const { body } = req;
   const { queryResult } = body;
   const sessionId = body.session;
   const userId = body.originalDetectIntentRequest.payload.data.sender.id;
   const intent = queryResult.intent.displayName;
-
-  log(`intent ${intent}`);
 
   switch (intent) {
     case IntentHandler.Intents.WelcomeBegin:
@@ -63,11 +61,12 @@ app.post('/webhook', (req: any, res: any) => {
     case IntentHandler.Intents.UserSelectsPreferences: 
       log('Inside user selects preferences');
       IntentHandler.handleUserSelectsPreferences(userId, queryResult);
+      res.json({});
       break;
 
     case IntentHandler.Intents.WelcomeEnd: 
       log('Inside welcome end');
-      IntentHandler.handlerWelcomeEnd(userId, queryResult);
+      IntentHandler.handleWelcomeEnd(userId, queryResult);
       break;
 
     case IntentHandler.Intents.InvalidTeamProvided:

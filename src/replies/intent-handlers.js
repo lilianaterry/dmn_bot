@@ -86,19 +86,18 @@ export async function handleInvalidTeam(userId: string, queryResult: any, sessio
 }
 
 export function handleUserSelectsPreferences(userId: string, queryResult: any) {
-  const typePreferences = queryResult.parameters.typePreference;
-  if (typePreferences) {
-    // iterate over every team so query database and then get promise
+  const typePreference = queryResult.parameters.typePreference;
+
+  if (typePreference) {
     const database = new Database();
-    log(`Type Preference paramater: ${typePreferences}`)
-    database.addTypePrefToAllTeams(userId, typePreferences, false);
-  }
+    database.setPrefForAllTeams(userId, typePreference, false);
+  } 
 }
 
 export function handleWelcomeEnd(userId: string, queryResult: any) {
-  const freqPreferences = queryResult.parameters.freqPreference;
-  log(`Freq Preference parameters: ${freqPreferences}`);
-  if (freqPreferences) {
-
+  const freqPreference = queryResult.parameters.freqPreference;
+  if (freqPreference) {
+    const database = new Database();
+    database.setPrefForAllTeams(userId, freqPreference, true);
   }
 }

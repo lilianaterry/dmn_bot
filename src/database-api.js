@@ -86,14 +86,10 @@ export default class Database {
       Item: {
         team_id: teamId,
         user_id: userId,
-        type_preferences: {
-          kickoff: true,
-        },
-        freq_preferences: {
-          everyScore: false,
-          everyTD: false,
-          everyQTR: false,
-        },
+        kickoff: true, 
+        everyScore: false,
+        everyTD: false,
+        everyQTR: false
       },
     };
 
@@ -104,46 +100,42 @@ export default class Database {
     });
   }
 
-  addTypePrefToAllTeams(userId: string, preference: string, prefVal: bool) {
+  setPrefForAllTeams(userId: string, prefName: string, prefVal: bool) {
     this.getTeamsByUser(userId).then((teams) => {
       teams.forEach(team => {
-        this.addTypePreference(userId, team.team_id, preference, prefVal);
+        this.setPreference(userId, team.team_id, prefName, prefVal);
       });
     })
     .catch((err) => {
-      log(chalk.red(`An error occured in addTypePrefToAllTeams`));
+      log(chalk.red(`An error occured in setTypePrefForAllTeams`));
       log(err);
-    })
+    });
   }
 
-  addTypePreference(userId: string, teamId: string, preference: string, prefVal: bool) {
+  setPreference(userId: string, teamId: string, prefName: string, prefVal: bool) {
     var params = {
       TableName: Database.SUBSCRIPTION_TABLE,
-      Key: { team_id : teamId },
-      UpdateExpression: 'set #type_pref = :typePref',
-      ConditionExpression: '#type_pref = :false',
-      ExpressionAttributeNames: {'#type_pref' : 'type_preferences'},
+      Key: {
+        team_id: teamId
+      },
+      UpdateExpression: 'set #type_pref = :prefVal',
+      ConditionExpression: '#user_id = :userId',
+      ExpressionAttributeNames: {
+        '#type_pref' : prefName,
+        '#user_id' : 'user_id'
+      },
       ExpressionAttributeValues: {
-        ':typePref' : preference,
-        ':false' : prefVal,
+        ':userId' : userId,
+        ':prefVal' : prefVal,
       },
     };
         
     this.docClient.update(params, function(err, data) {
        if (err) log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
+       else {
+         log(`Data from update:` + JSON.stringify(data))
+       }
     });
-  }
-
-  removeTypePreference(userId: string, teamId: string, preference: string) {
-
-  }
-
-  addFreqPreference(userId: string, teamId: string, preference: string) {
-
-  }
-
-  removeTypePreference(userId: string, teamId: string, preference: string) {
-
   }
 
   getTeamsByUser(userId: string): Promise<any> {
