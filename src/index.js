@@ -30,11 +30,14 @@ app.post('/webhook', (req: any, res: any) => {
   const userId = body.originalDetectIntentRequest.payload.data.sender.id;
   const intent = queryResult.intent.displayName;
 
+  log(`intent ${intent}`);
+
   switch (intent) {
-    case IntentHandler.Intents.Welcome:
+    case IntentHandler.Intents.WelcomeBegin:
       log('Inside welcome intent');
-      IntentHandler.handleWelcome(userId);
-      return null;
+      IntentHandler.handleWelcomeBegin(userId);
+      res.json({});
+      break;
 
     case IntentHandler.Intents.UserProvidesTeamName:
       log('Inside user provides team intent');
@@ -42,13 +45,12 @@ app.post('/webhook', (req: any, res: any) => {
         res.json(fulfillmentResponse);
       })
       .catch((err) => {
-        log(`There was an error in UserProvidesTeamName`);
         log(err);
       });
       break;
 
     case IntentHandler.Intents.UserProvidesAnotherName:
-      console.log('Inside user provides another name intent');
+      log('Inside user provides another name intent');
       IntentHandler.handleUserProvidesAnotherName(userId, queryResult, sessionId).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
       })
@@ -58,11 +60,30 @@ app.post('/webhook', (req: any, res: any) => {
       });
       break;
 
+    case IntentHandler.Intents.UserSelectsPreferences: 
+      log('Inside user selects preferences');
+      IntentHandler.handleUserSelectsPreferences(userId, queryResult);
+      break;
+
+    case IntentHandler.Intents.WelcomeEnd: 
+      log('Inside welcome end');
+      IntentHandler.handlerWelcomeEnd(userId, queryResult);
+      break;
+
     case IntentHandler.Intents.InvalidTeamProvided:
-      console.log('Inside invalid team intent');
-      return res.json(IntentHandler.handleInvalidTeam(userId, queryResult, sessionId));
+      log('Inside invalid team intent');
+      IntentHandler.handleInvalidTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log(`There was an error in InvalidTeamProvided`);
+        log(err);
+      });
+      break;
 
     default:
+      log('Hit webhook, but fell into default case');
+      res.json({});
       break;
   }
 });

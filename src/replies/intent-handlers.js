@@ -9,17 +9,16 @@ import debug from 'debug';
 const log = debug('intent-handlers');
 
 export const Intents = {
-  Welcome: 'Welcome',
-  UserProvidesTeamName: 'UserProvidesTeamName',
-  UserProvidesRivalName: 'UserProvidesRivalName',
-  UserProvidesAnotherName: 'UserProvidesAnotherName',
-  InvalidTeamProvided: 'InvalidTeamProvided',
-  TestIntent: 'Test',
+  WelcomeBegin: 'Welcome - Begin',
+  UserProvidesTeamName: 'TeamName',
+  UserProvidesAnotherName: 'TeamName - Loop',
+  UserSelectsPreferences: 'Preferences - yes',
+  WelcomeEnd: 'Welcome - End',
+  InvalidTeamProvided: 'TeamName - Invalid',
 };
 
 export async function verifySchool(userId: string, sessionId: string, teamName: string,
   nextContext: string|null, validTeamReply: any): Promise<any> {
-  log(`Verifying school name: ${teamName}`);
   const database = new Database();
 
   return new Promise((resolve, reject) => {
@@ -36,7 +35,7 @@ export async function verifySchool(userId: string, sessionId: string, teamName: 
         outputContexts = context.toJSON();
       } else {
         // team found, add subscription
-        database.addSubscription(userId, teamResponse.team_id);
+        database.addNewSubscription(userId, teamResponse.team_id);
         if (nextContext) {
           context.addContext(nextContext, 1, {});
         }
@@ -53,41 +52,19 @@ export async function verifySchool(userId: string, sessionId: string, teamName: 
   });
 }
 
-export function handleWelcome(userId: string) {
+export function handleWelcomeBegin(userId: string) {
   const database = new Database();
-  const userParams = database.getUserParams(userId);
-
-  database.docClient.get(userParams, (err, data) => {
-    if (err) console.log(err);
-    else {
-      // user not found
-      if (_.isEmpty(data)) {
-        database.addNewUser(userId);
-      }	else {
-        console.log('found user!');
-      }
-    }
-  });
-}
-
-export function handleInvalidTeam(userId: string, queryResult: any, session: string) {
-  const context = _.find(queryResult.outputContexts, o => o.name.includes('invalid-team'));
-  const nextContext = context ? context.parameters.next : null;
-  const validTeamReply = context ? context.parameters.validReply : null;
-  return verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
+  database.addNewUser(userId);
 }
 
 export async function handleUserProvidesTeamName(userId: string, queryResult: any, session: string) {
   const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
   const nextContext = context ? _.last(context.name.split('/')) : null;
+
   const validTeamReply = queryResult.fulfillmentText;
   const fulfillmentMessages = [];
-  fulfillmentMessages.push(DialogflowApi.getCardResponseJSON(validTeamReply,
-    null,
-    null,
-    [{ text: messages.skipButton_message, postback: null }]));
-  fulfillmentMessages.push(DialogflowApi.getQuickReplyResponseJSON(null,
-    ['Sanger', 'Carter', 'Denton', 'Greenhill']));
+  fulfillmentMessages.push(DialogflowApi.getQuickReplyResponseJSON(validTeamReply,
+    ['Skip', 'Sanger', 'Carter', 'Denton', 'Greenhill']));
   return await verifySchool(userId, session, queryResult.parameters.schoolname, nextContext, fulfillmentMessages);
 }
 
@@ -96,12 +73,32 @@ export async function handleUserProvidesAnotherName(userId: string, queryResult:
   const nextContext = context ? _.last(context.name.split('/')) : null;
   const userSelectedSkip = context ? context.parameters.skip : null;
 
-  if (!userSelectedSkip) {
-    const validTeamReply = queryResult.fulfillmentText;
-    const fulfillmentMessages = [DialogflowApi.getCardResponseJSON(validTeamReply, null, null,
-      [{ text: messages.skipButton_message, postback: null }])];
-    return await verifySchool(userId, session, queryResult.parameters.schoolname, 'awaiting-another-name', fulfillmentMessages);
-  } else {
-    return null;
+  const validTeamReply = queryResult.fulfillmentText;
+  const fulfillmentMessages = [DialogflowApi.getQuickReplyResponseJSON(validTeamReply, ['Skip'])];
+  return await verifySchool(userId, session, queryResult.parameters.schoolname, 'awaiting-another-name', fulfillmentMessages);
+}
+
+export async function handleInvalidTeam(userId: string, queryResult: any, session: string) {
+  const context = _.find(queryResult.outputContexts, o => o.name.includes('invalid-team'));
+  const nextContext = context ? context.parameters.next : null;
+  const validTeamReply = context ? context.parameters.validReply : null;
+  return await verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
+}
+
+export function handleUserSelectsPreferences(userId: string, queryResult: any) {
+  const typePreferences = queryResult.parameters.typePreference;
+  if (typePreferences) {
+    // iterate over every team so query database and then get promise
+    const database = new Database();
+    log(`Type Preference paramater: ${typePreferences}`)
+    database.addTypePrefToAllTeams(userId, typePreferences, false);
+  }
+}
+
+export function handleWelcomeEnd(userId: string, queryResult: any) {
+  const freqPreferences = queryResult.parameters.freqPreference;
+  log(`Freq Preference parameters: ${freqPreferences}`);
+  if (freqPreferences) {
+
   }
 }
