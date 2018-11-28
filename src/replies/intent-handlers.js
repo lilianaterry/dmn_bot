@@ -10,11 +10,13 @@ const log = debug('intent-handlers');
 
 export const Intents = {
   WelcomeBegin: 'Welcome - Begin',
-  UserProvidesTeamName: 'TeamName',
-  UserProvidesAnotherName: 'TeamName - Loop',
-  UserSelectsPreferences: 'Preferences - yes',
+  UserProvidesTeamName: 'Welcome - TeamName',
+  UserProvidesAnotherName: 'Welcome - TeamName - Loop',
+  UserSelectsPreferences: 'Welcome - Preferences - yes',
   WelcomeEnd: 'Welcome - End',
-  InvalidTeamProvided: 'TeamName - Invalid',
+  InvalidTeamProvided: 'Welcome - TeamName - Invalid',
+  AddTeamFirst: 'AddTeam - ReceiveTeamName',
+  AddTeamSecond: 'AddTeam - ReceiveTeamName - yes - ReceiveTeamName',
 };
 
 export async function verifySchool(userId: string, sessionId: string, teamName: string,
@@ -100,4 +102,12 @@ export function handleWelcomeEnd(userId: string, queryResult: any) {
     const database = new Database();
     database.setPrefForAllTeams(userId, freqPreference, true);
   }
+}
+
+export async function handleAddTeam(userId: string, queryResult: any, session: string) {
+  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
+  const nextContext = context ? _.last(context.name.split('/')) : null;
+  const fulfillmentMessages = queryResult.fulfillmentMessages;
+
+  return await verifySchool(userId, session, queryResult.parameters.teamName, nextContext, fulfillmentMessages);
 }

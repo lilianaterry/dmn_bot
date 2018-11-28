@@ -79,6 +79,19 @@ app.post('/webhook', (req: any, res: any) => {
         log(err);
       });
       break;
+    
+    case IntentHandler.Intents.AddTeamFirst:
+      // fall through to same handler as second intent
+      
+    case IntentHandler.Intents.AddTeamSecond:
+      IntentHandler.handleAddTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log(`There was an error in AddTeam`);
+        log(err);
+      })
+      break;
 
     default:
       log('Hit webhook, but fell into default case');
