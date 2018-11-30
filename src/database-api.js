@@ -113,28 +113,33 @@ export default class Database {
   }
 
   setPreference(userId: string, teamId: string, prefName: string, prefVal: bool) {
-    var params = {
-      TableName: Database.SUBSCRIPTION_TABLE,
-      Key: {
-        team_id: teamId
-      },
-      UpdateExpression: 'set #type_pref = :prefVal',
-      ConditionExpression: '#user_id = :userId',
-      ExpressionAttributeNames: {
-        '#type_pref' : prefName,
-        '#user_id' : 'user_id'
-      },
-      ExpressionAttributeValues: {
-        ':userId' : userId,
-        ':prefVal' : prefVal,
-      },
-    };
-        
-    this.docClient.update(params, function(err, data) {
-       if (err) log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
-       else {
-         log(`Data from update:` + JSON.stringify(data))
-       }
+    return new Promise((resolve, reject) => {
+      var params = {
+        TableName: Database.SUBSCRIPTION_TABLE,
+        Key: {
+          team_id: teamId
+        },
+        UpdateExpression: 'set #type_pref = :prefVal',
+        ConditionExpression: '#user_id = :userId',
+        ExpressionAttributeNames: {
+          '#type_pref' : prefName,
+          '#user_id' : 'user_id'
+        },
+        ExpressionAttributeValues: {
+          ':userId' : userId,
+          ':prefVal' : prefVal,
+        },
+      };
+          
+      this.docClient.update(params, function(err, data) {
+         if (err) {
+           log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
+           reject();
+         } else {
+           log(`Data from update:` + JSON.stringify(data));
+           resolve();
+         }
+      });
     });
   }
 
@@ -237,6 +242,31 @@ export default class Database {
         } else {
           log('Successfully added game to database.');
           resolve(data);
+        }
+      });
+    });
+  }
+
+  getUserNotifications(userId: string, teamId: string) {
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: Database.SUBSCRIPTION_TABLE,
+        FilterExpression: 'team_id = :teamId AND user_id = :userId',
+        ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
+      };
+
+      this.docClient.scan(params, (err, data) => {
+        if (err) {
+          log(chalk.red('There was an error retrieving the user\'s preferences from the database.'));
+          log(err);
+          reject(err);
+        } else {
+          log(`Successfully retrieved user notifications from database`);
+          if (data.Items) {
+            resolve(data.Items[0]);
+          } else {
+            resolve(null);
+          }
         }
       });
     });

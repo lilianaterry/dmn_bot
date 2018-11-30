@@ -17,6 +17,10 @@ export const Intents = {
   InvalidTeamProvided: 'Welcome - TeamName - Invalid',
   AddTeamFirst: 'AddTeam - ReceiveTeamName',
   AddTeamSecond: 'AddTeam - ReceiveTeamName - yes - ReceiveTeamName',
+  UnsubscribeTeamRequest: 'UnsubscribeTeam',
+  UnsubscribeTeamName: 'UnsubscribeTeam - ProvideTeamName',
+  AddNotificationsOptions: 'ChangeNotifications - AddNotifications',
+  AddNotificationsSelection: 'ChangeNotifications - AddNotifications - SelectRange - End',
 };
 
 export async function verifySchool(userId: string, sessionId: string, teamName: string,
@@ -54,9 +58,12 @@ export async function verifySchool(userId: string, sessionId: string, teamName: 
   });
 }
 
-export function handleWelcomeBegin(userId: string) {
+export async function handleWelcomeBegin(userId: string) {
   const database = new Database();
   database.addNewUser(userId);
+  const messenger = new MessengerApi();
+  const attachID = await messenger.uploadImageAttachment(`${__dirname}/../out.png`);
+  messenger.sendImageAttachmentWithId(userId, attachID);
 }
 
 export async function handleUserProvidesTeamName(userId: string, queryResult: any, session: string) {
@@ -84,7 +91,8 @@ export async function handleInvalidTeam(userId: string, queryResult: any, sessio
   const context = _.find(queryResult.outputContexts, o => o.name.includes('invalid-team'));
   const nextContext = context ? context.parameters.next : null;
   const validTeamReply = context ? context.parameters.validReply : null;
-  return await verifySchool(session, queryResult.parameters.schoolname, nextContext, validTeamReply);
+
+  return await verifySchool(userId, session, queryResult.parameters.schoolname, nextContext, validTeamReply);
 }
 
 export function handleUserSelectsPreferences(userId: string, queryResult: any) {
@@ -110,4 +118,53 @@ export async function handleAddTeam(userId: string, queryResult: any, session: s
   const fulfillmentMessages = queryResult.fulfillmentMessages;
 
   return await verifySchool(userId, session, queryResult.parameters.teamName, nextContext, fulfillmentMessages);
+}
+
+export async function handleUnsubscribeTeamRequest() {
+
+}
+
+export async function handleUnsubscribeTeamName(userId: string, queryResult: any, session: string) {
+
+}
+
+export async function handleNotificationsOptions(userId: string, queryResult: any) {
+  // get teams by user 
+  const teamId = '5414';
+  const database = new Database();
+  const result = await database.getUserNotifications(userId, teamId);
+
+  const notifications = [];
+  if (!result.everyScore)
+    notifications.push('every score');
+  if (!result.everyTD)
+    notifications.push('every TD');
+  if (!result.everyQTR)
+    notifications.push('every QTR');
+  if (!result.kickoff)
+    notifications.push('kickoff');
+
+  let fulfillment;
+  if (_.isEmpty(notifications)) {
+    fulfillment = [DialogflowApi.getTextResponseJSON(strings.addNotificationsFail_message)];
+  } else {
+    fulfillment = [DialogflowApi.getQuickReplyResponseJSON(queryResult.fulfillmentText, notifications)];
+  }
+
+  return { fulfillmentMessages: fulfillment };
+}
+
+export async function handleAddNotificationsSelection(userId: string, queryResult: any) {
+  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
+  const notification = context.parameters.freqNotification != '' ? context.parameters.freqNotification : context.parameters.typeNotification;
+
+  log(notification);
+
+  // get teams by user 
+  const teamId = '5414';
+  const database = new Database();
+  await database.setPreference(userId, teamId, notification, true);
+  log('do we get here')
+  
+  return await handleNotificationsOptions(userId, queryResult);
 }

@@ -1,14 +1,16 @@
-import uuid from 'uuid/v4';
-import * as fs from 'fs';
+// import uuid from 'uuid/v4';
+const uuid = require('uuid/v4');
+const fs = require('fs');
+// import * as fs from 'fs';
 
 const Canvas = require('canvas');
 
 const { Image } = Canvas;
 
-export default class ScorecardGenerator {
-  canvas: Canvas;
-  graphics: any;
-  outputPath: string;
+class ScorecardGenerator {
+  // canvas: Canvas;
+  // graphics: any;
+  // outputPath: string;
 
   constructor() {
     const width = 960;
@@ -20,8 +22,7 @@ export default class ScorecardGenerator {
     this.outputPath = `${__dirname}/${uuid()}.png`;
   }
 
-  generate(
-    finalScore: boolean,
+  generate(finalScore: boolean,
     home: string,
     away: string,
     homeScore: string,
@@ -164,3 +165,15 @@ export default class ScorecardGenerator {
     this.graphics.closePath();
   }
 }
+
+const gen = new ScorecardGenerator()
+generate(true,
+  'Lake Highland',
+  'Burges',
+  '24',
+  '14',
+  './LakeHighland.png',
+  './BurgesHS_Logo.png',
+  '10:32',
+  '3rd',
+  'away');
