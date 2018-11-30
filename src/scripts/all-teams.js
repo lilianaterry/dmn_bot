@@ -10,7 +10,7 @@ function addTeamsToDatabase(teams) {
   const table = 'dmn_teams';
   const docClient = new AWS.DynamoDB.DocumentClient();
 
-  teams.forEach(team => {
+  teams.forEach((team) => {
     const params = {
       TableName: table,
       Item: {
@@ -29,27 +29,26 @@ function addTeamsToDatabase(teams) {
 }
 
 function queryAllTeams() {
-  TEAM_PLAYER_API = "http://belo-web1.newsengin.com/dallas/tpweb/web/gateway.php?site=default&tpl=API_ActiveTeams&contentType=json";
+  const TEAM_PLAYER_API = 'http://belo-web1.newsengin.com/dallas/tpweb/web/gateway.php?site=default&tpl=API_ActiveTeams&contentType=json';
 
   const options = {
     method: 'GET',
     uri: TEAM_PLAYER_API,
     headers: {
-      'User-Agent': 'Request-Promise'
+      'User-Agent': 'Request-Promise',
     },
     json: true,
   };
 
   request(options)
-    .then(function (response) {
+    .then((response) => {
       // get all teams
-      const allTeams = _.flatMap(response, function (item) {
-        return [{teamId: item.TeamID, teamName: item.TeamName}];
-      });
+      const allTeams = _.flatMap(response,
+        item => [{ teamId: item.TeamID, teamName: item.TeamName }]);
 
       addTeamsToDatabase(allTeams);
     })
-    .catch(function (err) {
+    .catch(() => {
       throw new Error('Get team request failed.');
     });
 }

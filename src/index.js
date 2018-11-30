@@ -15,9 +15,9 @@ const app = express().use(bodyParser.json()); // creates express http server
 app.listen(process.env.PORT || 8000, () => log('Listening for webhook requests'));
 
 // Check for score updates every minute
-// const scoreListener = new CronJob('* * * * *', checkForUpdates);
-// log('Starting job to check for score updates');
-// scoreListener.start();
+const scoreListener = new CronJob('* * * * *', checkForUpdates);
+log('Starting job to check for score updates');
+scoreListener.start();
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
@@ -39,45 +39,48 @@ app.post('/webhook', (req: any, res: any) => {
 
     case IntentHandler.Intents.UserProvidesTeamName:
       log('Inside user provides team intent');
-      IntentHandler.handleUserProvidesTeamName(userId, queryResult, sessionId).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log(err);
-      });
+      IntentHandler.handleUserProvidesTeamName(userId, queryResult, sessionId)
+        .then((fulfillmentResponse) => {
+          res.json(fulfillmentResponse);
+        })
+        .catch((err) => {
+          log(err);
+        });
       break;
 
     case IntentHandler.Intents.UserProvidesAnotherName:
       log('Inside user provides another name intent');
-      IntentHandler.handleUserProvidesAnotherName(userId, queryResult, sessionId).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log(`There was an error in UserProvidesAnotherName`);
-        log(err);
-      });
+      IntentHandler.handleUserProvidesAnotherName(userId, queryResult, sessionId)
+        .then((fulfillmentResponse) => {
+          res.json(fulfillmentResponse);
+        })
+        .catch((err) => {
+          log('There was an error in UserProvidesAnotherName');
+          log(err);
+        });
       break;
 
-    case IntentHandler.Intents.UserSelectsPreferences: 
+    case IntentHandler.Intents.UserSelectsPreferences:
       log('Inside user selects preferences');
       IntentHandler.handleUserSelectsPreferences(userId, queryResult);
       res.json({});
       break;
 
-    case IntentHandler.Intents.WelcomeEnd: 
+    case IntentHandler.Intents.WelcomeEnd:
       log('Inside welcome end');
       IntentHandler.handleWelcomeEnd(userId, queryResult);
       break;
 
     case IntentHandler.Intents.InvalidTeamProvided:
       log('Inside invalid team intent');
-      IntentHandler.handleInvalidTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log(`There was an error in InvalidTeamProvided`);
-        log(err);
-      });
+      IntentHandler.handleInvalidTeam(userId, queryResult, sessionId)
+        .then((fulfillmentResponse) => {
+          res.json(fulfillmentResponse);
+        })
+        .catch((err) => {
+          log('There was an error in InvalidTeamProvided');
+          log(err);
+        });
       break;
 
     default:

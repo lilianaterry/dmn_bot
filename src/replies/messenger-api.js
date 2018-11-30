@@ -1,6 +1,10 @@
 import * as request from 'request-promise';
 import * as fs from 'fs';
 import { flattenJSON } from 'lomath';
+import debug from 'debug';
+import chalk from 'chalk';
+
+const log = debug('messenger-api');
 
 export default class MessengerApi {
   static instance: MessengerApi;
@@ -39,10 +43,10 @@ export default class MessengerApi {
         },
       },
     }).then(() => {
-      console.log('Message sent successfully');
-      // console.log(JSON.stringify(body, null, 4));
+      log('Message sent successfully');
+      // log(JSON.stringify(body, null, 4));
     }).catch((error) => {
-      console.error(error);
+      log(chalk.red(error));
     });
   }
 
@@ -63,15 +67,15 @@ export default class MessengerApi {
         },
       },
     }).then((body) => {
-      console.log('Message sent successfully');
+      log('Message sent successfully');
       return body;
-      // console.log(JSON.stringify(body, null, 4));
+      // log(JSON.stringify(body, null, 4));
     }).catch((error) => {
-      console.error(error);
+      log(chalk.red(error));
     });
   }
 
-  sendImageAttachmentWithId(psid: string, imageId: string) {
+  sendImageAttachmentWithId(psid: string, imageId: string): Promise<any> {
     return request.post(this.MESSAGES_API, {
       json: {
         recipient: {
@@ -87,11 +91,11 @@ export default class MessengerApi {
         },
       },
     }).then((body) => {
-      console.log('Message sent successfully');
+      log('Message sent successfully');
       return body;
-      // console.log(JSON.stringify(body, null, 4));
+      // log(JSON.stringify(body, null, 4));
     }).catch((error) => {
-      console.error(error);
+      log(chalk.red(error));
     });
   }
 
@@ -109,15 +113,15 @@ export default class MessengerApi {
         },
       },
     }).then((body) => {
-      console.log('Image uploaded successfully');
-      // console.log(JSON.stringify(body, null, 4));
+      log('Image uploaded successfully');
+      // log(JSON.stringify(body, null, 4));
       return body.attachment_id;
     }).catch((error) => {
-      console.error(error);
+      log(chalk.red(error));
     });
   }
 
-  uploadImageAttachment(filepath: string): Promise<any> {
+  uploadImageAttachment(filepath: string): Promise<string> {
     const formData = {
       message: JSON.stringify({
         attachment: {
@@ -133,11 +137,11 @@ export default class MessengerApi {
     return request.post(this.ATTACHMENTS_API, {
       formData: flattenJSON(formData),
     }).then((body) => {
-      console.log('Image uploaded successfully');
-      // console.log(JSON.stringify(body, null, 4));
+      log('Image uploaded successfully');
+      // log(JSON.stringify(body, null, 4));
       return JSON.parse(body).attachment_id;
     }).catch((error) => {
-      console.error(error);
+      log(chalk.red(error));
       throw error;
     });
   }

@@ -3,6 +3,7 @@ import debug from 'debug';
 import chalk from 'chalk';
 import * as _ from 'lodash';
 import moment from 'moment';
+import uuid from 'uuid/v4';
 import { GameData } from './models/teamplayer';
 
 const log = debug('database');
@@ -24,47 +25,29 @@ export default class Database {
   }
 
   /**
-   * Returns parameters needs to retrive user from data base
+   * Add new user id to master table of all subscribers
+   * @param {string} userId
    */
-  getUserParams(userId: string) {
-    const params = {
+  addNewUser(userId: string) {
+    const getUserParams = {
       TableName: Database.USER_TABLE,
       Key: {
         user_id: userId,
       },
     };
 
-    return params;
-  }
-
-  /**
-   * Returns parameters needed to add user to database 
-   */
-  addUserParams(userId: string) {
-    const params = {
-      TableName: Database.USER_TABLE,
-      Item: {
-        user_id: userId,
-      },
-    };
-
-    return params;
-  }
-
-  /**
-   * Add new user id to master table of all subscribers
-   * @param {string} userId
-   */
-  addNewUser(userId: string) {
-    const getUserParams = this.getUserParams(userId);
-
     this.docClient.get(getUserParams, (err, data) => {
       if (err) {
-        log(chalk.red(`An error occured in addNewUser`));
+        log(chalk.red('An error occurred in addNewUser'));
         log(err);
       } else if (_.isEmpty(data)) {
         // user not found
-        const addUserParams = this.addUserParams(userId);
+        const addUserParams = {
+          TableName: Database.USER_TABLE,
+          Item: {
+            user_id: userId,
+          },
+        };
 
         this.docClient.put(addUserParams, (err) => {
           if (err) {
@@ -84,12 +67,13 @@ export default class Database {
     const params = {
       TableName: Database.SUBSCRIPTION_TABLE,
       Item: {
+        subscription_id: uuid(),
         team_id: teamId,
         user_id: userId,
-        kickoff: true, 
+        kickoff: true,
         everyScore: false,
         everyTD: false,
-        everyQTR: false
+        everyQTR: false,
       },
     };
 
@@ -101,45 +85,45 @@ export default class Database {
   }
 
   setPrefForAllTeams(userId: string, prefName: string, prefVal: bool) {
-    this.getTeamsByUser(userId).then((teams) => {
-      teams.forEach(team => {
+    this.getSubscriptionsByUser(userId).then((teams) => {
+      teams.forEach((team) => {
         this.setPreference(userId, team.team_id, prefName, prefVal);
       });
     })
-    .catch((err) => {
-      log(chalk.red(`An error occured in setTypePrefForAllTeams`));
-      log(err);
-    });
+      .catch((err) => {
+        log(chalk.red('An error occured in setTypePrefForAllTeams'));
+        log(err);
+      });
   }
 
   setPreference(userId: string, teamId: string, prefName: string, prefVal: bool) {
-    var params = {
+    const params = {
       TableName: Database.SUBSCRIPTION_TABLE,
       Key: {
-        team_id: teamId
+        team_id: teamId,
       },
       UpdateExpression: 'set #type_pref = :prefVal',
       ConditionExpression: '#user_id = :userId',
       ExpressionAttributeNames: {
-        '#type_pref' : prefName,
-        '#user_id' : 'user_id'
+        '#type_pref': prefName,
+        '#user_id': 'user_id',
       },
       ExpressionAttributeValues: {
-        ':userId' : userId,
-        ':prefVal' : prefVal,
+        ':userId': userId,
+        ':prefVal': prefVal,
       },
     };
-        
-    this.docClient.update(params, function(err, data) {
-       if (err) log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
-       else {
-         log(`Data from update:` + JSON.stringify(data))
-       }
+
+    this.docClient.update(params, (err, data) => {
+      if (err) log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
+      else {
+        log(`Data from update:${JSON.stringify(data)}`);
+      }
     });
   }
 
-  getTeamsByUser(userId: string): Promise<any> {
-    return new Promise ((resolve, reject) => {
+  getSubscriptionsByUser(userId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
         FilterExpression: 'user_id = :userId',
@@ -152,7 +136,7 @@ export default class Database {
           log(err);
           reject(err);
         } else {
-          log(`Successfully retrieved team from database`);
+          log('Successfully retrieved team from database');
           if (data.Items) {
             resolve(data.Items);
           } else {
@@ -162,11 +146,11 @@ export default class Database {
       });
     });
   }
- 
+
   getTeamByName(teamName: string): Promise<any> {
-    let lowerCaseName = teamName.toLowerCase();
-    log (`Getting team ${teamName} from dynamo`);
-    return new Promise ((resolve, reject) => {
+    const lowerCaseName = teamName.toLowerCase();
+    log(`Getting team ${teamName} from dynamo`);
+    return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.TEAM_TABLE,
         FilterExpression: 'team_name = :teamName',
@@ -179,9 +163,34 @@ export default class Database {
           log(err);
           reject(err);
         } else {
-          log(`Successfully retrieved team from database`);
+          log('Successfully retrieved team from database');
           if (data.Items) {
             resolve(data.Items[0]);
+          } else {
+            resolve(null);
+          }
+        }
+      });
+    });
+  }
+
+  getSubscriptionsByTeam(teamId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: Database.SUBSCRIPTION_TABLE,
+        FilterExpression: 'teamId = :teamId',
+        ExpressionAttributeValues: { ':teamId': teamId },
+      };
+
+      this.docClient.scan(params, (err, data) => {
+        if (err) {
+          log(chalk.red('There was an error retrieving the team\'s subscriptions from the database.'));
+          log(err);
+          reject(err);
+        } else {
+          log('Successfully retrieved subscriptions from database');
+          if (data.Items) {
+            resolve(data.Items);
           } else {
             resolve(null);
           }
