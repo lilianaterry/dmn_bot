@@ -24,7 +24,7 @@ interface Record {
   SummaryDescription: string;
 }
 
-interface Possession {
+export interface Possession {
   TeamName: string;
   ScoreChange: boolean;
   AwayScorePrev: number;
@@ -53,7 +53,7 @@ interface PlayByPlay {
   };
 }
 
-interface GameInfo {
+export interface GameInfo {
   GameID: string;
   GameStatStatus: string;
   SportID: string;
@@ -187,10 +187,6 @@ export interface GameData {
    roster: Player[],
    seasonstats: SeasonStats,
  };
-}
-
-export interface InProgressGame {
-  GameID: string;
 }
 
 export class ScoreUpdate {

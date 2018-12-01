@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
+import debug from 'debug';
 import Database from '../database-api';
 import { messages } from '../strings';
 import MessengerApi from './messenger-api';
 import DialogflowApi from './dialogflow-api';
 import SessionContext from '../context';
-import debug from 'debug';
 
 const log = debug('intent-handlers');
 
@@ -101,7 +101,7 @@ export function handleUserSelectsPreferences(userId: string, queryResult: any) {
   if (typePreference) {
     const database = new Database();
     database.setPrefForAllTeams(userId, typePreference, false);
-  } 
+  }
 }
 
 export function handleWelcomeEnd(userId: string, queryResult: any) {
