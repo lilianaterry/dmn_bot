@@ -152,6 +152,31 @@ export default class Database {
     });
   }
 
+  getSingleTeamSubscription(userId: string, teamId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: Database.SUBSCRIPTION_TABLE,
+        FilterExpression: 'team_id = :teamId AND user_id = :userId',
+        ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
+      };
+
+      this.docClient.scan(params, (err, data) => {
+        if (err) {
+          log(chalk.red('There was an error retrieving the singular subscription from the database.'));
+          log(err);
+          reject(err);
+        } else {
+          log('Successfully retrieved subscription from database');
+          if (data.Items) {
+            resolve(data.Items[0]);
+          } else {
+            resolve(null);
+          }
+        }
+      });
+    })
+  }
+
   getTeamByName(teamName: string): Promise<any> {
     const lowerCaseName = teamName.toLowerCase();
     log(`Getting team ${teamName} from dynamo`);

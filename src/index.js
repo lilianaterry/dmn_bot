@@ -15,9 +15,9 @@ const app = express().use(bodyParser.json()); // creates express http server
 app.listen(process.env.PORT || 8000, () => log('Listening for webhook requests'));
 
 // Check for score updates every minute
-const scoreListener = new CronJob('* * * * *', checkForUpdates);
-log('Starting job to check for score updates');
-scoreListener.start();
+// const scoreListener = new CronJob('* * * * *', checkForUpdates);
+// log('Starting job to check for score updates');
+// scoreListener.start();
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
@@ -113,6 +113,7 @@ app.post('/webhook', (req: any, res: any) => {
     case IntentHandler.Intents.RemoveNotificationsOptions: 
       log('Inside remove notification options');
       IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
+        log(fulfillmentResponse);
         res.json(fulfillmentResponse);
       })
       .catch((err) => {
@@ -123,13 +124,13 @@ app.post('/webhook', (req: any, res: any) => {
 
     case IntentHandler.Intents.AddNotificationsSelection:
       log('Inside add notifications selection');
-      IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log('There was an error in AddNotificationsLoop');
-        log(err);
-      });
+      // IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
+      //   res.json(fulfillmentResponse);
+      // })
+      // .catch((err) => {
+      //   log('There was an error in AddNotificationsLoop');
+      //   log(err);
+      // });
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamRequest:

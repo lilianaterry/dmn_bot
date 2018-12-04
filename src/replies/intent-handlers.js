@@ -130,9 +130,11 @@ export async function handleUnsubscribeTeamName(userId: string, queryResult: any
 
 export async function handleNotificationsOptions(userId: string, queryResult: any) {
   // get teams by user 
-  const teamId = '5414';
+  const teamId = '4498';
   const database = new Database();
-  const result = await database.getUserNotifications(userId, teamId);
+  const result = await database.getSingleTeamSubscription(userId, teamId);
+
+  log(JSON.stringify(result.kickoff));
 
   const notifications = [];
   if (!result.everyScore)
