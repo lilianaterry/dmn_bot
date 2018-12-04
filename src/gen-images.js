@@ -1,16 +1,14 @@
-// import uuid from 'uuid/v4';
-const uuid = require('uuid/v4');
-const fs = require('fs');
-// import * as fs from 'fs';
+import uuid from 'uuid/v4';
+import * as fs from 'fs';
 
 const Canvas = require('canvas');
 
 const { Image } = Canvas;
 
-class ScorecardGenerator {
-  // canvas: Canvas;
-  // graphics: any;
-  // outputPath: string;
+export class ScorecardGenerator {
+  canvas: Canvas;
+  graphics: any;
+  outputPath: string;
 
   constructor() {
     const width = 960;
@@ -31,9 +29,8 @@ class ScorecardGenerator {
     awayURI: string,
     time: string,
     quarter: string,
-    possession: 'home' | 'away',
-  ) {
-  // set background to white
+    possession: 'home' | 'away') {
+    // set background to white
     this.graphics.fillStyle = 'white';
     this.graphics.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -165,15 +162,3 @@ class ScorecardGenerator {
     this.graphics.closePath();
   }
 }
-
-const gen = new ScorecardGenerator()
-generate(true,
-  'Lake Highland',
-  'Burges',
-  '24',
-  '14',
-  './LakeHighland.png',
-  './BurgesHS_Logo.png',
-  '10:32',
-  '3rd',
-  'away');

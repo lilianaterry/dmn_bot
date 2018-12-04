@@ -1,8 +1,7 @@
 import * as request from 'request-promise';
 import moment from 'moment';
 import debug from 'debug';
-import { ScoreUpdate, GameData, InProgressGame } from '../models/teamplayer';
-import { scoreUpdate, gameData } from '../test-data';
+import { ScoreUpdate, GameData } from '../models/teamplayer';
 
 const log = debug('teamplayer');
 

@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import * as _ from 'lodash';
 import * as TeamPlayer from '../gateways/teamplayer';
 import Database from '../database-api';
-import { ScoreUpdate, GameData, GameInfo } from '../models/teamplayer';
+import { ScoreUpdate, GameData } from '../models/teamplayer';
 import { sendPregameMessages, sendScoreUpdate } from './score-parser';
 
 const log = debug('scorelistener');

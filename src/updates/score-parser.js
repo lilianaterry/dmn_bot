@@ -1,5 +1,5 @@
 import debug from 'debug';
-import { GameData, Possession } from '../models/teamplayer';
+import { GameData } from '../models/teamplayer';
 import Database from '../database-api';
 import MessengerApi from '../replies/messenger-api';
 
