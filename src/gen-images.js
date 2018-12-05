@@ -1,16 +1,17 @@
-// import uuid from 'uuid/v4';
-const uuid = require('uuid/v4');
-const fs = require('fs');
-// import * as fs from 'fs';
+import uuid from 'uuid/v4';
+import * as fs from 'fs';
+import debug from 'debug';
+import * as Jimp from 'jimp';
 
 const Canvas = require('canvas');
 
 const { Image } = Canvas;
 
-class ScorecardGenerator {
-  // canvas: Canvas;
-  // graphics: any;
-  // outputPath: string;
+const log = debug('scorecard-generator');
+export class ScorecardGenerator {
+  canvas: Canvas;
+  graphics: any;
+  outputPath: string;
 
   constructor() {
     const width = 960;
@@ -22,24 +23,23 @@ class ScorecardGenerator {
     this.outputPath = `${__dirname}/${uuid()}.png`;
   }
 
-  generate(finalScore: boolean,
+  async generate(finalScore: boolean,
     home: string,
     away: string,
     homeScore: string,
     awayScore: string,
-    homeURI: string,
-    awayURI: string,
+    homeURL: string,
+    awayURL: string,
     time: string,
     quarter: string,
-    possession: 'home' | 'away',
-  ) {
-  // set background to white
+    possession: 'home' | 'away') {
+    // set background to white
     this.graphics.fillStyle = 'white';
     this.graphics.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this._drawBorders();
     this._topBar(finalScore, time, quarter);
-    this._teamSection(home, away, homeScore, awayScore, homeURI, awayURI, 30, finalScore);
+    await this._teamSection(home, away, homeScore, awayScore, homeURL, awayURL, 30, finalScore);
 
     if (!finalScore) {
       this._drawPossessionTriangle(possession);
@@ -91,7 +91,7 @@ class ScorecardGenerator {
     this.graphics.fillText(text, x, y);
   }
 
-  _teamSection(
+  async _teamSection(
     home: string,
     away: string,
     homeScore: string,
@@ -143,13 +143,12 @@ class ScorecardGenerator {
     this.graphics.fillText(away, teamNameX, awayNameY);
 
     // images
-    const homeImg = new Image();
-    homeImg.src = fs.readFileSync(homeURI);
-    const awayImg = new Image();
-    awayImg.src = fs.readFileSync(awayURI);
+    const imagePromises = [];
 
-    this.graphics.drawImage(homeImg, padding, 180, 100, 100);
-    this.graphics.drawImage(awayImg, padding, 400, 100, 100);
+    imagePromises.push(this._getTeamImage(homeURI, padding + 25, 180, 100, 100));
+    imagePromises.push(this._getTeamImage(awayURI, padding + 25, 400, 100, 100));
+
+    await Promise.all(imagePromises);
   }
 
   _drawPossessionTriangle(possession: 'home' | 'away') {
@@ -164,16 +163,17 @@ class ScorecardGenerator {
     this.graphics.fill();
     this.graphics.closePath();
   }
-}
 
-const gen = new ScorecardGenerator()
-generate(true,
-  'Lake Highland',
-  'Burges',
-  '24',
-  '14',
-  './LakeHighland.png',
-  './BurgesHS_Logo.png',
-  '10:32',
-  '3rd',
-  'away');
+  async _getTeamImage(url: string, padding: number, v1: number, width: number, height: number) {
+    return Jimp.read(url)
+      .then(image => image.scaleToFit(width, height).getBufferAsync(Jimp.MIME_PNG)
+        .then((pngBuffer) => {
+          const canvasImage = new Image();
+          canvasImage.src = pngBuffer;
+          this.graphics.drawImage(canvasImage, padding, v1, width, height);
+        }))
+      .catch((err) => {
+        log(err);
+      });
+  }
+}

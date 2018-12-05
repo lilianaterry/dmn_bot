@@ -49,8 +49,8 @@ export default class Database {
           },
         };
 
-        this.docClient.put(addUserParams, (err) => {
-          if (err) {
+        this.docClient.put(addUserParams, (putErr) => {
+          if (putErr) {
             log(chalk.red('Unable to add new user. Error JSON:', JSON.stringify(err, null, 2)));
           }
         });
@@ -98,36 +98,37 @@ export default class Database {
 
   setPreference(userId: string, teamId: string, prefName: string, prefVal: bool) {
     return new Promise((resolve, reject) => {
-      var params = {
+      const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
         Key: {
-          team_id: teamId
+          team_id: teamId,
         },
         UpdateExpression: 'set #type_pref = :prefVal',
         ConditionExpression: '#user_id = :userId',
         ExpressionAttributeNames: {
-          '#type_pref' : prefName,
-          '#user_id' : 'user_id'
+          '#type_pref': prefName,
+          '#user_id': 'user_id',
         },
         ExpressionAttributeValues: {
-          ':userId' : userId,
-          ':prefVal' : prefVal,
+          ':userId': userId,
+          ':prefVal': prefVal,
         },
       };
-          
-      this.docClient.update(params, function(err, data) {
-         if (err) {
-           log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
-           reject();
-         } else {
-           log(`Data from update:` + JSON.stringify(data));
-           resolve();
-         }
+
+      this.docClient.update(params, (err, data) => {
+        if (err) {
+          log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
+          reject();
+        } else {
+          log(`Data from update:${JSON.stringify(data)}`);
+          resolve();
+        }
       });
     });
   }
 
   getSubscriptionsByUser(userId: string): Promise<any> {
+    log(`Getting subscriptions for user: ${userId}`);
     return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
@@ -145,7 +146,7 @@ export default class Database {
           if (data.Items) {
             resolve(data.Items);
           } else {
-            resolve(null);
+            resolve([]);
           }
         }
       });
@@ -204,11 +205,64 @@ export default class Database {
     });
   }
 
+  getTeamById(teamId: string): Promise<any> {
+    log(`Getting team id ${teamId} from dynamo`);
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: Database.TEAM_TABLE,
+        Key: {
+          team_id: teamId,
+        },
+      };
+
+      this.docClient.get(params, (err, data) => {
+        if (err) {
+          log(chalk.red('There was an error retrieving the team from the database.'));
+          log(err);
+          reject(err);
+        } else {
+          log('Successfully retrieved team from database');
+          if (data.Items) {
+            resolve(data.Items[0]);
+          } else {
+            reject();
+          }
+        }
+      });
+    });
+  }
+
+  addTeam(teamId:string, teamName: string) {
+    log(`Adding team ${teamName} to database.`);
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: Database.TEAM_TABLE,
+        Item: {
+          team_id: teamId,
+          team_name: teamName.toLowerCase(),
+          display_name: teamName,
+        },
+      };
+
+      this.docClient.put(params, (err) => {
+        if (err) {
+          log(chalk.red('There was an error adding the team to the database.'));
+          log(err);
+          reject(err);
+        } else {
+          log('Successfully added team to database.');
+          resolve();
+        }
+      });
+    });
+  }
+
   getSubscriptionsByTeam(teamId: string): Promise<any> {
+    log(`Getting subscriptions for team: ${teamId}`);
     return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
-        FilterExpression: 'teamId = :teamId',
+        FilterExpression: 'team_id = :teamId',
         ExpressionAttributeValues: { ':teamId': teamId },
       };
 
@@ -222,7 +276,7 @@ export default class Database {
           if (data.Items) {
             resolve(data.Items);
           } else {
-            resolve(null);
+            resolve([]);
           }
         }
       });
@@ -264,6 +318,8 @@ export default class Database {
         Item: {
           game_id: game.gameInfo.GameID,
           expires_at: moment().add(1, 'w').unix(),
+          home_score: 0,
+          away_score: 0,
           ..._.pickBy(game.gameInfo, (v: any) => !_.isEmpty(v)),
         },
       };
@@ -286,7 +342,7 @@ export default class Database {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
         FilterExpression: 'team_id = :teamId AND user_id = :userId',
-        ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
+        ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId },
       };
 
       this.docClient.scan(params, (err, data) => {
@@ -295,12 +351,38 @@ export default class Database {
           log(err);
           reject(err);
         } else {
-          log(`Successfully retrieved user notifications from database`);
+          log('Successfully retrieved user notifications from database');
           if (data.Items) {
             resolve(data.Items[0]);
           } else {
             resolve(null);
           }
+        }
+      });
+    });
+  }
+
+  updateGame(gameId: string, homeScore: number, awayScore: number, timeModified: string) {
+    return new Promise((resolve, reject) => {
+      const params = {
+        TableName: Database.GAME_TABLE,
+        Key: {
+          game_id: gameId,
+        },
+        UpdateExpression: 'set home_score = :homeScore, away_score = :awayScore, GameStatsDateTimeModified = :updateTime',
+        ExpressionAttributeValues: {
+          ':homeScore': homeScore,
+          ':awayScore': awayScore,
+          ':updateTime': timeModified,
+        },
+      };
+
+      this.docClient.update(params, (err) => {
+        if (err) {
+          log(chalk.red('Unable to update game information'));
+          reject(err);
+        } else {
+          resolve();
         }
       });
     });

@@ -39,13 +39,13 @@ app.post('/webhook', (req: any, res: any) => {
 
     case IntentHandler.Intents.UserProvidesTeamName:
       log('Inside user provides team intent');
-      IntentHandler.handleUserProvidesTeamName(userId, queryResult, sessionId).then((fulfillmentResponse) => {
-        log(JSON.stringify(fulfillmentResponse))
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log(err);
-      });
+      IntentHandler.handleUserProvidesTeamName(userId, queryResult, sessionId)
+        .then((fulfillmentResponse) => {
+          log(JSON.stringify(fulfillmentResponse));
+          res.json(fulfillmentResponse);
+        }).catch((err) => {
+          log(err);
+        });
       break;
 
     case IntentHandler.Intents.UserProvidesAnotherName:
@@ -74,63 +74,63 @@ app.post('/webhook', (req: any, res: any) => {
     case IntentHandler.Intents.InvalidTeamProvided:
       log('Inside invalid team intent');
 
-      IntentHandler.handleInvalidTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
-        log(JSON.stringify(fulfillmentResponse))
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log(`There was an error in InvalidTeamProvided`);
-        log(err);
-      });
+      IntentHandler.handleInvalidTeam(userId, queryResult, sessionId)
+        .then((fulfillmentResponse) => {
+          log(JSON.stringify(fulfillmentResponse));
+          res.json(fulfillmentResponse);
+        }).catch((err) => {
+          log('There was an error in InvalidTeamProvided');
+          log(err);
+        });
       break;
-    
+
     case IntentHandler.Intents.AddTeamFirst:
       // fall through to same handler as second intent
-      
+
     case IntentHandler.Intents.AddTeamSecond:
-    log('Inside Add Team');
+      log('Inside Add Team');
       IntentHandler.handleAddTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
       })
-      .catch((err) => {
-        log(`There was an error in AddTeam`);
-        log(err);
-      })
+        .catch((err) => {
+          log('There was an error in AddTeam');
+          log(err);
+        });
       break;
 
     case IntentHandler.Intents.AddNotificationsOptions:
       log('Inside add notification options');
       IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
-        log(JSON.stringify(fulfillmentResponse))
+        log(JSON.stringify(fulfillmentResponse));
         res.json(fulfillmentResponse);
       })
-      .catch((err) => {
-        log('There was an error in AddNotificationsOptions');
-        log(err);
-      });
+        .catch((err) => {
+          log('There was an error in AddNotificationsOptions');
+          log(err);
+        });
       break;
 
-    case IntentHandler.Intents.RemoveNotificationsOptions: 
+    case IntentHandler.Intents.RemoveNotificationsOptions:
       log('Inside remove notification options');
       IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
         log(fulfillmentResponse);
         res.json(fulfillmentResponse);
       })
-      .catch((err) => {
-        log('There was an error in RemoveNotificationsOptions');
-        log(err);
-      });
+        .catch((err) => {
+          log('There was an error in RemoveNotificationsOptions');
+          log(err);
+        });
       break;
 
     case IntentHandler.Intents.AddNotificationsSelection:
       log('Inside add notifications selection');
-      // IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
-      //   res.json(fulfillmentResponse);
-      // })
-      // .catch((err) => {
-      //   log('There was an error in AddNotificationsLoop');
-      //   log(err);
-      // });
+      IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+        .catch((err) => {
+          log('There was an error in AddNotificationsLoop');
+          log(err);
+        });
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamRequest:
@@ -138,7 +138,7 @@ app.post('/webhook', (req: any, res: any) => {
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamName:
-    
+
       break;
 
     default:

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "start-dev": "DEBUG=*,-express:*,-babel:*,-babel babel-watch src/index.js",
+    "start-dev": "DEBUG=*,-express:*,-babel:*,-babel,-body-parser:* babel-watch src/index.js",
     "build": "babel src -d dist/"
   },
   "author": "",
@@ -15,12 +15,13 @@
     "actions-on-google": "^2.4.1",
     "aws-sdk": "^2.334.0",
     "body-parser": "latest",
-    "canvas": "^2.0.1",
+    "canvas": "^2.2.0",
     "chalk": "^2.4.1",
     "cron": "^1.5.0",
     "debug": "^4.1.0",
     "express": "^4.16.3",
     "form-data": "^2.3.3",
+    "jimp": "^0.6.0",
     "lodash": "^4.17.11",
     "lomath": "^0.3.0",
     "moment": "^2.22.2",

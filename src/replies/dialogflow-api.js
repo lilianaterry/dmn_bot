@@ -1,6 +1,6 @@
-import * as _ from 'lodash';
-
 export default class DialogflowApi {
+  response: any;
+
   constructor(response: any) {
     this.response = response;
   }
@@ -11,7 +11,7 @@ export default class DialogflowApi {
       throw new Error('Must have 1 to 3 responses');
     }
 
-		buttons = Array.from(buttons);
+    buttons = Array.from(buttons);
 
     return buttons.map(button => ({
       text: button.text,

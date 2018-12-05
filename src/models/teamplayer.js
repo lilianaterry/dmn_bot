@@ -24,7 +24,7 @@ interface Record {
   SummaryDescription: string;
 }
 
-interface Possession {
+export interface Possession {
   TeamName: string;
   ScoreChange: boolean;
   AwayScorePrev: number;
@@ -53,7 +53,7 @@ interface PlayByPlay {
   };
 }
 
-interface GameInfo {
+export interface GameInfo {
   GameID: string;
   GameStatStatus: string;
   SportID: string;
@@ -189,10 +189,6 @@ export interface GameData {
  };
 }
 
-export interface InProgressGame {
-  GameID: string;
-}
-
 export class ScoreUpdate {
   data: ScoreUpdateModel
 
@@ -200,14 +196,14 @@ export class ScoreUpdate {
     this.data = data;
   }
 
-  getLastPlay(): Possession | null {
+  getLastPlay(): { possession: Possession, quarter: string } | null {
     let last = null;
-    _.forEach(this.data.pbpData.SummaryQuarters, (v: BallPosessionList) => {
+    _.forEach(this.data.pbpData.SummaryQuarters, (v: BallPosessionList, k: string) => {
       // console.log('posession', v);
       if (!_.isEmpty(v.BallPossession)) {
         const lastKey = _.last(_.keys(v.BallPossession));
         // console.log('last key', lastKey);
-        last = v.BallPossession[lastKey];
+        last = { possession: v.BallPossession[lastKey], quarter: k };
       }
     });
     return last;
