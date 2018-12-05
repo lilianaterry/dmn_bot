@@ -145,8 +145,8 @@ export class ScorecardGenerator {
     // images
     const imagePromises = [];
 
-    imagePromises.push(this._getTeamImage(homeURI, padding, 180, 100, 100));
-    imagePromises.push(this._getTeamImage(awayURI, padding, 400, 100, 100));
+    imagePromises.push(this._getTeamImage(homeURI, padding + 25, 180, 100, 100));
+    imagePromises.push(this._getTeamImage(awayURI, padding + 25, 400, 100, 100));
 
     await Promise.all(imagePromises);
   }
