@@ -54,7 +54,7 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
           }, 
           lastPlay.quarter,
           lastPlay.possession.Records[_.last(_.keys(lastPlay.possession.Records))].TimeLeft,
-          lastPlay.possession.TeamName === storedData.homeTeamName ? 'home' : 'away' 
+          lastPlay.possession.TeamName === storedData.homeTeamName ? 'home' : 'away');
         }
       });
     } else {

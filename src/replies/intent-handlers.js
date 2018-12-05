@@ -61,9 +61,6 @@ export async function verifySchool(userId: string, sessionId: string, teamName: 
 export async function handleWelcomeBegin(userId: string) {
   const database = new Database();
   database.addNewUser(userId);
-  const messenger = new MessengerApi();
-  const attachID = await messenger.uploadImageAttachment(`${__dirname}/../out.png`);
-  messenger.sendImageAttachmentWithId(userId, attachID);
 }
 
 export async function handleUserProvidesTeamName(userId: string, queryResult: any, session: string) {
