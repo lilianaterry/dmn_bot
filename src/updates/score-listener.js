@@ -25,19 +25,19 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
     if (lastPlay) {
       // Check to see if the score has updated since the data changed.
       let scoreChanged;
-      if (storedData.home_score !== lastPlay.HomeScorePrev
-        || storedData.away_score !== lastPlay.AwayScorePrev) {
+      if (storedData.home_score !== lastPlay.possession.HomeScorePrev
+        || storedData.away_score !== lastPlay.possession.AwayScorePrev) {
         // Score has changed
         scoreChanged = true;
-        logGame(storedData.GameID, `The score of the game has changed. Previously ${storedData.home_score}-${storedData.away_score}. Now ${lastPlay.HomeScorePrev}-${lastPlay.AwayScorePrev}`);
+        logGame(storedData.GameID, `The score of the game has changed. Previously ${storedData.home_score}-${storedData.away_score}. Now ${lastPlay.possession.HomeScorePrev}-${lastPlay.possession.AwayScorePrev}`);
       } else {
         scoreChanged = false;
         logGame(storedData.GameID, 'The game has been updated but the score has not changed.');
       }
       db.updateGame(
         updateData.data.gameData.GameID,
-        lastPlay.HomeScorePrev,
-        lastPlay.AwayScorePrev,
+        lastPlay.possession.HomeScorePrev,
+        lastPlay.possession.AwayScorePrev,
         updateData.data.gameData.GameStatsDateTimeModified,
       ).then(() => {
         logGame(storedData.GameID, 'Game update has been saved in database.');
@@ -46,12 +46,15 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
           sendScoreUpdate({
             id: storedData.GameHomeTeamID,
             name: storedData.homeTeamName,
-            score: lastPlay.HomeScorePrev,
+            score: lastPlay.possession.HomeScorePrev,
           }, {
             id: storedData.GameAwayTeamID,
             name: storedData.awayTeamName,
-            score: lastPlay.AwayScorePrev,
-          });
+            score: lastPlay.possession.AwayScorePrev,
+          }, 
+          lastPlay.quarter,
+          lastPlay.possession.Records[_.last(_.keys(lastPlay.possession.Records))].TimeLeft,
+          lastPlay.possession.TeamName === storedData.homeTeamName ? 'home' : 'away' 
         }
       });
     } else {

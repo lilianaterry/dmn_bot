@@ -2,6 +2,7 @@ import debug from 'debug';
 import { GameData } from '../models/teamplayer';
 import Database from '../database-api';
 import MessengerApi from '../replies/messenger-api';
+import { ScorecardGenerator } from '../gen-images';
 
 const log = debug('score-parser');
 
@@ -47,9 +48,41 @@ interface SimpleTeam {
   score: number;
 }
 
-export async function sendScoreUpdate(home: SimpleTeam, away: SimpleTeam) {
+export async function sendScoreUpdate(
+  home: SimpleTeam,
+  away: SimpleTeam,
+  quarter: string,
+  timeLeft: string,
+  teamPossession: 'home'|'away',
+) {
   const db = new Database();
   const messenger = MessengerApi.getInstance();
+
+  const gen = new ScorecardGenerator();
+  let attachmentId = null;
+  try {
+    const homeTeamFull = await db.getTeamById(home.id);
+    const awayTeamFull = await db.getTeamById(away.id);
+
+    if (homeTeamFull.team_image && awayTeamFull.team_image) {
+      const imagePath = await gen.generate(
+        false,
+        home.name,
+        away.name,
+        `${home.score}`,
+        `${away.score}`,
+        homeTeamFull.team_image,
+        awayTeamFull.team_image,
+        timeLeft,
+        quarter,
+        teamPossession,
+      );
+      attachmentId = await MessengerApi.getInstance().uploadImageAttachment(imagePath);
+      gen.cleanup();
+    }
+  } catch (err) {
+    log(err);
+  }
 
   log('Getting subscriptions for home team');
   const homeUsers = await db.getSubscriptionsByTeam(home.id);
@@ -61,13 +94,21 @@ export async function sendScoreUpdate(home: SimpleTeam, away: SimpleTeam) {
     messenger.sendTextMessage(user.user_id,
       `Score update! 
 ${home.name}: ${home.score}
-${away.name}: ${away.score}`);
+${away.name}: ${away.score}`).then(() => {
+      if (attachmentId) {
+        MessengerApi.getInstance().sendImageAttachmentWithId(user.user_id, attachmentId);
+      }
+    });
   });
 
   awayUsers.forEach((user) => {
     messenger.sendTextMessage(user.user_id,
       `Score update!
 ${away.name}: ${away.score}
-${home.name}: ${home.score}`);
+${home.name}: ${home.score}`).then(() => {
+      if (attachmentId) {
+        MessengerApi.getInstance().sendImageAttachmentWithId(user.user_id, attachmentId);
+      }
+    });
   });
 }

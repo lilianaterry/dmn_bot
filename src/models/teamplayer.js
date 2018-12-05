@@ -196,14 +196,14 @@ export class ScoreUpdate {
     this.data = data;
   }
 
-  getLastPlay(): Possession | null {
+  getLastPlay(): { possession: Possession, quarter: string } | null {
     let last = null;
-    _.forEach(this.data.pbpData.SummaryQuarters, (v: BallPosessionList) => {
+    _.forEach(this.data.pbpData.SummaryQuarters, (v: BallPosessionList, k: string) => {
       // console.log('posession', v);
       if (!_.isEmpty(v.BallPossession)) {
         const lastKey = _.last(_.keys(v.BallPossession));
         // console.log('last key', lastKey);
-        last = v.BallPossession[lastKey];
+        last = { possession: v.BallPossession[lastKey], quarter: k };
       }
     });
     return last;
