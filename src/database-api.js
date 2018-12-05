@@ -128,7 +128,6 @@ export default class Database {
   }
 
   getSubscriptionsByUser(userId: string): Promise<any> {
-    log(`Getting subscriptions for user: ${userId}`);
     return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
@@ -178,6 +177,36 @@ export default class Database {
     })
   }
 
+  removeSubscription(userId: string, teamId: string) {
+    const scanParams = {
+      TableName: Database.SUBSCRIPTION_TABLE,
+      FilterExpression: 'team_id = :teamId AND user_id = :userId',
+      ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
+    };
+
+    
+    this.docClient.scan(scanParams, (err, data) => {
+        if (err) {
+            log("Unable to find item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            log("Found item succeeded:", JSON.stringify(data, null, 2));
+            const deleteParams = {
+              TableName: Database.SUBSCRIPTION_TABLE,
+              Key: {
+                subscription_id: data.Items[0].subscription_id,
+              }
+            };
+            this.docClient.delete(deleteParams, function(err, deletedData) {
+              if (err) {
+                log(`Failed to delete team ${data.Items[0].team_id}`);
+              } else {
+                log(`Successfully deleted team ${data.Items[0].team_id}`);
+              }
+            });
+        }
+    });
+  }
+
   getTeamByName(teamName: string): Promise<any> {
     const lowerCaseName = teamName.toLowerCase();
     log(`Getting team ${teamName} from dynamo`);
@@ -217,15 +246,15 @@ export default class Database {
 
       this.docClient.get(params, (err, data) => {
         if (err) {
-          log(chalk.red('There was an error retrieving the team from the database.'));
+          log(chalk.red(`There was an error retrieving team ${teamId} from the database.`));
           log(err);
           reject(err);
         } else {
-          log('Successfully retrieved team from database');
-          if (data.Items) {
-            resolve(data.Items[0]);
+          log(`Successfully retrieved team ${teamId} from database`);
+          if (data.Item) {
+            resolve(data.Item);
           } else {
-            reject();
+            resolve(null);
           }
         }
       });

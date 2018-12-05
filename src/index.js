@@ -92,10 +92,10 @@ app.post('/webhook', (req: any, res: any) => {
       IntentHandler.handleAddTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
       })
-        .catch((err) => {
-          log('There was an error in AddTeam');
-          log(err);
-        });
+      .catch((err) => {
+        log('There was an error in AddTeam');
+        log(err);
+      });
       break;
 
     case IntentHandler.Intents.AddNotificationsOptions:
@@ -104,10 +104,10 @@ app.post('/webhook', (req: any, res: any) => {
         log(JSON.stringify(fulfillmentResponse));
         res.json(fulfillmentResponse);
       })
-        .catch((err) => {
-          log('There was an error in AddNotificationsOptions');
-          log(err);
-        });
+      .catch((err) => {
+        log('There was an error in AddNotificationsOptions');
+        log(err);
+      });
       break;
 
     case IntentHandler.Intents.RemoveNotificationsOptions:
@@ -116,10 +116,10 @@ app.post('/webhook', (req: any, res: any) => {
         log(fulfillmentResponse);
         res.json(fulfillmentResponse);
       })
-        .catch((err) => {
-          log('There was an error in RemoveNotificationsOptions');
-          log(err);
-        });
+      .catch((err) => {
+        log('There was an error in RemoveNotificationsOptions');
+        log(err);
+      });
       break;
 
     case IntentHandler.Intents.AddNotificationsSelection:
@@ -127,18 +127,25 @@ app.post('/webhook', (req: any, res: any) => {
       IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
       })
-        .catch((err) => {
-          log('There was an error in AddNotificationsLoop');
-          log(err);
-        });
+      .catch((err) => {
+        log('There was an error in AddNotificationsLoop');
+        log(err);
+      });
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamRequest:
-
+      IntentHandler.handleUnsubscribeTeamRequest(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log('There was an error in UnsubscribeTeamRequest');
+        log(err);
+      })
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamName:
-
+      IntentHandler.handleUnsubscribeTeamName(userId, queryResult);
+      res.json({});
       break;
 
     default:

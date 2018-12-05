@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import debug from 'debug';
 import Database from '../database-api';
 import { messages } from '../strings';
-import MessengerApi from './messenger-api';
 import DialogflowApi from './dialogflow-api';
 import SessionContext from '../context';
 
@@ -117,15 +116,34 @@ export async function handleAddTeam(userId: string, queryResult: any, session: s
   return await verifySchool(userId, session, queryResult.parameters.teamName, nextContext, fulfillmentMessages);
 }
 
-export async function handleUnsubscribeTeamRequest() {
+export async function handleUnsubscribeTeamRequest(userId: string, queryResult: any) {
+  const database = new Database();
+  const teams = await database.getSubscriptionsByUser(userId);
 
+  const fulfillment = [];
+  for (const team of teams) {
+    const teamData = await database.getTeamById(team.team_id);
+    const buttons = [
+      {
+        text: "Unsubscribe",
+        postback: team.team_id
+      }
+    ];
+    fulfillment.push(DialogflowApi.getCardResponseJSON(teamData.display_name, null, teamData.team_image, buttons));
+  }
+
+  return { fulfillmentMessages: fulfillment };
 }
 
-export async function handleUnsubscribeTeamName(userId: string, queryResult: any, session: string) {
+export async function handleUnsubscribeTeamName(userId: string, queryResult: any) {
+  const teamId = queryResult.queryText;
+  const database = new Database();
 
+  database.removeSubscription(userId, teamId);
 }
 
 export async function handleNotificationsOptions(userId: string, queryResult: any) {
+  // TODO: 
   // get teams by user 
   const teamId = '4498';
   const database = new Database();
