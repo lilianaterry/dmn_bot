@@ -21,6 +21,7 @@ export const Intents = {
   AddNotificationsOptions: 'ChangeNotifications - AddNotifications',
   AddNotificationsSelection: 'ChangeNotifications - AddNotifications - SelectRange - End',
   ChangeTeamNotif: 'GlobalChangeNotifications - Single',
+  ChangeTeamNotifSelection: 'GlobalChangeNotifications - Single - End',
   ChangeGlobalNotif: 'GlobalChangeNotifications - All - End'
 };
 
@@ -144,8 +145,7 @@ export async function handleUnsubscribeTeamName(userId: string, queryResult: any
   database.removeSubscription(userId, teamId);
 }
 
-export async function handleChangeGlobalNotifications(userId: string, queryResult: any) {
-  log(JSON.stringify(queryResult, null, 2))
+export function handleChangeGlobalNotifications(userId: string, queryResult: any) {
   const postback = queryResult.queryText.split(':');
   const notificationType = postback[0];
   const notificationSetting = postback[1] == 'true';
@@ -155,56 +155,60 @@ export async function handleChangeGlobalNotifications(userId: string, queryResul
   
   const startResponse = "Great! PressBot will start sending you notifications for ";
   const stopResponse = "PressBot will stop sending you notifications for ";
-  let reply;
-  if (notificationSetting) {
-    reply = startResponse + " " + _.lowerCase(notificationType) + ".";
-  } else {
-    reply = stopResponse + " " + _.lowerCase(notificationType) + ".";
-  }
+  let reply = notificationSetting ? startResponse : stopResponse;
+  reply = reply + _.lowerCase(notificationType) + ".";
 
   return { fulfillmentMessages: [DialogflowApi.getTextResponseJSON(reply)] };
 }
 
-export async function handleNotificationsOptions(userId: string, queryResult: any) {
-  // TODO: 
-  // get teams by user 
-  const teamId = '4498';
+export async function handleChangeTeamNotification(userId: string, queryResult: string) {
   const database = new Database();
-  const result = await database.getSingleTeamSubscription(userId, teamId);
+  const teams = await database.getSubscriptionsByUser(userId);
 
-  log(JSON.stringify(result.kickoff));
+  const fulfillment = [];
+  for (const team of teams) {
+    const teamData = await database.getTeamById(team.team_id);
 
-  const notifications = [];
-  if (!result.everyScore)
-    notifications.push('every score');
-  if (!result.everyTD)
-    notifications.push('every TD');
-  if (!result.everyQTR)
-    notifications.push('every QTR');
-  if (!result.kickoff)
-    notifications.push('kickoff');
+    const everyScoreText = team.everyScore ? "Stop Every Score" : "Start Every Score";
+    const everyQTRText = team.everyQTR ? "Stop Every QTR" : "Start Every QTR";
+    const kickoffText = team.kickoff ? "Stop Kickoff Alerts" : "Start Kickoff Alerts";
 
-  let fulfillment;
-  if (_.isEmpty(notifications)) {
-    fulfillment = [DialogflowApi.getTextResponseJSON(strings.addNotificationsFail_message)];
-  } else {
-    fulfillment = [DialogflowApi.getQuickReplyResponseJSON(queryResult.fulfillmentText, notifications)];
-  }
+    const buttons = [
+      {
+        text: everyScoreText,
+        postback: `${team.team_id}:everyScore:${!team.everyScore}`
+      }, 
+      {
+        text: everyQTRText,
+        postback: `${team.team_id}:everyQTR:${!team.everyQTR}`
+      }, 
+      {
+        text: kickoffText,
+        postback: `${team.team_id}:kickoff:${!team.kickoff}`
+      }, 
+    ];
+    fulfillment.push(DialogflowApi.getCardResponseJSON(teamData.display_name, null, teamData.team_image, buttons));
+  }; 
 
   return { fulfillmentMessages: fulfillment };
 }
 
-export async function handleAddNotificationsSelection(userId: string, queryResult: any) {
-  const context = _.find(queryResult.outputContexts, o => !(o.name.includes('generic')));
-  const notification = context.parameters.freqNotification != '' ? context.parameters.freqNotification : context.parameters.typeNotification;
+export async function handleChangeTeamNotificationSelection(userId: string, queryResult: any) {
+  const postback = queryResult.queryText.split(":");
+  const teamId = postback[0];
+  const notificationType = postback[1];
+  const notificationSetting = postback[2] == 'true';
 
-  log(notification);
-
-  // get teams by user 
-  const teamId = '5414';
   const database = new Database();
-  await database.setPreference(userId, teamId, notification, true);
-  log('do we get here')
-  
-  return await handleNotificationsOptions(userId, queryResult);
+  const teamData = await database.getTeamById(teamId);
+  const subData = await database.getSingleTeamSubscription(userId, teamId);
+  log(`Passed: ${subData.subscription_id} + ${userId} + ${teamId} + ${notificationType} + ${notificationSetting}`)
+  database.setPreference(subData.subscription_id, userId, teamId, notificationType, notificationSetting);
+
+  const startResponse = `Great! PressBot will start sending you notifications for`;
+  const stopResponse = `PressBot will stop sending you notifications for`;
+  let reply = notificationSetting ? startResponse : stopResponse;
+  reply = `${reply} ${_.lowerCase(notificationType)} for ${teamData.display_name}.`;
+
+  return { fulfillmentMessages: [DialogflowApi.getTextResponseJSON(reply)] };
 }

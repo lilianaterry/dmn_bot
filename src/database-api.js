@@ -86,7 +86,6 @@ export default class Database {
 
   setPrefForAllTeams(userId: string, prefName: string, prefVal: bool) {
     this.getSubscriptionsByUser(userId).then((teams) => {
-      log(JSON.stringify(teams, null, 2))
       teams.forEach((team) => {
         this.setPreference(team.subscription_id, userId, team.team_id, prefName, prefVal);
       });
@@ -121,7 +120,7 @@ export default class Database {
           log(chalk.red('Unable to add type preference. Error JSON:', JSON.stringify(err, null, 2)));
           reject();
         } else {
-          log(`Data from update:${JSON.stringify(data)}`);
+          log(`Data from update team preference:${JSON.stringify(data)}`);
           resolve();
         }
       });

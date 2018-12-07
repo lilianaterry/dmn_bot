@@ -69,6 +69,7 @@ app.post('/webhook', (req: any, res: any) => {
     case IntentHandler.Intents.WelcomeEnd:
       log('Inside welcome end');
       IntentHandler.handleWelcomeEnd(userId, queryResult);
+      res.json({});
       break;
 
     case IntentHandler.Intents.InvalidTeamProvided:
@@ -98,41 +99,6 @@ app.post('/webhook', (req: any, res: any) => {
       });
       break;
 
-    case IntentHandler.Intents.AddNotificationsOptions:
-      log('Inside add notification options');
-      IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
-        log(JSON.stringify(fulfillmentResponse));
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log('There was an error in AddNotificationsOptions');
-        log(err);
-      });
-      break;
-
-    case IntentHandler.Intents.RemoveNotificationsOptions:
-      log('Inside remove notification options');
-      IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
-        log(fulfillmentResponse);
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log('There was an error in RemoveNotificationsOptions');
-        log(err);
-      });
-      break;
-
-    case IntentHandler.Intents.AddNotificationsSelection:
-      log('Inside add notifications selection');
-      IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-      .catch((err) => {
-        log('There was an error in AddNotificationsLoop');
-        log(err);
-      });
-      break;
-
     case IntentHandler.Intents.UnsubscribeTeamRequest:
       IntentHandler.handleUnsubscribeTeamRequest(userId, queryResult).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
@@ -144,21 +110,32 @@ app.post('/webhook', (req: any, res: any) => {
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamName:
+      log('Inside UnsubscribeTeamName');
       IntentHandler.handleUnsubscribeTeamName(userId, queryResult);
       res.json({});
       break;
 
     case IntentHandler.Intents.ChangeTeamNotif:
-      
-
-    case IntentHandler.Intents.ChangeGlobalNotif:
-      IntentHandler.handleChangeGlobalNotifications(userId, queryResult).then((fulfillmentResponse) => {
+      log('Inside ChangeTeamNotif');
+      IntentHandler.handleChangeTeamNotification(userId, queryResult).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
       })
       .catch((err) => {
-        log('There was an error in ChangeGlobalNotifications');
+        log('There was an error in ChangeTeamNotif');
         log(err);
       });
+      break;
+
+    case IntentHandler.Intents.ChangeTeamNotifSelection:
+      log('Inside ChangeTeamNotifSelection');
+      IntentHandler.handleChangeTeamNotificationSelection(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      });
+      break;
+
+    case IntentHandler.Intents.ChangeGlobalNotif:
+      log('Inside ChangeGlobalNotif');
+      res.json(IntentHandler.handleChangeGlobalNotifications(userId, queryResult));
       break;
 
     default:
