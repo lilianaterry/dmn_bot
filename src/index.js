@@ -15,9 +15,9 @@ const app = express().use(bodyParser.json()); // creates express http server
 app.listen(process.env.PORT || 8000, () => log('Listening for webhook requests'));
 
 // Check for score updates every minute
-const scoreListener = new CronJob('* * * * *', checkForUpdates);
-log('Starting job to check for score updates');
-scoreListener.start();
+// const scoreListener = new CronJob('* * * * *', checkForUpdates);
+// log('Starting job to check for score updates');
+// scoreListener.start();
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req: any, res: any) => {
@@ -69,6 +69,7 @@ app.post('/webhook', (req: any, res: any) => {
     case IntentHandler.Intents.WelcomeEnd:
       log('Inside welcome end');
       IntentHandler.handleWelcomeEnd(userId, queryResult);
+      res.json({});
       break;
 
     case IntentHandler.Intents.InvalidTeamProvided:
@@ -92,52 +93,49 @@ app.post('/webhook', (req: any, res: any) => {
       IntentHandler.handleAddTeam(userId, queryResult, sessionId).then((fulfillmentResponse) => {
         res.json(fulfillmentResponse);
       })
-        .catch((err) => {
-          log('There was an error in AddTeam');
-          log(err);
-        });
-      break;
-
-    case IntentHandler.Intents.AddNotificationsOptions:
-      log('Inside add notification options');
-      IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
-        log(JSON.stringify(fulfillmentResponse));
-        res.json(fulfillmentResponse);
-      })
-        .catch((err) => {
-          log('There was an error in AddNotificationsOptions');
-          log(err);
-        });
-      break;
-
-    case IntentHandler.Intents.RemoveNotificationsOptions:
-      log('Inside remove notification options');
-      IntentHandler.handleNotificationsOptions(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-        .catch((err) => {
-          log('There was an error in RemoveNotificationsOptions');
-          log(err);
-        });
-      break;
-
-    case IntentHandler.Intents.AddNotificationsSelection:
-      log('Inside add notifications selection');
-      IntentHandler.handleAddNotificationsSelection(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
-        .catch((err) => {
-          log('There was an error in AddNotificationsLoop');
-          log(err);
-        });
+      .catch((err) => {
+        log('There was an error in AddTeam');
+        log(err);
+      });
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamRequest:
-
+      IntentHandler.handleUnsubscribeTeamRequest(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log('There was an error in UnsubscribeTeamRequest');
+        log(err);
+      });
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamName:
+      log('Inside UnsubscribeTeamName');
+      IntentHandler.handleUnsubscribeTeamName(userId, queryResult);
+      res.json({});
+      break;
 
+    case IntentHandler.Intents.ChangeTeamNotif:
+      log('Inside ChangeTeamNotif');
+      IntentHandler.handleChangeTeamNotification(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log('There was an error in ChangeTeamNotif');
+        log(err);
+      });
+      break;
+
+    case IntentHandler.Intents.ChangeTeamNotifSelection:
+      log('Inside ChangeTeamNotifSelection');
+      IntentHandler.handleChangeTeamNotificationSelection(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      });
+      break;
+
+    case IntentHandler.Intents.ChangeGlobalNotif:
+      log('Inside ChangeGlobalNotif');
+      res.json(IntentHandler.handleChangeGlobalNotifications(userId, queryResult));
       break;
 
     default:
