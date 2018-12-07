@@ -86,31 +86,32 @@ export default class Database {
 
   setPrefForAllTeams(userId: string, prefName: string, prefVal: bool) {
     this.getSubscriptionsByUser(userId).then((teams) => {
+      log(JSON.stringify(teams, null, 2))
       teams.forEach((team) => {
-        this.setPreference(userId, team.team_id, prefName, prefVal);
+        this.setPreference(team.subscription_id, userId, team.team_id, prefName, prefVal);
       });
     })
-      .catch((err) => {
-        log(chalk.red('An error occured in setTypePrefForAllTeams'));
-        log(err);
-      });
+    .catch((err) => {
+      log(chalk.red('An error occured in setTypePrefForAllTeams'));
+      log(err);
+    });
   }
 
-  setPreference(userId: string, teamId: string, prefName: string, prefVal: bool) {
+  setPreference(subscriptionId: string, userId: string, teamId: string, prefName: string, prefVal: bool) {
     return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
         Key: {
-          team_id: teamId,
+          subscription_id: subscriptionId,
         },
         UpdateExpression: 'set #type_pref = :prefVal',
-        ConditionExpression: '#user_id = :userId',
+        ConditionExpression: 'team_id = :teamId AND user_id = :userId',
         ExpressionAttributeNames: {
           '#type_pref': prefName,
-          '#user_id': 'user_id',
         },
         ExpressionAttributeValues: {
           ':userId': userId,
+          ':teamId': teamId,
           ':prefVal': prefVal,
         },
       };
@@ -141,7 +142,7 @@ export default class Database {
           log(err);
           reject(err);
         } else {
-          log('Successfully retrieved team from database');
+          log(`Successfully retrieved user ${userId}\'steams from database`);
           if (data.Items) {
             resolve(data.Items);
           } else {
@@ -184,7 +185,6 @@ export default class Database {
       ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
     };
 
-    
     this.docClient.scan(scanParams, (err, data) => {
         if (err) {
             log("Unable to find item. Error JSON:", JSON.stringify(err, null, 2));

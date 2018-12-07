@@ -20,6 +20,8 @@ export const Intents = {
   UnsubscribeTeamName: 'UnsubscribeTeam - ProvideTeamName',
   AddNotificationsOptions: 'ChangeNotifications - AddNotifications',
   AddNotificationsSelection: 'ChangeNotifications - AddNotifications - SelectRange - End',
+  ChangeTeamNotif: 'GlobalChangeNotifications - Single',
+  ChangeGlobalNotif: 'GlobalChangeNotifications - All - End'
 };
 
 export async function verifySchool(userId: string, sessionId: string, teamName: string,
@@ -140,6 +142,27 @@ export async function handleUnsubscribeTeamName(userId: string, queryResult: any
   const database = new Database();
 
   database.removeSubscription(userId, teamId);
+}
+
+export async function handleChangeGlobalNotifications(userId: string, queryResult: any) {
+  log(JSON.stringify(queryResult, null, 2))
+  const postback = queryResult.queryText.split(':');
+  const notificationType = postback[0];
+  const notificationSetting = postback[1] == 'true';
+
+  const database = new Database();
+  database.setPrefForAllTeams(userId, notificationType, notificationSetting)
+  
+  const startResponse = "Great! PressBot will start sending you notifications for ";
+  const stopResponse = "PressBot will stop sending you notifications for ";
+  let reply;
+  if (notificationSetting) {
+    reply = startResponse + " " + _.lowerCase(notificationType) + ".";
+  } else {
+    reply = stopResponse + " " + _.lowerCase(notificationType) + ".";
+  }
+
+  return { fulfillmentMessages: [DialogflowApi.getTextResponseJSON(reply)] };
 }
 
 export async function handleNotificationsOptions(userId: string, queryResult: any) {

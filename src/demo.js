@@ -50,26 +50,26 @@ function sendEndOfGame(team1, team2, team1Score, team2Score) {
 }
 
 
-const play = 'Carson Collins pass complete to Solomon Aweke for 50 yards to AO 0. FIRST DOWN. TOUCHDOWN. (Tyler Loop PAT KICK GOOD.)';
+const play = 'Run FARRRRRRR';
 
-const team1 = 'Carthage';
-const team2 = 'Midlothian Heritage';
+const team1 = 'Sanger';
+const team2 = 'Carthage';
 
-const team1Score = '15';
-const team2Score = '20';
+const team1Score = '7';
+const team2Score = '0';
 
-const quarter = '1st';
+const quarter = '2nd';
 
 const team1Image = 'https://dw3jhbqsbya58.cloudfront.net/fit-in/210x89/school-mascot/e/5/9/e59c57a1-2080-4f3d-b660-5532bf34a950.gif?version=636208622400000000';
 const team2Image = 'https://dw3jhbqsbya58.cloudfront.net/fit-in/210x89/school-mascot/5/5/6/556cde7f-6469-4bd0-934c-fe78b5949f68.gif?version=633651561600000000';
 
-const final = false;
-const time = '3:52';
-const possession = 'away';
+const final = true;
+const time = '45:52';
+const possession = 'home';
 
-sendScore(team1, team2, team1Score, team2Score, play);
+sendScoreCard(final, team1, team2, team1Score, team2Score, team1Image, team2Image, time, quarter, possession);
+// sendScore(team1, team2, team1Score, team2Score, play);
 // sendQTR(quarter, team1, team2, team1Score, team2Score);
-// sendEndOfGame(team1, team2, team1Score, team2Score);
+sendEndOfGame(team1, team2, team1Score, team2Score);
 
-// sendScoreCard(final, team1, team2, team1Score, team2Score, team1Image, team2Image, time, quarter, possession);
 

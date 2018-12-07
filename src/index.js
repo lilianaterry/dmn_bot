@@ -140,12 +140,25 @@ app.post('/webhook', (req: any, res: any) => {
       .catch((err) => {
         log('There was an error in UnsubscribeTeamRequest');
         log(err);
-      })
+      });
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamName:
       IntentHandler.handleUnsubscribeTeamName(userId, queryResult);
       res.json({});
+      break;
+
+    case IntentHandler.Intents.ChangeTeamNotif:
+      
+
+    case IntentHandler.Intents.ChangeGlobalNotif:
+      IntentHandler.handleChangeGlobalNotifications(userId, queryResult).then((fulfillmentResponse) => {
+        res.json(fulfillmentResponse);
+      })
+      .catch((err) => {
+        log('There was an error in ChangeGlobalNotifications');
+        log(err);
+      });
       break;
 
     default:
