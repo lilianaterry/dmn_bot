@@ -2,6 +2,7 @@ import * as request from 'request-promise';
 import moment from 'moment';
 import debug from 'debug';
 import { ScoreUpdate, GameData } from '../models/teamplayer';
+import { gameData, scoreUpdate } from '../test-data';
 
 const log = debug('teamplayer');
 
@@ -23,7 +24,7 @@ export async function getInProgressGames(searchDate: moment): Promise<string[]> 
   let response;
   try {
     response = await callApi('API_GamesInProgress', { SearchDate: searchDate.toISOString() });
-    // response = JSON.stringify(['101442']);
+    response = JSON.stringify(['101442']);
   } catch (e) {
     throw new Error(`Something went wrong with getting in progress games: ${e.message}`);
   }
@@ -36,7 +37,7 @@ export async function getGameData(gameId: string): Promise<GameData> {
   let response;
   try {
     response = await callApi('API_GameData', { ID: gameId });
-    // response = JSON.stringify(gameData);
+    response = JSON.stringify(gameData);
   } catch (e) {
     throw new Error(`Something went wrong with getting game data: ${e.message}`);
   }
@@ -50,7 +51,7 @@ export async function getScoreUpdates(gameId: string): Promise<ScoreUpdate> {
   let response;
   try {
     response = await callApi('API_GameStats', { ID: gameId });
-    // response = JSON.stringify(scoreUpdate);
+    response = JSON.stringify(scoreUpdate);
   } catch (e) {
     throw new Error(`Something went wrong with getting score updates: ${e.message}`);
   }

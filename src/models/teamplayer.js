@@ -208,4 +208,20 @@ export class ScoreUpdate {
     });
     return last;
   }
+
+  getLastScoringPlay(): { possession: Possession, quarter: string } | null {
+    let last = null;
+    _.forEach(this.data.pbpData.SummaryQuarters, (v: BallPosessionList, k: string) => {
+      // console.log('posession', v);
+      if (!_.isEmpty(v.BallPossession)) {
+        _.forEach(v.BallPossession, (poss: Possession) => {
+          if (poss.ScoreChange && poss.AwayScoreCurr !== 0) {
+            last = { possession: poss, quarter: k };
+          }
+        });
+        // console.log('last key', lastKey);
+      }
+    });
+    return last;
+  }
 }

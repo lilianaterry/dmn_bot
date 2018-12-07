@@ -21,23 +21,24 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
     logGame(storedData.GameID, 'No update has occured for game.');
   } else {
     logGame(storedData.GameID, 'Updated data has been found.');
-    const lastPlay = updateData.getLastPlay();
+    const lastPlay = updateData.getLastScoringPlay();
     if (lastPlay) {
+      logGame(storedData.GameID, '%O', lastPlay);
       // Check to see if the score has updated since the data changed.
       let scoreChanged;
-      if (storedData.home_score !== lastPlay.possession.HomeScorePrev
-        || storedData.away_score !== lastPlay.possession.AwayScorePrev) {
+      if (storedData.home_score !== lastPlay.possession.HomeScoreCurr
+        || storedData.away_score !== lastPlay.possession.AwayScoreCurr) {
         // Score has changed
         scoreChanged = true;
-        logGame(storedData.GameID, `The score of the game has changed. Previously ${storedData.home_score}-${storedData.away_score}. Now ${lastPlay.possession.HomeScorePrev}-${lastPlay.possession.AwayScorePrev}`);
+        logGame(storedData.GameID, `The score of the game has changed. Previously ${storedData.home_score}-${storedData.away_score}. Now ${lastPlay.possession.HomeScoreCurr}-${lastPlay.possession.AwayScoreCurr}`);
       } else {
         scoreChanged = false;
         logGame(storedData.GameID, 'The game has been updated but the score has not changed.');
       }
       db.updateGame(
         updateData.data.gameData.GameID,
-        lastPlay.possession.HomeScorePrev,
-        lastPlay.possession.AwayScorePrev,
+        lastPlay.possession.HomeScoreCurr,
+        lastPlay.possession.AwayScoreCurr,
         updateData.data.gameData.GameStatsDateTimeModified,
       ).then(() => {
         logGame(storedData.GameID, 'Game update has been saved in database.');
@@ -46,15 +47,14 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
           sendScoreUpdate({
             id: storedData.GameHomeTeamID,
             name: storedData.homeTeamName,
-            score: lastPlay.possession.HomeScorePrev,
+            score: lastPlay.possession.HomeScoreCurr,
           }, {
             id: storedData.GameAwayTeamID,
             name: storedData.awayTeamName,
-            score: lastPlay.possession.AwayScorePrev,
-          }, 
+            score: lastPlay.possession.AwayScoreCurr,
+          },
           lastPlay.quarter,
-          lastPlay.possession.Records[_.last(_.keys(lastPlay.possession.Records))].TimeLeft,
-          lastPlay.possession.TeamName === storedData.homeTeamName ? 'home' : 'away' 
+          lastPlay.possession);
         }
       });
     } else {
