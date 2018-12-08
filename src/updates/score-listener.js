@@ -28,11 +28,13 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
       if (storedData.home_score !== lastPlay.possession.HomeScoreCurr
         || storedData.away_score !== lastPlay.possession.AwayScoreCurr) {
         // Score has changed, check to see if we should wait for PAT
+        const lastRecord = lastPlay.possession.Records[_.last(_.keys(lastPlay.possession.Records))];
         if (
-          parseInt(lastPlay.possession.HomeScoreCurr, 10)
+          (parseInt(lastPlay.possession.HomeScoreCurr, 10)
           - parseInt(lastPlay.possession.HomeScorePrev, 10) === 6
           || parseInt(lastPlay.possession.HomeScoreCurr, 10)
-          - parseInt(lastPlay.possession.HomeScorePrev, 10) === 6
+          - parseInt(lastPlay.possession.HomeScorePrev, 10) === 6)
+          && !lastRecord.SummaryDescription.includes('PAT')
         ) {
           logGame(storedData.GameID, `The score of the game has changed. Previously ${storedData.home_score}-${storedData.away_score}. Now ${lastPlay.possession.HomeScoreCurr}-${lastPlay.possession.AwayScoreCurr}. Waiting to send notifications for the PAT.`);
           scoreChanged = false;
