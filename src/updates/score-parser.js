@@ -73,7 +73,7 @@ export async function sendScoreUpdate(
         `${away.score}`,
         homeTeamFull.team_image,
         awayTeamFull.team_image,
-        lastPlay.TimeLeft,
+        lastPlay.TimeLeft ? lastPlay.TimeLeft.split(' ')[0] : '',
         quarter,
         possession.TeamName === home.name ? 'home' : 'away',
       );
