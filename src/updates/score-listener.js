@@ -23,7 +23,6 @@ function compareUpdate(storedData, updateData: ScoreUpdate, db: Database) {
     logGame(storedData.GameID, 'Updated data has been found.');
     const lastPlay = updateData.getLastScoringPlay();
     if (lastPlay) {
-      logGame(storedData.GameID, '%O', lastPlay);
       // Check to see if the score has updated since the data changed.
       let scoreChanged;
       if (storedData.home_score !== lastPlay.possession.HomeScoreCurr
