@@ -1,3 +1,5 @@
+/* JavaScript functions for the TeamPlayer API */
+
 import * as request from 'request-promise';
 import moment from 'moment';
 import debug from 'debug';

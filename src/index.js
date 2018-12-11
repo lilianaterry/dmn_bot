@@ -1,3 +1,6 @@
+/* Made with ♥ by Connor and Liliana */
+/* Webhook and TeamPlayer polling to listen for incoming events. */
+
 import { CronJob } from 'cron';
 import debug from 'debug';
 import * as IntentHandler from './replies/intent-handlers';

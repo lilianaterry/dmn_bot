@@ -1,4 +1,10 @@
-export const gameData = {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.scoreUpdate = exports.gameData = void 0;
+const gameData = {
   gameInfo: {
     GameID: '101442',
     GameStatStatus: '3',
@@ -35,7 +41,7 @@ export const gameData = {
     GamePeriod: '',
     GamePeriodTime: '',
     GameUpdate: '0',
-    GameHasUpdate: '0',
+    GameHasUpdate: '0'
   },
   away: {
     team: {
@@ -74,7 +80,7 @@ export const gameData = {
       SchoolEmailAddress: 'speach@aisd.net',
       SchoolURL: '',
       SchoolLatitude: '32.721054',
-      SchoolLongitude: '-97.116646',
+      SchoolLongitude: '-97.116646'
     },
     roster: [{
       PlayerID: '3524',
@@ -86,7 +92,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '24',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3563',
       PlayerFirstName: 'Jerson',
@@ -97,7 +103,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '66',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3543',
       PlayerFirstName: 'Razi',
@@ -108,7 +114,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '45',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3573',
       PlayerFirstName: 'Hayden',
@@ -119,7 +125,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '81',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3529',
       PlayerFirstName: 'Aidan',
@@ -130,7 +136,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '30',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3528',
       PlayerFirstName: 'Zander',
@@ -141,7 +147,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '29',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3508',
       PlayerFirstName: 'Charles',
@@ -152,7 +158,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '6',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3518',
       PlayerFirstName: 'Seth',
@@ -163,7 +169,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '16',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3561',
       PlayerFirstName: 'Connor',
@@ -174,7 +180,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '64',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3547',
       PlayerFirstName: 'Tavron',
@@ -185,7 +191,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '49',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3564',
       PlayerFirstName: 'Max',
@@ -196,7 +202,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '68',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3555',
       PlayerFirstName: 'Caleb',
@@ -207,7 +213,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '58',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3512',
       PlayerFirstName: 'Trey',
@@ -218,7 +224,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '10',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3565',
       PlayerFirstName: 'Samson',
@@ -229,7 +235,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '70',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3560',
       PlayerFirstName: 'Andrew',
@@ -240,7 +246,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '63',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3516',
       PlayerFirstName: 'Kyree',
@@ -251,7 +257,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '14',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10254',
       PlayerFirstName: "L'Dominique",
@@ -262,7 +268,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '50',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3552',
       PlayerFirstName: 'Brian',
@@ -273,7 +279,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '55',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '14582',
       PlayerFirstName: 'Victor',
@@ -284,7 +290,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '93',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3536',
       PlayerFirstName: 'Dawson',
@@ -295,7 +301,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '38',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3551',
       PlayerFirstName: 'Joey',
@@ -306,7 +312,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '54',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3542',
       PlayerFirstName: 'Jared',
@@ -317,7 +323,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '44',
       TeamRosterPosition: 'TE',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3507',
       PlayerFirstName: 'Qaklon',
@@ -328,7 +334,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '5',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '11495',
       PlayerFirstName: 'Wyatt',
@@ -339,7 +345,7 @@ export const gameData = {
       PlayerWeight: '150',
       TeamRosterPlayerNumber: '7',
       TeamRosterPosition: 'QB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3572',
       PlayerFirstName: 'Isaac',
@@ -350,7 +356,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '80',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3576',
       PlayerFirstName: 'Casey',
@@ -361,7 +367,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '90',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3562',
       PlayerFirstName: 'Zane',
@@ -372,7 +378,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '65',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3514',
       PlayerFirstName: 'Willie',
@@ -383,7 +389,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '12',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3530',
       PlayerFirstName: 'Christian',
@@ -394,7 +400,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '31',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10255',
       PlayerFirstName: 'Antonio',
@@ -405,7 +411,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '82',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3533',
       PlayerFirstName: 'James',
@@ -416,7 +422,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '35',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3532',
       PlayerFirstName: 'Griffin',
@@ -427,7 +433,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '34',
       TeamRosterPosition: 'K',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3546',
       PlayerFirstName: 'Micah',
@@ -438,7 +444,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '48',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3549',
       PlayerFirstName: 'Tyrin',
@@ -449,7 +455,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '52',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3557',
       PlayerFirstName: 'Cecil',
@@ -460,7 +466,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '60',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '14581',
       PlayerFirstName: 'Antonio',
@@ -471,7 +477,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '91',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3558',
       PlayerFirstName: 'Preston',
@@ -482,7 +488,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '61',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3540',
       PlayerFirstName: 'AJ',
@@ -493,7 +499,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '42',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3515',
       PlayerFirstName: 'Rodney',
@@ -504,7 +510,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '13',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3545',
       PlayerFirstName: 'Alex',
@@ -515,7 +521,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '47',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3527',
       PlayerFirstName: 'Jabyron',
@@ -526,7 +532,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '28',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10251',
       PlayerFirstName: "A'Tavion",
@@ -537,7 +543,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '19',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10250',
       PlayerFirstName: "X'Zavion",
@@ -548,7 +554,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '17',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3566',
       PlayerFirstName: 'Kevaugnte',
@@ -559,7 +565,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '73',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3577',
       PlayerFirstName: 'Noe',
@@ -570,7 +576,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '92',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3567',
       PlayerFirstName: 'Ben',
@@ -581,7 +587,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '75',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3521',
       PlayerFirstName: 'Miles',
@@ -592,7 +598,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '21',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3570',
       PlayerFirstName: 'Mark',
@@ -603,7 +609,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '78',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3525',
       PlayerFirstName: 'Ladarian',
@@ -614,7 +620,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '26',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3539',
       PlayerFirstName: 'Ty',
@@ -625,7 +631,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '41',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3559',
       PlayerFirstName: 'Will',
@@ -636,7 +642,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '62',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3531',
       PlayerFirstName: 'Dominic',
@@ -647,7 +653,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '33',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '14580',
       PlayerFirstName: 'Kevin',
@@ -658,7 +664,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '74',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3556',
       PlayerFirstName: 'Justin',
@@ -669,7 +675,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '59',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3517',
       PlayerFirstName: 'BJ',
@@ -680,7 +686,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '15',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3506',
       PlayerFirstName: 'Jahari',
@@ -691,7 +697,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '4',
       TeamRosterPosition: 'QB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10252',
       PlayerFirstName: "Zy'Treon",
@@ -702,7 +708,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '25',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3504',
       PlayerFirstName: 'Pierce',
@@ -713,7 +719,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '2',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3554',
       PlayerFirstName: 'Cole',
@@ -724,7 +730,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '57',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3550',
       PlayerFirstName: 'Spencer',
@@ -735,7 +741,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '53',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3568',
       PlayerFirstName: 'Dakota',
@@ -746,7 +752,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '76',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3510',
       PlayerFirstName: 'Kris',
@@ -757,7 +763,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '8',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: 'QB',
+      TeamRosterAdditionalPositions: 'QB'
     }, {
       PlayerID: '3534',
       PlayerFirstName: 'Khled',
@@ -768,7 +774,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '36',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3537',
       PlayerFirstName: 'Riece',
@@ -779,7 +785,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '39',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3571',
       PlayerFirstName: 'Cameron',
@@ -790,7 +796,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '79',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3502',
       PlayerFirstName: 'Team',
@@ -801,7 +807,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '',
       TeamRosterPosition: '',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3548',
       PlayerFirstName: 'Drake',
@@ -812,7 +818,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '51',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3575',
       PlayerFirstName: 'Jordan',
@@ -823,7 +829,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '84',
       TeamRosterPosition: 'TE',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3503',
       PlayerFirstName: 'Tucker',
@@ -834,7 +840,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '1',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3520',
       PlayerFirstName: 'Kaleb',
@@ -845,7 +851,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '20',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '11496',
       PlayerFirstName: 'Richard',
@@ -856,7 +862,7 @@ export const gameData = {
       PlayerWeight: '160',
       TeamRosterPlayerNumber: '37',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '15642',
       PlayerFirstName: 'Demarea',
@@ -867,7 +873,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '11',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3511',
       PlayerFirstName: 'Jeffrey',
@@ -878,7 +884,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '9',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3541',
       PlayerFirstName: 'DJ',
@@ -889,7 +895,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '43',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3569',
       PlayerFirstName: 'Quintyn',
@@ -900,7 +906,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '77',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3513',
       PlayerFirstName: 'Mekhi',
@@ -911,7 +917,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '32',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: 'LB',
+      TeamRosterAdditionalPositions: 'LB'
     }, {
       PlayerID: '3526',
       PlayerFirstName: 'Marcus',
@@ -922,7 +928,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '27',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3505',
       PlayerFirstName: 'Kyron',
@@ -933,7 +939,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '3',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3522',
       PlayerFirstName: 'Nate',
@@ -944,7 +950,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '22',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3519',
       PlayerFirstName: 'Nate',
@@ -955,7 +961,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '18',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3553',
       PlayerFirstName: 'Bo',
@@ -966,7 +972,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '56',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '3523',
       PlayerFirstName: 'Hugh',
@@ -977,7 +983,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '23',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }],
     seasonstats: {
       Win: '11',
@@ -1000,8 +1006,8 @@ export const gameData = {
       FumblesLost: '7',
       Penalties: '86',
       PenaltyYards: '776',
-      AverageRush: 7.18,
-    },
+      AverageRush: 7.18
+    }
   },
   home: {
     team: {
@@ -1040,7 +1046,7 @@ export const gameData = {
       SchoolEmailAddress: 'kperry@aisd.com',
       SchoolURL: '',
       SchoolLatitude: '32.704550',
-      SchoolLongitude: '-97.077975',
+      SchoolLongitude: '-97.077975'
     },
     roster: [{
       PlayerID: '10559',
@@ -1052,7 +1058,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '45',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10558',
       PlayerFirstName: 'Isaiah',
@@ -1063,7 +1069,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '44',
       TeamRosterPosition: 'TE',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10542',
       PlayerFirstName: 'Aneaus',
@@ -1074,7 +1080,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '32',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10546',
       PlayerFirstName: 'Patrick',
@@ -1085,7 +1091,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '24',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10571',
       PlayerFirstName: 'Eric',
@@ -1096,7 +1102,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '70',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10535',
       PlayerFirstName: 'Darrell',
@@ -1107,7 +1113,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '8',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10567',
       PlayerFirstName: 'Aaron',
@@ -1118,7 +1124,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '61',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10531',
       PlayerFirstName: 'Javione',
@@ -1129,7 +1135,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '3',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10555',
       PlayerFirstName: 'Angel',
@@ -1140,7 +1146,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '40',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10576',
       PlayerFirstName: 'Joquan',
@@ -1151,7 +1157,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '76',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10538',
       PlayerFirstName: 'Raylin',
@@ -1162,7 +1168,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '12',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10539',
       PlayerFirstName: "Ty'riek",
@@ -1173,7 +1179,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '13',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10550',
       PlayerFirstName: 'Lajavian',
@@ -1184,7 +1190,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '30',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10575',
       PlayerFirstName: 'Jalen',
@@ -1195,7 +1201,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '75',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10584',
       PlayerFirstName: 'Omar',
@@ -1206,7 +1212,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '92',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10536',
       PlayerFirstName: 'Quinten',
@@ -1217,7 +1223,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '5',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10565',
       PlayerFirstName: 'Steve',
@@ -1228,7 +1234,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '58',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10554',
       PlayerFirstName: 'Michael',
@@ -1239,7 +1245,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '35',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10530',
       PlayerFirstName: 'Juan',
@@ -1250,7 +1256,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '2',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10556',
       PlayerFirstName: 'Matthew',
@@ -1261,7 +1267,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '77',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10578',
       PlayerFirstName: 'Kenzi',
@@ -1272,7 +1278,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '80',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10541',
       PlayerFirstName: 'Ethan',
@@ -1283,7 +1289,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '15',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10537',
       PlayerFirstName: 'Erik',
@@ -1294,7 +1300,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '10',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10557',
       PlayerFirstName: 'Jacoby',
@@ -1305,7 +1311,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '43',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10570',
       PlayerFirstName: 'Pedro',
@@ -1316,7 +1322,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '64',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10552',
       PlayerFirstName: 'Samarte',
@@ -1327,7 +1333,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '33',
       TeamRosterPosition: 'DE',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10553',
       PlayerFirstName: 'LaReco',
@@ -1338,7 +1344,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '34',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10564',
       PlayerFirstName: 'Jesus',
@@ -1349,7 +1355,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '57',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10581',
       PlayerFirstName: 'Presley',
@@ -1360,7 +1366,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '20',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '15252',
       PlayerFirstName: 'Marcus',
@@ -1371,7 +1377,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '22',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10562',
       PlayerFirstName: 'Kaleb',
@@ -1382,7 +1388,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '54',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10568',
       PlayerFirstName: 'Emmanuel',
@@ -1393,7 +1399,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '62',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10572',
       PlayerFirstName: 'Erick',
@@ -1404,7 +1410,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '71',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '15917',
       PlayerFirstName: 'Francisco',
@@ -1415,7 +1421,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '50',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10560',
       PlayerFirstName: 'Roderick',
@@ -1426,7 +1432,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '56',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10545',
       PlayerFirstName: 'Jezon',
@@ -1437,7 +1443,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '23',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '16092',
       PlayerFirstName: 'Omari',
@@ -1448,7 +1454,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '9',
       TeamRosterPosition: 'QB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10529',
       PlayerFirstName: 'Brandon',
@@ -1459,7 +1465,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '1',
       TeamRosterPosition: 'QB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10543',
       PlayerFirstName: 'Tony',
@@ -1470,7 +1476,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '21',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10579',
       PlayerFirstName: 'Angel',
@@ -1481,7 +1487,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '81',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10582',
       PlayerFirstName: 'Bryce',
@@ -1492,7 +1498,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '7',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10580',
       PlayerFirstName: 'Tyler',
@@ -1503,7 +1509,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '82',
       TeamRosterPosition: 'WR',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10534',
       PlayerFirstName: 'Caleb',
@@ -1514,7 +1520,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '26',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10583',
       PlayerFirstName: 'Jose',
@@ -1525,7 +1531,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '88',
       TeamRosterPosition: 'K',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10573',
       PlayerFirstName: 'Rey',
@@ -1536,7 +1542,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '73',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10574',
       PlayerFirstName: 'Jacob',
@@ -1547,7 +1553,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '74',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10566',
       PlayerFirstName: 'Adrian',
@@ -1558,7 +1564,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '60',
       TeamRosterPosition: 'OL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10561',
       PlayerFirstName: 'Uriel',
@@ -1569,7 +1575,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '51',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10551',
       PlayerFirstName: 'Trevis',
@@ -1580,7 +1586,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '31',
       TeamRosterPosition: 'LB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10563',
       PlayerFirstName: 'Jacarri',
@@ -1591,7 +1597,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '55',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '15251',
       PlayerFirstName: 'Tyris',
@@ -1602,7 +1608,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '14',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10528',
       PlayerFirstName: 'Team',
@@ -1613,7 +1619,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '',
       TeamRosterPosition: '',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10549',
       PlayerFirstName: 'Prag',
@@ -1624,7 +1630,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '27',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10547',
       PlayerFirstName: 'Exzavier',
@@ -1635,7 +1641,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '25',
       TeamRosterPosition: 'RB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10569',
       PlayerFirstName: 'Cameron',
@@ -1646,7 +1652,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '63',
       TeamRosterPosition: 'DL',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }, {
       PlayerID: '10532',
       PlayerFirstName: 'Raquan',
@@ -1657,7 +1663,7 @@ export const gameData = {
       PlayerWeight: '',
       TeamRosterPlayerNumber: '4',
       TeamRosterPosition: 'DB',
-      TeamRosterAdditionalPositions: '',
+      TeamRosterAdditionalPositions: ''
     }],
     seasonstats: {
       Win: '3',
@@ -1680,18 +1686,18 @@ export const gameData = {
       FumblesLost: '10',
       Penalties: '73',
       PenaltyYards: '567',
-      AverageRush: 4.92,
-    },
-  },
+      AverageRush: 4.92
+    }
+  }
 };
-
-export const scoreUpdate = {
+exports.gameData = gameData;
+const scoreUpdate = {
   gameData: {
     GameID: '111879',
     GameScoreIsFinal: '0',
     GameStatStatus: '9',
     GameStatsFinal: '0',
-    GameStatsDateTimeModified: '2018-11-16 19:55:01',
+    GameStatsDateTimeModified: '2018-11-16 19:55:01'
   },
   pbpData: {
     GameID: '111879',
@@ -1715,26 +1721,26 @@ export const scoreUpdate = {
                 TimeLeft: '12:00 left in 1st Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Start of Quarter',
-                SummaryDescription: 'Start of 1st Quarter',
+                SummaryDescription: 'Start of 1st Quarter'
               },
               2: {
                 TimeLeft: '11:56 left in 1st Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Kickoff Return',
-                SummaryDescription: 'Montrell Smith returns kick 5 yards.',
+                SummaryDescription: 'Montrell Smith returns kick 5 yards.'
               },
               3: {
                 SummaryEvent: '1st down and 10 at AM 33',
                 SummaryType: 'Run',
-                SummaryDescription: 'Montrell Smith rush for 4 yards to AM 37.',
+                SummaryDescription: 'Montrell Smith rush for 4 yards to AM 37.'
               },
               4: {
                 TimeLeft: '11:01 left in 1st Quarter.',
                 SummaryEvent: '2nd down and 6 at AM 37',
                 SummaryType: 'Run',
-                SummaryDescription: 'Willie Roberts rush for 63 yards to ET 0. FIRST DOWN. TOUCHDOWN. (Nick Rodriguez PAT KICK GOOD.)',
-              },
-            },
+                SummaryDescription: 'Willie Roberts rush for 63 yards to ET 0. FIRST DOWN. TOUCHDOWN. (Nick Rodriguez PAT KICK GOOD.)'
+              }
+            }
           },
           2: {
             TeamName: 'Euless Trinity',
@@ -1748,40 +1754,40 @@ export const scoreUpdate = {
                 TimeLeft: '10:56 left in 1st Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Kickoff Return',
-                SummaryDescription: 'Marcus Ervin returns kick 17 yards.',
+                SummaryDescription: 'Marcus Ervin returns kick 17 yards.'
               },
               2: {
                 SummaryEvent: '1st down and 10 at ET 27',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 3 yards to ET 30.',
+                SummaryDescription: 'Brandon Theus rush for 3 yards to ET 30.'
               },
               3: {
                 SummaryEvent: '2nd down and 7 at ET 30',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 23 yards to AM 47. FIRST DOWN.',
+                SummaryDescription: 'Brandon Theus rush for 23 yards to AM 47. FIRST DOWN.'
               },
               4: {
                 SummaryEvent: '1st down and 10 at AM 47',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 5 yards to AM 42.',
+                SummaryDescription: 'Brandon Theus rush for 5 yards to AM 42.'
               },
               5: {
                 SummaryEvent: '2nd down and 5 at AM 42',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 1 yards to AM 41.',
+                SummaryDescription: 'Brandon Theus rush for 1 yards to AM 41.'
               },
               6: {
                 SummaryEvent: '3rd down and 4 at AM 41',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 2 yards to AM 39.',
+                SummaryDescription: 'Brandon Theus rush for 2 yards to AM 39.'
               },
               7: {
                 TimeLeft: '8:04 left in 1st Quarter.',
                 SummaryEvent: '4th down and 2 at AM 39',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 39 yards to AM 0. FIRST DOWN. TOUCHDOWN. (Asim Ljuso PAT KICK GOOD.)',
-              },
-            },
+                SummaryDescription: 'Brandon Theus rush for 39 yards to AM 0. FIRST DOWN. TOUCHDOWN. (Asim Ljuso PAT KICK GOOD.)'
+              }
+            }
           },
           3: {
             TeamName: 'Arlington Martin',
@@ -1795,59 +1801,59 @@ export const scoreUpdate = {
                 TimeLeft: '8:02 left in 1st Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Kickoff Return',
-                SummaryDescription: 'Alonzo Banks returns kick 8 yards.',
+                SummaryDescription: 'Alonzo Banks returns kick 8 yards.'
               },
               2: {
                 SummaryEvent: '1st down and 10 at AM 47',
                 SummaryType: 'Run',
-                SummaryDescription: 'Zach Mundell rush for -3 yards to AM 44.',
+                SummaryDescription: 'Zach Mundell rush for -3 yards to AM 44.'
               },
               3: {
                 SummaryEvent: '2nd down and 13 at AM 44',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Zach Mundell pass complete to Jonathan Carter for 13 yards to ET 43. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell pass complete to Jonathan Carter for 13 yards to ET 43. FIRST DOWN.'
               },
               4: {
                 SummaryEvent: '1st down and 10 at ET 43',
                 SummaryType: 'Run',
-                SummaryDescription: 'Zach Mundell rush for 6 yards to ET 37.',
+                SummaryDescription: 'Zach Mundell rush for 6 yards to ET 37.'
               },
               5: {
                 TimeLeft: '6:38 left in 1st Quarter.',
                 SummaryEvent: '2nd down and 4 at ET 37',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Zach Mundell pass complete to Alonzo Banks for 8 yards to ET 29. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell pass complete to Alonzo Banks for 8 yards to ET 29. FIRST DOWN.'
               },
               6: {
                 TimeLeft: '6:34 left in 1st Quarter.',
                 SummaryEvent: '1st down and 10 at ET 29',
                 SummaryType: 'Incomplete Pass',
-                SummaryDescription: 'Zach Mundell pass incomplete.',
+                SummaryDescription: 'Zach Mundell pass incomplete.'
               },
               7: {
                 TimeLeft: '6:29 left in 1st Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Penalty Offense',
-                SummaryDescription: 'AM penalized 10 yards.',
+                SummaryDescription: 'AM penalized 10 yards.'
               },
               8: {
                 TimeLeft: '6:25 left in 1st Quarter.',
                 SummaryEvent: '2nd down and 20 at ET 39',
                 SummaryType: 'Incomplete Pass',
-                SummaryDescription: 'Zach Mundell pass incomplete.',
+                SummaryDescription: 'Zach Mundell pass incomplete.'
               },
               9: {
                 SummaryEvent: '3rd down and 20 at ET 39',
                 SummaryType: 'Run',
-                SummaryDescription: 'Montrell Smith rush for 0 yards to ET 39.',
+                SummaryDescription: 'Montrell Smith rush for 0 yards to ET 39.'
               },
               10: {
                 TimeLeft: '5:38 left in 1st Quarter.',
                 SummaryEvent: '4th down and 20 at ET 39',
                 SummaryType: 'Punt',
-                SummaryDescription: 'Sawyer Evans punts 38 yards to ET 1.',
-              },
-            },
+                SummaryDescription: 'Sawyer Evans punts 38 yards to ET 1.'
+              }
+            }
           },
           4: {
             TeamName: 'Euless Trinity',
@@ -1860,77 +1866,77 @@ export const scoreUpdate = {
               1: {
                 SummaryEvent: '1st down and 10 at ET 1',
                 SummaryType: 'Run',
-                SummaryDescription: 'Laki Ellis rush for 2 yards to ET 3.',
+                SummaryDescription: 'Laki Ellis rush for 2 yards to ET 3.'
               },
               2: {
                 SummaryEvent: '2nd down and 8 at ET 3',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 2 yards to ET 5.',
+                SummaryDescription: 'Brandon Theus rush for 2 yards to ET 5.'
               },
               3: {
                 SummaryEvent: '3rd down and 6 at ET 5',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 3 yards to ET 8.',
+                SummaryDescription: 'Brandon Theus rush for 3 yards to ET 8.'
               },
               4: {
                 SummaryEvent: '4th down and 3 at ET 8',
                 SummaryType: 'Punt',
-                SummaryDescription: 'Ian Mason punts 7 yards to ET 15.',
+                SummaryDescription: 'Ian Mason punts 7 yards to ET 15.'
               },
               5: {
                 SummaryEvent: '1st down and 10 at ET 15',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 9 yards to ET 24.',
+                SummaryDescription: 'Brandon Theus rush for 9 yards to ET 24.'
               },
               6: {
                 TimeLeft: '3:31 left in 1st Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Timeout',
-                SummaryDescription: 'Timeout.',
+                SummaryDescription: 'Timeout.'
               },
               7: {
                 SummaryEvent: '2nd down and 1 at ET 24',
                 SummaryType: 'Run',
-                SummaryDescription: 'Isaac Fakailoatanga rush for 0 yards to ET 24.',
+                SummaryDescription: 'Isaac Fakailoatanga rush for 0 yards to ET 24.'
               },
               8: {
                 SummaryEvent: '3rd down and 1 at ET 24',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 1 yards to ET 25. FIRST DOWN.',
+                SummaryDescription: 'Brandon Theus rush for 1 yards to ET 25. FIRST DOWN.'
               },
               9: {
                 TimeLeft: '2:22 left in 1st Quarter.',
                 SummaryEvent: '1st down and 10 at ET 25',
                 SummaryType: 'Incomplete Pass',
-                SummaryDescription: 'Laki Ellis pass incomplete.',
+                SummaryDescription: 'Laki Ellis pass incomplete.'
               },
               10: {
                 SummaryEvent: '2nd down and 10 at ET 25',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 3 yards to ET 28.',
+                SummaryDescription: 'Brandon Theus rush for 3 yards to ET 28.'
               },
               11: {
                 SummaryEvent: '',
                 SummaryType: 'Penalty Offense',
-                SummaryDescription: 'ET penalized 10 yards.',
+                SummaryDescription: 'ET penalized 10 yards.'
               },
               12: {
                 SummaryEvent: '2nd down and 17 at ET 18',
                 SummaryType: 'Run',
-                SummaryDescription: 'Laki Ellis rush for 0 yards to ET 18.',
+                SummaryDescription: 'Laki Ellis rush for 0 yards to ET 18.'
               },
               13: {
                 SummaryEvent: '3rd down and 17 at ET 18',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Laki Ellis pass complete to Keanu Hill for 8 yards to ET 26.',
+                SummaryDescription: 'Laki Ellis pass complete to Keanu Hill for 8 yards to ET 26.'
               },
               14: {
                 TimeLeft: '0:33 left in 1st Quarter.',
                 SummaryEvent: '4th down and 9 at ET 26',
                 SummaryType: 'Punt',
-                SummaryDescription: 'Ian Mason punts 32 yards to AM 42.',
-              },
-            },
+                SummaryDescription: 'Ian Mason punts 32 yards to AM 42.'
+              }
+            }
           },
           5: {
             TeamName: 'Arlington Martin',
@@ -1943,16 +1949,16 @@ export const scoreUpdate = {
               1: {
                 SummaryEvent: '1st down and 10 at AM 42',
                 SummaryType: 'Run',
-                SummaryDescription: 'Montrell Smith rush for 6 yards to AM 48.',
+                SummaryDescription: 'Montrell Smith rush for 6 yards to AM 48.'
               },
               2: {
                 SummaryEvent: '',
                 SummaryType: 'End of Quarter',
-                SummaryDescription: 'End of 1st Quarter.',
-              },
-            },
-          },
-        },
+                SummaryDescription: 'End of 1st Quarter.'
+              }
+            }
+          }
+        }
       },
       '2nd Quarter': {
         BallPossession: {
@@ -1968,53 +1974,53 @@ export const scoreUpdate = {
                 TimeLeft: '12:00 left in 2nd Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Start of Quarter',
-                SummaryDescription: 'Start of 2nd Quarter',
+                SummaryDescription: 'Start of 2nd Quarter'
               },
               2: {
                 SummaryEvent: '2nd down and 4 at AM 48',
                 SummaryType: 'Run',
-                SummaryDescription: 'Zach Mundell rush for 10 yards to ET 42. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell rush for 10 yards to ET 42. FIRST DOWN.'
               },
               3: {
                 SummaryEvent: '',
                 SummaryType: 'Penalty Offense',
-                SummaryDescription: 'AM penalized 15 yards.',
+                SummaryDescription: 'AM penalized 15 yards.'
               },
               4: {
                 SummaryEvent: '1st down and 10 at AM 43',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Zach Mundell pass complete to Willie Roberts for 18 yards to ET 39. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell pass complete to Willie Roberts for 18 yards to ET 39. FIRST DOWN.'
               },
               5: {
                 SummaryEvent: '1st down and 10 at ET 39',
                 SummaryType: 'Run',
-                SummaryDescription: 'Willie Roberts rush for -1 yards to ET 40.',
+                SummaryDescription: 'Willie Roberts rush for -1 yards to ET 40.'
               },
               6: {
                 SummaryEvent: '2nd down and 11 at ET 40',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Zach Mundell pass complete to Jonathan Carter for 18 yards to ET 22. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell pass complete to Jonathan Carter for 18 yards to ET 22. FIRST DOWN.'
               },
               7: {
                 SummaryEvent: '1st down and 10 at ET 22',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Zach Mundell pass complete to KJ Polk for 8 yards to ET 14.',
+                SummaryDescription: 'Zach Mundell pass complete to KJ Polk for 8 yards to ET 14.'
               },
               8: {
                 TimeLeft: '9:54 left in 2nd Quarter.',
                 RedZone: 1,
                 SummaryEvent: '2nd down and 2 at ET 14',
                 SummaryType: 'Run',
-                SummaryDescription: 'Zach Mundell rush for 11 yards to ET 3. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell rush for 11 yards to ET 3. FIRST DOWN.'
               },
               9: {
                 TimeLeft: '9:50 left in 2nd Quarter.',
                 RedZone: 1,
                 SummaryEvent: '1st down and G at ET 3',
                 SummaryType: 'Run',
-                SummaryDescription: 'Willie Roberts rush for 3 yards to ET 0. TOUCHDOWN. (Nick Rodriguez PAT KICK GOOD.)',
-              },
-            },
+                SummaryDescription: 'Willie Roberts rush for 3 yards to ET 0. TOUCHDOWN. (Nick Rodriguez PAT KICK GOOD.)'
+              }
+            }
           },
           2: {
             TeamName: 'Euless Trinity',
@@ -2027,51 +2033,51 @@ export const scoreUpdate = {
               1: {
                 SummaryEvent: '',
                 SummaryType: 'Penalty Defense',
-                SummaryDescription: 'AM penalized 5 yards.',
+                SummaryDescription: 'AM penalized 5 yards.'
               },
               2: {
                 TimeLeft: '9:43 left in 2nd Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Kickoff Return',
-                SummaryDescription: 'Marcus Ervin returns kick 13 yards.',
+                SummaryDescription: 'Marcus Ervin returns kick 13 yards.'
               },
               3: {
                 SummaryEvent: '1st down and 10 at ET 26',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 10 yards to ET 36. FIRST DOWN.',
+                SummaryDescription: 'Brandon Theus rush for 10 yards to ET 36. FIRST DOWN.'
               },
               4: {
                 SummaryEvent: '1st down and 10 at ET 36',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 8 yards to ET 44.',
+                SummaryDescription: 'Brandon Theus rush for 8 yards to ET 44.'
               },
               5: {
                 SummaryEvent: '2nd down and 2 at ET 44',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 6 yards to  50. FIRST DOWN.',
+                SummaryDescription: 'Brandon Theus rush for 6 yards to  50. FIRST DOWN.'
               },
               6: {
                 SummaryEvent: '1st down and 10 at AM 50',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 3 yards to AM 47.',
+                SummaryDescription: 'Brandon Theus rush for 3 yards to AM 47.'
               },
               7: {
                 SummaryEvent: '2nd down and 7 at AM 47',
                 SummaryType: 'Run',
-                SummaryDescription: 'AJ Barnett rush for 5 yards to AM 42.',
+                SummaryDescription: 'AJ Barnett rush for 5 yards to AM 42.'
               },
               8: {
                 SummaryEvent: '3rd down and 2 at AM 42',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 4 yards to AM 38. FIRST DOWN.',
+                SummaryDescription: 'Brandon Theus rush for 4 yards to AM 38. FIRST DOWN.'
               },
               9: {
                 TimeLeft: '6:45 left in 2nd Quarter.',
                 SummaryEvent: '1st down and 10 at AM 38',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for 0 yards to AM 38.FUMBLE LOST.',
-              },
-            },
+                SummaryDescription: 'Brandon Theus rush for 0 yards to AM 38.FUMBLE LOST.'
+              }
+            }
           },
           3: {
             TeamName: 'Arlington Martin',
@@ -2084,66 +2090,66 @@ export const scoreUpdate = {
               1: {
                 SummaryEvent: '1st down and 10 at AM 34',
                 SummaryType: 'Run',
-                SummaryDescription: 'Zach Mundell rush for 3 yards to AM 37.',
+                SummaryDescription: 'Zach Mundell rush for 3 yards to AM 37.'
               },
               2: {
                 TimeLeft: '6:31 left in 2nd Quarter.',
                 SummaryEvent: '2nd down and 7 at AM 37',
                 SummaryType: 'Incomplete Pass',
-                SummaryDescription: 'Zach Mundell pass incomplete.',
+                SummaryDescription: 'Zach Mundell pass incomplete.'
               },
               3: {
                 SummaryEvent: '3rd down and 7 at AM 37',
                 SummaryType: 'Pass',
-                SummaryDescription: 'Zach Mundell pass complete to Jonathan Carter for 11 yards to AM 48. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell pass complete to Jonathan Carter for 11 yards to AM 48. FIRST DOWN.'
               },
               4: {
                 SummaryEvent: '1st down and 10 at AM 48',
                 SummaryType: 'Run',
-                SummaryDescription: 'Montrell Smith rush for 7 yards to ET 45.',
+                SummaryDescription: 'Montrell Smith rush for 7 yards to ET 45.'
               },
               5: {
                 TimeLeft: '5:01 left in 2nd Quarter.',
                 SummaryEvent: '2nd down and 3 at ET 45',
                 SummaryType: 'Run',
-                SummaryDescription: 'Zach Mundell rush for 15 yards to ET 30. FIRST DOWN.',
+                SummaryDescription: 'Zach Mundell rush for 15 yards to ET 30. FIRST DOWN.'
               },
               6: {
                 SummaryEvent: '1st down and 10 at ET 30',
                 SummaryType: 'Run',
-                SummaryDescription: 'Montrell Smith rush for 1 yards to ET 29.',
+                SummaryDescription: 'Montrell Smith rush for 1 yards to ET 29.'
               },
               7: {
                 TimeLeft: '4:14 left in 2nd Quarter.',
                 SummaryEvent: '2nd down and 9 at ET 29',
                 SummaryType: 'Incomplete Pass',
-                SummaryDescription: 'Zach Mundell pass incomplete.',
+                SummaryDescription: 'Zach Mundell pass incomplete.'
               },
               8: {
                 TimeLeft: '4:12 left in 2nd Quarter.',
                 SummaryEvent: '3rd down and 9 at ET 29',
                 SummaryType: 'Incomplete Pass',
-                SummaryDescription: 'Zach Mundell pass incomplete.',
+                SummaryDescription: 'Zach Mundell pass incomplete.'
               },
               9: {
                 TimeLeft: '4:11 left in 2nd Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Timeout',
-                SummaryDescription: 'Timeout.',
+                SummaryDescription: 'Timeout.'
               },
               10: {
                 TimeLeft: '4:11 left in 2nd Quarter.',
                 SummaryEvent: '',
                 SummaryType: 'Timeout',
-                SummaryDescription: 'Timeout.',
+                SummaryDescription: 'Timeout.'
               },
               11: {
                 TimeLeft: '4:00 left in 2nd Quarter.',
                 SummaryEvent: '4th down and 9 at ET 29',
                 SummaryType: 'Field Goal',
-                SummaryDescription: '  46-yard field goal. MISSED',
-              },
-            },
+                SummaryDescription: '  46-yard field goal. MISSED'
+              }
+            }
           },
           4: {
             TeamName: 'Euless Trinity',
@@ -2156,33 +2162,24 @@ export const scoreUpdate = {
               1: {
                 SummaryEvent: '1st down and 10 at ET 29',
                 SummaryType: 'Run',
-                SummaryDescription: 'Brandon Theus rush for -3 yards to ET 26.',
+                SummaryDescription: 'Brandon Theus rush for -3 yards to ET 26.'
               },
               2: {
                 SummaryEvent: '',
                 SummaryType: '',
-                SummaryDescription: '',
-              },
-            },
-          },
-        },
-      },
-    },
+                SummaryDescription: ''
+              }
+            }
+          }
+        }
+      }
+    }
   },
   away: {
     id: '884',
     name: 'Arlington Martin',
     teamCode: 'AM',
-    boxscore: [
-      7,
-      7,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ],
+    boxscore: [7, 7, 0, 0, 0, 0, 0, 0],
     teamStats: {
       TotalYards: '201',
       FirstDowns: '9',
@@ -2200,7 +2197,7 @@ export const scoreUpdate = {
       FumblesLost: '0',
       Penalties: '3',
       PenaltyYards: '30',
-      AverageRush: 8.93,
+      AverageRush: 8.93
     },
     playerStats: {
       Rushing: [{
@@ -2211,9 +2208,8 @@ export const scoreUpdate = {
         RushingAttempts: '3',
         RushingYards: '65',
         RushingYardsPerAttempt: '21.67',
-        RushingTouchdowns: '2',
-      },
-      {
+        RushingTouchdowns: '2'
+      }, {
         PlayerID: '804',
         PlayerFirstName: 'Zach',
         PlayerLastName: 'Mundell',
@@ -2221,9 +2217,8 @@ export const scoreUpdate = {
         RushingAttempts: '6',
         RushingYards: '42',
         RushingYardsPerAttempt: '7.00',
-        RushingTouchdowns: '0',
-      },
-      {
+        RushingTouchdowns: '0'
+      }, {
         PlayerID: '795',
         PlayerFirstName: 'Montrell',
         PlayerLastName: 'Smith',
@@ -2231,9 +2226,8 @@ export const scoreUpdate = {
         RushingAttempts: '5',
         RushingYards: '18',
         RushingYardsPerAttempt: '3.60',
-        RushingTouchdowns: '0',
-      },
-      ],
+        RushingTouchdowns: '0'
+      }],
       Passing: [{
         PlayerID: '804',
         PlayerFirstName: 'Zach',
@@ -2244,7 +2238,7 @@ export const scoreUpdate = {
         PassCompletionPercentage: 54.55,
         PassingYards: '76',
         PassingTouchdowns: '0',
-        PassingInterceptions: '0',
+        PassingInterceptions: '0'
       }],
       Receiving: [{
         PlayerID: '835',
@@ -2254,9 +2248,8 @@ export const scoreUpdate = {
         Receptions: '3',
         ReceivingYards: '42',
         YardsPerCatch: '14.0',
-        ReceivingTouchdowns: '0',
-      },
-      {
+        ReceivingTouchdowns: '0'
+      }, {
         PlayerID: '785',
         PlayerFirstName: 'Willie',
         PlayerLastName: 'Roberts',
@@ -2264,9 +2257,8 @@ export const scoreUpdate = {
         Receptions: '1',
         ReceivingYards: '18',
         YardsPerCatch: '18.0',
-        ReceivingTouchdowns: '0',
-      },
-      {
+        ReceivingTouchdowns: '0'
+      }, {
         PlayerID: '794',
         PlayerFirstName: 'KJ',
         PlayerLastName: 'Polk',
@@ -2274,9 +2266,8 @@ export const scoreUpdate = {
         Receptions: '1',
         ReceivingYards: '8',
         YardsPerCatch: '8.0',
-        ReceivingTouchdowns: '0',
-      },
-      {
+        ReceivingTouchdowns: '0'
+      }, {
         PlayerID: '793',
         PlayerFirstName: 'Alonzo',
         PlayerLastName: 'Banks',
@@ -2284,25 +2275,15 @@ export const scoreUpdate = {
         Receptions: '1',
         ReceivingYards: '8',
         YardsPerCatch: '8.0',
-        ReceivingTouchdowns: '0',
-      },
-      ],
-    },
+        ReceivingTouchdowns: '0'
+      }]
+    }
   },
   home: {
     id: '1498',
     name: 'Euless Trinity',
     teamCode: 'ET',
-    boxscore: [
-      7,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ],
+    boxscore: [7, 0, 0, 0, 0, 0, 0, 0],
     teamStats: {
       TotalYards: '134',
       FirstDowns: '6',
@@ -2320,7 +2301,7 @@ export const scoreUpdate = {
       FumblesLost: '1',
       Penalties: '1',
       PenaltyYards: '10',
-      AverageRush: 5.73,
+      AverageRush: 5.73
     },
     playerStats: {
       Rushing: [{
@@ -2331,9 +2312,8 @@ export const scoreUpdate = {
         RushingAttempts: '18',
         RushingYards: '119',
         RushingYardsPerAttempt: '6.61',
-        RushingTouchdowns: '1',
-      },
-      {
+        RushingTouchdowns: '1'
+      }, {
         PlayerID: '8550',
         PlayerFirstName: 'AJ',
         PlayerLastName: 'Barnett',
@@ -2341,9 +2321,8 @@ export const scoreUpdate = {
         RushingAttempts: '1',
         RushingYards: '5',
         RushingYardsPerAttempt: '5.00',
-        RushingTouchdowns: '0',
-      },
-      {
+        RushingTouchdowns: '0'
+      }, {
         PlayerID: '8538',
         PlayerFirstName: 'Laki',
         PlayerLastName: 'Ellis',
@@ -2351,9 +2330,8 @@ export const scoreUpdate = {
         RushingAttempts: '2',
         RushingYards: '2',
         RushingYardsPerAttempt: '1.00',
-        RushingTouchdowns: '0',
-      },
-      {
+        RushingTouchdowns: '0'
+      }, {
         PlayerID: '8544',
         PlayerFirstName: 'Isaac',
         PlayerLastName: 'Fakailoatanga',
@@ -2361,9 +2339,8 @@ export const scoreUpdate = {
         RushingAttempts: '1',
         RushingYards: '0',
         RushingYardsPerAttempt: '0.00',
-        RushingTouchdowns: '0',
-      },
-      ],
+        RushingTouchdowns: '0'
+      }],
       Passing: [{
         PlayerID: '8538',
         PlayerFirstName: 'Laki',
@@ -2374,7 +2351,7 @@ export const scoreUpdate = {
         PassCompletionPercentage: 50,
         PassingYards: '8',
         PassingTouchdowns: '0',
-        PassingInterceptions: '0',
+        PassingInterceptions: '0'
       }],
       Receiving: [{
         PlayerID: '8549',
@@ -2384,8 +2361,9 @@ export const scoreUpdate = {
         Receptions: '1',
         ReceivingYards: '8',
         YardsPerCatch: '8.0',
-        ReceivingTouchdowns: '0',
-      }],
-    },
-  },
+        ReceivingTouchdowns: '0'
+      }]
+    }
+  }
 };
+exports.scoreUpdate = scoreUpdate;

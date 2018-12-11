@@ -1,3 +1,6 @@
+/* Used for altering the returned fulfillment contexts needed to 
+    trigger the next step of some Dialoflow intents */
+
 import * as _ from 'lodash';
 
 export default class SessionContext {

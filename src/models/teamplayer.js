@@ -1,3 +1,5 @@
+/* JavaScript models to convert TeamPlayer json data to objects */
+
 import * as _ from 'lodash';
 
 interface Team {

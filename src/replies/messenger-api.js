@@ -1,3 +1,6 @@
+/* Communication needed to connect directly to Messenger 
+    without Dialogflow as intermediary */
+
 import * as request from 'request-promise';
 import * as fs from 'fs';
 import { flattenJSON } from 'lomath';

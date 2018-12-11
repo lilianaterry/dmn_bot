@@ -1,3 +1,5 @@
+/* Sends update messages to subscribers */
+
 import debug from 'debug';
 import * as _ from 'lodash';
 import { GameData, Possession } from '../models/teamplayer';

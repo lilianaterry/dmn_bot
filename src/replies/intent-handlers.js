@@ -1,3 +1,5 @@
+/* Handles all logic needed to complete Dialogflow fulfillment */
+
 import * as _ from 'lodash';
 import debug from 'debug';
 import Database from '../database-api';
