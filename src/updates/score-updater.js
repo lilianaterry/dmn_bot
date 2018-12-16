@@ -13,14 +13,11 @@ function sendMessageContent(
   messenger: MessengerApi,
   user: string,
   teamName: string,
-  attachmentId: string,
 ) {
   messenger.sendTextMessage(user, `${teamName} is about to take the field! Here's the matchup:`).then(() => {
-    // messenger.sendImageAttachmentWithId(user, attachmentId).then(() => {
     messenger.sendTextMessage(user, `Right now, you're signed up to receive the following updates:
 <updates>
 If you want to change the notifications you receive now or during the game, press "Change Notifications"`); // TODO: change this to quick replies
-    // });
   });
 }
 

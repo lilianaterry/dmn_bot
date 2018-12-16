@@ -4,7 +4,7 @@ import * as request from 'request-promise';
 import moment from 'moment';
 import debug from 'debug';
 import { ScoreUpdate, GameData } from '../models/teamplayer';
-import { gameData, scoreUpdate } from '../test-data';
+// import { gameData, scoreUpdate } from '../test-data';
 
 const log = debug('teamplayer');
 

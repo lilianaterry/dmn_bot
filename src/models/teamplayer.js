@@ -22,7 +22,7 @@ interface Game {
 interface Record {
   TimeLeft: string;
   SummaryEvent: string;
-  SummaryType: string;
+  SummaryType: 'Pass'|'Run'|'Incomplete Pass'|'Punt'|'Kickoff Return'|'Field Goal'|'Timeout'|'Penalty Offense'|'Penalty Defense'|'Start of Quarter'|'End of Quarter';
   SummaryDescription: string;
 }
 
@@ -225,5 +225,33 @@ export class ScoreUpdate {
       }
     });
     return last;
+  }
+
+  * getPossessionsAfter(quarter: string, possession: string): Iterable<{
+    quarter: string,
+    possessionNumber: string,
+    possession: Possession
+  }> {
+    const quarterKeys = Object.keys(this.data.pbpData.SummaryQuarters);
+
+    let after = (!quarter && !possession);
+    // Iterate through quarters
+    for (const quarterKey of quarterKeys) {
+      // Iterate through possessions until we find the one we're looking to go after
+      const currentQuarter: BallPosessionList = this.data.pbpData.SummaryQuarters[quarterKey];
+      const possKeys = Object.keys(currentQuarter.BallPossession);
+
+      for (const possKey of possKeys) {
+        if (after) {
+          yield {
+            possession: currentQuarter.BallPossession[possKey],
+            possessionNumber: possKey,
+            quarter: quarterKey,
+          };
+        } else if (quarterKey === quarter && possKey === possession) {
+          after = true;
+        }
+      }
+    }
   }
 }

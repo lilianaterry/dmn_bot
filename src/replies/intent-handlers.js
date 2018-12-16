@@ -24,7 +24,7 @@ export const Intents = {
   AddNotificationsSelection: 'ChangeNotifications - AddNotifications - SelectRange - End',
   ChangeTeamNotif: 'GlobalChangeNotifications - Single',
   ChangeTeamNotifSelection: 'GlobalChangeNotifications - Single - End',
-  ChangeGlobalNotif: 'GlobalChangeNotifications - All - End'
+  ChangeGlobalNotif: 'GlobalChangeNotifications - All - End',
 };
 
 export async function verifySchool(userId: string, sessionId: string, teamName: string,
@@ -130,9 +130,9 @@ export async function handleUnsubscribeTeamRequest(userId: string, queryResult: 
     const teamData = await database.getTeamById(team.team_id);
     const buttons = [
       {
-        text: "Unsubscribe",
-        postback: team.team_id
-      }
+        text: 'Unsubscribe',
+        postback: team.team_id,
+      },
     ];
     fulfillment.push(DialogflowApi.getCardResponseJSON(teamData.display_name, null, teamData.team_image, buttons));
   }
@@ -153,12 +153,12 @@ export function handleChangeGlobalNotifications(userId: string, queryResult: any
   const notificationSetting = postback[1] == 'true';
 
   const database = new Database();
-  database.setPrefForAllTeams(userId, notificationType, notificationSetting)
-  
-  const startResponse = "Great! PressBot will start sending you notifications for ";
-  const stopResponse = "PressBot will stop sending you notifications for ";
+  database.setPrefForAllTeams(userId, notificationType, notificationSetting);
+
+  const startResponse = 'Great! PressBot will start sending you notifications for ';
+  const stopResponse = 'PressBot will stop sending you notifications for ';
   let reply = notificationSetting ? startResponse : stopResponse;
-  reply = reply + _.lowerCase(notificationType) + ".";
+  reply = `${reply + _.lowerCase(notificationType)}.`;
 
   return { fulfillmentMessages: [DialogflowApi.getTextResponseJSON(reply)] };
 }
@@ -171,32 +171,32 @@ export async function handleChangeTeamNotification(userId: string, queryResult: 
   for (const team of teams) {
     const teamData = await database.getTeamById(team.team_id);
 
-    const everyScoreText = team.everyScore ? "Stop Every Score" : "Start Every Score";
-    const everyQTRText = team.everyQTR ? "Stop Every QTR" : "Start Every QTR";
-    const kickoffText = team.kickoff ? "Stop Kickoff Alerts" : "Start Kickoff Alerts";
+    const everyScoreText = team.everyScore ? 'Stop Every Score' : 'Start Every Score';
+    const everyQTRText = team.everyQTR ? 'Stop Every QTR' : 'Start Every QTR';
+    const kickoffText = team.kickoff ? 'Stop Kickoff Alerts' : 'Start Kickoff Alerts';
 
     const buttons = [
       {
         text: everyScoreText,
-        postback: `${team.team_id}:everyScore:${!team.everyScore}`
-      }, 
+        postback: `${team.team_id}:everyScore:${!team.everyScore}`,
+      },
       {
         text: everyQTRText,
-        postback: `${team.team_id}:everyQTR:${!team.everyQTR}`
-      }, 
+        postback: `${team.team_id}:everyQTR:${!team.everyQTR}`,
+      },
       {
         text: kickoffText,
-        postback: `${team.team_id}:kickoff:${!team.kickoff}`
-      }, 
+        postback: `${team.team_id}:kickoff:${!team.kickoff}`,
+      },
     ];
     fulfillment.push(DialogflowApi.getCardResponseJSON(teamData.display_name, null, teamData.team_image, buttons));
-  }; 
+  }
 
   return { fulfillmentMessages: fulfillment };
 }
 
 export async function handleChangeTeamNotificationSelection(userId: string, queryResult: any) {
-  const postback = queryResult.queryText.split(":");
+  const postback = queryResult.queryText.split(':');
   const teamId = postback[0];
   const notificationType = postback[1];
   const notificationSetting = postback[2] == 'true';
@@ -204,11 +204,11 @@ export async function handleChangeTeamNotificationSelection(userId: string, quer
   const database = new Database();
   const teamData = await database.getTeamById(teamId);
   const subData = await database.getSingleTeamSubscription(userId, teamId);
-  log(`Passed: ${subData.subscription_id} + ${userId} + ${teamId} + ${notificationType} + ${notificationSetting}`)
+  log(`Passed: ${subData.subscription_id} + ${userId} + ${teamId} + ${notificationType} + ${notificationSetting}`);
   database.setPreference(subData.subscription_id, userId, teamId, notificationType, notificationSetting);
 
-  const startResponse = `Great! PressBot will start sending you notifications for`;
-  const stopResponse = `PressBot will stop sending you notifications for`;
+  const startResponse = 'Great! PressBot will start sending you notifications for';
+  const stopResponse = 'PressBot will stop sending you notifications for';
   let reply = notificationSetting ? startResponse : stopResponse;
   reply = `${reply} ${_.lowerCase(notificationType)} for ${teamData.display_name}.`;
 

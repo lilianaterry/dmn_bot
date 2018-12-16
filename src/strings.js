@@ -14,7 +14,7 @@ export const messages = {
   frequencyPreference_message: 'How often would you like PressBot to update you while your team is playing?',
   setupComplete_message: "You're all set up! Here's the next ${0} when your ${1} will hit the field:",
   skipButton_message: 'Skip',
-  addNotificationsFail_message: 'Whoops. Looks like you\'re already receiving all that we can send you! Sorry we can\'t get you closer to your team.'
+  addNotificationsFail_message: 'Whoops. Looks like you\'re already receiving all that we can send you! Sorry we can\'t get you closer to your team.',
 };
 
 export const errorMessages = {};

@@ -8,6 +8,14 @@
         "no-console":"off",
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
         "lines-between-class-members": ["error", "always", {"exceptAfterSingleLine": true}],
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "no-restricted-syntax": "off"
+    },
+    "globals": {
+        "Generator": true,
+        "Iterator": true,
+        "Iterable": true,
+        "$Keys": true,
+        "$Shape": true
     }
 }

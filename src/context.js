@@ -1,5 +1,5 @@
-/* Used for altering the returned fulfillment contexts needed to 
-    trigger the next step of some Dialoflow intents */
+/* Used for altering the returned fulfillment contexts needed to
+    trigger the next step of some Dialogflow intents */
 
 import * as _ from 'lodash';
 

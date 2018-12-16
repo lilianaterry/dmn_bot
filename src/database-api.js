@@ -91,14 +91,19 @@ export default class Database {
       teams.forEach((team) => {
         this.setPreference(team.subscription_id, userId, team.team_id, prefName, prefVal);
       });
-    })
-    .catch((err) => {
+    }).catch((err) => {
       log(chalk.red('An error occured in setTypePrefForAllTeams'));
       log(err);
     });
   }
 
-  setPreference(subscriptionId: string, userId: string, teamId: string, prefName: string, prefVal: bool) {
+  setPreference(
+    subscriptionId: string,
+    userId: string,
+    teamId: string,
+    prefName: string,
+    prefVal: bool,
+  ) {
     return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
@@ -143,7 +148,7 @@ export default class Database {
           log(err);
           reject(err);
         } else {
-          log(`Successfully retrieved user ${userId}\'steams from database`);
+          log(`Successfully retrieved user ${userId}'s teams from database`);
           if (data.Items) {
             resolve(data.Items);
           } else {
@@ -159,7 +164,7 @@ export default class Database {
       const params = {
         TableName: Database.SUBSCRIPTION_TABLE,
         FilterExpression: 'team_id = :teamId AND user_id = :userId',
-        ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
+        ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId },
       };
 
       this.docClient.scan(params, (err, data) => {
@@ -176,35 +181,35 @@ export default class Database {
           }
         }
       });
-    })
+    });
   }
 
   removeSubscription(userId: string, teamId: string) {
     const scanParams = {
       TableName: Database.SUBSCRIPTION_TABLE,
       FilterExpression: 'team_id = :teamId AND user_id = :userId',
-      ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId},
+      ExpressionAttributeValues: { ':userId': userId, ':teamId': teamId },
     };
 
     this.docClient.scan(scanParams, (err, data) => {
-        if (err) {
-            log("Unable to find item. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            log("Found item succeeded:", JSON.stringify(data, null, 2));
-            const deleteParams = {
-              TableName: Database.SUBSCRIPTION_TABLE,
-              Key: {
-                subscription_id: data.Items[0].subscription_id,
-              }
-            };
-            this.docClient.delete(deleteParams, function(err, deletedData) {
-              if (err) {
-                log(`Failed to delete team ${data.Items[0].team_id}`);
-              } else {
-                log(`Successfully deleted team ${data.Items[0].team_id}`);
-              }
-            });
-        }
+      if (err) {
+        log('Unable to find item. Error JSON:', JSON.stringify(err, null, 2));
+      } else {
+        log('Found item succeeded:', JSON.stringify(data, null, 2));
+        const deleteParams = {
+          TableName: Database.SUBSCRIPTION_TABLE,
+          Key: {
+            subscription_id: data.Items[0].subscription_id,
+          },
+        };
+        this.docClient.delete(deleteParams, () => {
+          if (err) {
+            log(`Failed to delete team ${data.Items[0].team_id}`);
+          } else {
+            log(`Successfully deleted team ${data.Items[0].team_id}`);
+          }
+        });
+      }
     });
   }
 

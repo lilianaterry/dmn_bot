@@ -1,5 +1,5 @@
-/* Compares updated data with data stored in database to 
-    determine whether an update notificaiton should be sent 
+/* Compares updated data with data stored in database to
+    determine whether an update notificaiton should be sent
     to users */
 
 import moment from 'moment';
@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 import * as TeamPlayer from '../gateways/teamplayer';
 import Database from '../database-api';
 import { ScoreUpdate, GameData } from '../models/teamplayer';
-import { sendPregameMessages, sendScoreUpdate } from './score-parser';
+import { sendPregameMessages, sendScoreUpdate } from './score-updater';
 
 const log = debug('scorelistener');
 

@@ -103,9 +103,10 @@ app.post('/webhook', (req: any, res: any) => {
       break;
 
     case IntentHandler.Intents.UnsubscribeTeamRequest:
-      IntentHandler.handleUnsubscribeTeamRequest(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
+      IntentHandler.handleUnsubscribeTeamRequest(userId, queryResult)
+        .then((fulfillmentResponse) => {
+          res.json(fulfillmentResponse);
+        })
         .catch((err) => {
           log('There was an error in UnsubscribeTeamRequest');
           log(err);
@@ -120,9 +121,10 @@ app.post('/webhook', (req: any, res: any) => {
 
     case IntentHandler.Intents.ChangeTeamNotif:
       log('Inside ChangeTeamNotif');
-      IntentHandler.handleChangeTeamNotification(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      })
+      IntentHandler.handleChangeTeamNotification(userId, queryResult)
+        .then((fulfillmentResponse) => {
+          res.json(fulfillmentResponse);
+        })
         .catch((err) => {
           log('There was an error in ChangeTeamNotif');
           log(err);
@@ -131,9 +133,10 @@ app.post('/webhook', (req: any, res: any) => {
 
     case IntentHandler.Intents.ChangeTeamNotifSelection:
       log('Inside ChangeTeamNotifSelection');
-      IntentHandler.handleChangeTeamNotificationSelection(userId, queryResult).then((fulfillmentResponse) => {
-        res.json(fulfillmentResponse);
-      });
+      IntentHandler.handleChangeTeamNotificationSelection(userId, queryResult)
+        .then((fulfillmentResponse) => {
+          res.json(fulfillmentResponse);
+        });
       break;
 
     case IntentHandler.Intents.ChangeGlobalNotif:
