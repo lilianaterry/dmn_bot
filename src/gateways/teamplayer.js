@@ -4,7 +4,7 @@ import * as request from 'request-promise';
 import moment from 'moment';
 import debug from 'debug';
 import { ScoreUpdate, GameData } from '../models/teamplayer';
-// import { gameData, scoreUpdate } from '../test-data';
+import { gameData, scoreUpdate } from '../test-data';
 
 const log = debug('teamplayer');
 
@@ -25,8 +25,8 @@ export async function getInProgressGames(searchDate: moment): Promise<string[]> 
   log(`Calling getInProgressGames() with date: ${searchDate.toString()}`);
   let response;
   try {
-    response = await callApi('API_GamesInProgress', { SearchDate: searchDate.toISOString() });
-    // response = JSON.stringify(['101442']);
+    // response = await callApi('API_GamesInProgress', { SearchDate: searchDate.toISOString() });
+    response = JSON.stringify(['113710']);
   } catch (e) {
     throw new Error(`Something went wrong with getting in progress games: ${e.message}`);
   }
@@ -38,8 +38,8 @@ export async function getGameData(gameId: string): Promise<GameData> {
   log(`Calling getGameData() with gameId: ${gameId}`);
   let response;
   try {
-    response = await callApi('API_GameData', { ID: gameId });
-    // response = JSON.stringify(gameData);
+    // response = await callApi('API_GameData', { ID: gameId });
+    response = JSON.stringify(gameData);
   } catch (e) {
     throw new Error(`Something went wrong with getting game data: ${e.message}`);
   }
@@ -52,8 +52,8 @@ export async function getScoreUpdates(gameId: string): Promise<ScoreUpdate> {
   log(`Calling getScoreUpdates() with gameId: ${gameId}`);
   let response;
   try {
-    response = await callApi('API_GameStats', { ID: gameId });
-    // response = JSON.stringify(scoreUpdate);
+    // response = await callApi('API_GameStats', { ID: gameId });
+    response = JSON.stringify(scoreUpdate);
   } catch (e) {
     throw new Error(`Something went wrong with getting score updates: ${e.message}`);
   }

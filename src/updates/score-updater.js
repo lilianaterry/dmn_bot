@@ -1,13 +1,13 @@
 /* Sends update messages to subscribers */
 
 import debug from 'debug';
-import * as _ from 'lodash';
-import { GameData, Possession } from '../models/teamplayer';
+import chalk from 'chalk';
+import { GameData } from '../models/teamplayer';
 import Database from '../database-api';
 import MessengerApi from '../replies/messenger-api';
 import { ScorecardGenerator } from '../gen-images';
 
-const log = debug('score-parser');
+const log = debug('score-updater');
 
 function sendMessageContent(
   messenger: MessengerApi,
@@ -31,13 +31,13 @@ export async function sendPregameMessages(gameData: GameData) {
   const awayUsers = await db.getSubscriptionsByTeam(gameData.away.team.TeamID);
   log(`Got subscriptions. Total users: ${homeUsers.length + awayUsers.length}`);
 
-  homeUsers.forEach((user) => {
+  [{ user_id: '2190307544333596' }].forEach((user) => {
     sendMessageContent(messenger, user.user_id, gameData.home.team.TeamName);
   });
 
-  awayUsers.forEach((user) => {
-    sendMessageContent(messenger, user.user_id, gameData.away.team.TeamName);
-  });
+  // awayUsers.forEach((user) => {
+  //   sendMessageContent(messenger, user.user_id, gameData.away.team.TeamName);
+  // });
 }
 
 interface SimpleTeam {
@@ -50,13 +50,13 @@ export async function sendScoreUpdate(
   home: SimpleTeam,
   away: SimpleTeam,
   quarter: string,
-  possession: Possession,
+  timeRemaining: string,
+  possession: 'home'|'away',
+  description: string,
 ) {
   const db = new Database();
   const messenger = MessengerApi.getInstance();
   const gen = new ScorecardGenerator();
-
-  const lastPlay = possession.Records[_.last(_.keys(possession.Records))];
 
   let attachmentId = null;
   try {
@@ -72,9 +72,9 @@ export async function sendScoreUpdate(
         `${away.score}`,
         homeTeamFull.team_image,
         awayTeamFull.team_image,
-        lastPlay.TimeLeft ? lastPlay.TimeLeft.split(' ')[0] : '',
+        timeRemaining,
         quarter,
-        possession.TeamName === home.name ? 'home' : 'away',
+        possession,
       );
       attachmentId = await MessengerApi.getInstance().uploadImageAttachment(imagePath);
       gen.cleanup();
@@ -89,35 +89,53 @@ export async function sendScoreUpdate(
   const awayUsers = await db.getSubscriptionsByTeam(away.id);
   log(`Got subscriptions. Total users: ${homeUsers.length + awayUsers.length}`);
 
-  homeUsers.forEach((user) => {
+  const messagePromises = [];
+
+  [{ user_id: '2190307544333596' }].forEach((user) => {
     let promise;
     if (attachmentId) {
-      promise = MessengerApi.getInstance().sendImageAttachmentWithId(user.user_id, attachmentId);
+      promise = MessengerApi.getInstance().sendImageAttachmentWithId(user.user_id, attachmentId)
+        .catch((err) => {
+          log(chalk.red('There was an error sending the image to a subscriber.'));
+          log(err);
+        });
     } else {
       promise = Promise.resolve();
     }
 
-    promise.then(() => {
-      messenger.sendTextMessage(
-        user.user_id,
-        `${lastPlay.SummaryDescription}\n\n${home.name}: ${home.score}\n${away.name}: ${away.score}`,
-      );
-    });
+    const messagePromise = promise.then(() => messenger.sendTextMessage(
+      user.user_id,
+      `${description}\n\n${home.name}: ${home.score}\n${away.name}: ${away.score}`,
+    ).catch((err) => {
+      log(chalk.red('There was an error sending the message to a subscriber.'));
+      log(err);
+    }));
+
+    messagePromises.push(messagePromise);
   });
 
-  awayUsers.forEach((user) => {
-    let promise;
-    if (attachmentId) {
-      promise = MessengerApi.getInstance().sendImageAttachmentWithId(user.user_id, attachmentId);
-    } else {
-      promise = Promise.resolve();
-    }
+  // awayUsers.forEach((user) => {
+  //   let promise;
+  //   if (attachmentId) {
+  //     promise = MessengerApi.getInstance().sendImageAttachmentWithId(user.user_id, attachmentId)
+  //       .catch((err) => {
+  //         log(chalk.red('There was an error sending the image to subscribers.'));
+  //         log(err);
+  //       });
+  //   } else {
+  //     promise = Promise.resolve();
+  //   }
 
-    promise.then(() => {
-      messenger.sendTextMessage(
-        user.user_id,
-        `${lastPlay.SummaryDescription}\n\n${away.name}: ${away.score}\n${home.name}: ${home.score}`,
-      );
-    });
-  });
+  //   const messagePromise = promise.then(() => messenger.sendTextMessage(
+  //     user.user_id,
+  //     `${description}\n\n${away.name}: ${away.score}\n${home.name}: ${home.score}`,
+  //   ).catch((err) => {
+  //     log(chalk.red('There was an error sending the message to a subscriber.'));
+  //     log(err);
+  //   }));
+
+  //   messagePromises.push(messagePromise);
+  // });
+
+  await Promise.all(messagePromises);
 }

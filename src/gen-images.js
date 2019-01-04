@@ -155,7 +155,7 @@ export class ScorecardGenerator {
 
   _drawPossessionTriangle(possession: 'home' | 'away') {
     const x = this.canvas.width - 20;
-    const y = (possession !== 'home' ? 230 : 450);
+    const y = (possession === 'home' ? 230 : 450);
 
     this.graphics.fillStyle = '#48494a';
     this.graphics.beginPath();

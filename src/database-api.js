@@ -397,18 +397,19 @@ export default class Database {
     });
   }
 
-  updateGame(gameId: string, homeScore: number, awayScore: number, timeModified: string) {
+  updateGame(gameId: string, lastQuarter: string, lastPossession: string, lastModified: string) {
+    log(`Updating game ${gameId} with quarter ${lastQuarter} and posession ${lastPossession}`);
     return new Promise((resolve, reject) => {
       const params = {
         TableName: Database.GAME_TABLE,
         Key: {
           game_id: gameId,
         },
-        UpdateExpression: 'set home_score = :homeScore, away_score = :awayScore, GameStatsDateTimeModified = :updateTime',
+        UpdateExpression: 'set lastQuarter = :lastQuarter, lastPossession = :lastPossession, lastModified = :lastModified',
         ExpressionAttributeValues: {
-          ':homeScore': homeScore,
-          ':awayScore': awayScore,
-          ':updateTime': timeModified,
+          ':lastQuarter': lastQuarter,
+          ':lastPossession': lastPossession,
+          ':lastModified': lastModified,
         },
       };
 

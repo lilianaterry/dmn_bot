@@ -19,7 +19,7 @@ interface Game {
   GameScoreIsFinal: string;
 }
 
-interface Record {
+export interface Record {
   TimeLeft: string;
   SummaryEvent: string;
   SummaryType: 'Pass'|'Run'|'Incomplete Pass'|'Punt'|'Kickoff Return'|'Field Goal'|'Timeout'|'Penalty Offense'|'Penalty Defense'|'Start of Quarter'|'End of Quarter';
@@ -227,7 +227,10 @@ export class ScoreUpdate {
     return last;
   }
 
-  * getPossessionsAfter(quarter: string, possession: string): Iterable<{
+  * getPossessionsAfter(
+    quarter: string|typeof undefined|null,
+    possession: string|typeof undefined|null,
+  ): Iterable<{
     quarter: string,
     possessionNumber: string,
     possession: Possession
@@ -243,11 +246,20 @@ export class ScoreUpdate {
 
       for (const possKey of possKeys) {
         if (after) {
-          yield {
-            possession: currentQuarter.BallPossession[possKey],
-            possessionNumber: possKey,
-            quarter: quarterKey,
-          };
+          const currentPossession: Possession = currentQuarter.BallPossession[possKey];
+          if (!currentPossession.ScoreChange
+            || (parseInt(currentPossession.AwayScoreCurr, 10)
+            >= parseInt(currentPossession.AwayScorePrev, 10)
+            || parseInt(currentPossession.HomeScoreCurr, 10)
+            >= parseInt(currentPossession.HomeScorePrev, 10))) {
+            yield {
+              possession: currentPossession,
+              possessionNumber: possKey,
+              quarter: quarterKey,
+            };
+          } else {
+            return;
+          }
         } else if (quarterKey === quarter && possKey === possession) {
           after = true;
         }
